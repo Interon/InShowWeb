@@ -1,0 +1,12 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+<h2>@Model.Name</h2>
+    @Model.GetPropertyValue("test")
+    <ul>
+        @foreach (var item in Model.Children)
+        {
+            <li>
+                <a href="@item.Url">@item.Name</a>
+            </li>
+        }
+    </ul>

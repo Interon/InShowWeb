@@ -1,0 +1,23 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.ContentInfo>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@using wg2k.umbraco
+@{
+    try
+    {
+        if (Request.QueryString["x"].ToString() == "true")
+        {
+
+            @((new uHateoas(Model,true)).Process())
+            return;
+        }
+    }
+    catch
+    { }
+    Layout = "Master.cshtml";
+}
+
+<div style="margin-top:100px" class="container">
+    @Html.Partial("Header")
+	   @Html.Partial("Welcome")
+    <img src="@Umbraco.Field("image")" />
+</div>

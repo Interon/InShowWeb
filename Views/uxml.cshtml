@@ -1,0 +1,3 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using wg2k.umbraco
+@((new uHateoas(Model, true)).Process("root"))

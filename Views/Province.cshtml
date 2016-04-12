@@ -1,0 +1,24 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using wg2k.umbraco
+@using ExtensionMethods
+
+
+
+@{
+    try
+    {
+        if (Request.QueryString["x"].ToString() == "true")
+        {
+
+            @((new uHateoas(Model,true)).Process())
+            return;
+        }
+    }
+    catch
+    { }
+    Layout = "Master.cshtml";
+}
+<div style="width:100%;height:50px"></div>
+<div class="container">
+    @Html.Partial("childNodes");
+</div>
