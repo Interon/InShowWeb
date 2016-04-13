@@ -76,7 +76,7 @@ artifacts/
 *.obj
 *.pch
 *.pgc
-
+*.sdf
 *.pgd
 *.rsp
 *.sbr
