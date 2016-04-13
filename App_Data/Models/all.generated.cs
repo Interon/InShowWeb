@@ -158,12 +158,12 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// Content
+		/// Geo
 		///</summary>
-		[ImplementPropertyType("content")]
-		public Newtonsoft.Json.Linq.JToken Content
+		[ImplementPropertyType("geo")]
+		public object Geo
 		{
-			get { return this.GetPropertyValue<Newtonsoft.Json.Linq.JToken>("content"); }
+			get { return this.GetPropertyValue("geo"); }
 		}
 	}
 
