@@ -23,11 +23,11 @@
             </div>
             <script type="text/javascript">
 
-                $("#Province").change( function (event) {
+                R("#Province").change( function (event) {
                    
-                    var url = "/inshow/" + $("#Province option:selected").text() + "?x=true&children=true"
+                    var url = "/inshow/" + R("#Province option:selected").text() + "?x=true&children=true"
                   
-                    $.ajax({
+                    R.ajax({
                         url: url,
                         dataType: "json",
                         type: "GET",
@@ -38,13 +38,13 @@
                            
                             var optionhtml1 = '<option value="' +
                              0 + '">' + "--Select City--" + '</option>';
-                            $("#cities").append(optionhtml1);
+                            R("#cities").append(optionhtml1);
                             debugger;
-                            $.each(data.entities, function (i) {
+                            R.each(data.entities, function (i) {
                                
                                 var optionhtml = '<option value="' +
-                            i.properties.id + '">' + i.properties.name + '</option>';
-                                $("#cities").append(optionhtml);
+                            data.entities[i].properties.Id + '">' + data.entities[i].properties.Name + '</option>';
+                                R("#cities").append(optionhtml);
                             });
                         }
                     });
@@ -53,12 +53,7 @@
             <div class="col-md-4 col-sm-6 col-xs-12">
                 <label>Location</label>
                 <select class="form-control" id="cities" name="cities">
-                    <option value="0">Any</option>
-                    <option value="1">New York</option>
-                    <option value="2">Los Angeles</option>
-                    <option value="3">Las Vegas</option>
-                    <option value="4">Palo Alto, SA</option>
-                    <option value="5">Silcon Valey, SA</option>
+                   
                 </select>
             </div>
            
@@ -118,30 +113,61 @@
                 <label>Price From</label>
                 <select class="form-control" name="re_price_from">
                     <option value="0">Any</option>
-                    <option value="1000">$1000</option>
-                    <option value="2000">$2000</option>
-                    <option value="3000">$3000</option>
-                    <option value="5000">$5000</option>
-                    <option value="10000">$10000</option>
-                    <option value="2000">$2000</option>
-                    <option value="100000">$100000</option>
-                    <option value="300000">$300000</option>
-                    <option value="1000000+">1000000+</option>
+                    <option value="100000">R 100 000</option>
+                    <option value="200000">R 200 000</option>
+                    <option value="300000">R 300 000</option>
+                    <option value="400000">R 500 000</option>
+                    <option value="500000">R 600 000</option>
+                    <option value="600000">R 700 000</option>
+                    <option value="700000">R 700 000</option>
+                    <option value="800000">R 800 000</option>
+                    <option value="900000">R 900 000</option>
+                    <option value="1000000">R 1 000 000</option>
+                    <option value="2000000">R 2 000 000</option>
+                    <option value="3000000">R 3 000 000</option>
+                    <option value="4000000">R 4 000 000</option>
+                    <option value="5000000">R 5 000 000</option>
+                    <option value="6000000">R 6 000 000</option>
+                    <option value="7000000">R 7 000 000</option>
+                    <option value="8000000">R 8 000 000</option>
+                    <option value="9000000">R 9 000 000</option>
+                    <option value="10000000">R 10 000 000</option>
+                    <option value="11000000">R 11 000 000</option>
+                    <option value="12000000">R 12 000 000</option>
+                    <option value="13000000">R 13 000 000</option>
+                    <option value="14000000">R 14 000 000</option>
+                    <option value="15000000">R 15 000 000+</option>
                 </select>
             </div>
             <div class="col-md-2 col-sm-6 col-xs-6">
                 <label>Price To</label>
                 <select class="form-control" name="re_price_to">
                     <option value="0">Any</option>
-                    <option value="1000">$1000</option>
-                    <option value="2000">$2000</option>
-                    <option value="3000">$3000</option>
-                    <option value="5000">$5000</option>
-                    <option value="10000">$10000</option>
-                    <option value="2000">$2000</option>
-                    <option value="100000">$100000</option>
-                    <option value="300000">$300000</option>
-                    <option value="1000000+">1000000+</option>
+                    <option value="100000">R 100 000</option>
+                    <option value="200000">R 200 000</option>
+                    <option value="300000">R 300 000</option>
+                    <option value="400000">R 500 000</option>
+                    <option value="500000">R 600 000</option>
+                    <option value="600000">R 700 000</option>
+                    <option value="700000">R 700 000</option>
+                    <option value="800000">R 800 000</option>
+                    <option value="900000">R 900 000</option>
+                    <option value="1000000">R 1 000 000</option>
+                    <option value="2000000">R 2 000 000</option>
+                    <option value="3000000">R 3 000 000</option>
+                    <option value="4000000">R 4 000 000</option>
+                    <option value="5000000">R 5 000 000</option>
+                    <option value="6000000">R 6 000 000</option>
+                    <option value="7000000">R 7 000 000</option>
+                    <option value="8000000">R 8 000 000</option>
+                    <option value="9000000">R 9 000 000</option>
+                    <option value="10000000">R 10 000 000</option>
+                    <option value="11000000">R 11 000 000</option>
+                    <option value="12000000">R 12 000 000</option>
+                    <option value="13000000">R 13 000 000</option>
+                    <option value="14000000">R 14 000 000</option>
+                    <option value="15000000">R 15 000 000+</option>
+
                 </select>
             </div>
 
