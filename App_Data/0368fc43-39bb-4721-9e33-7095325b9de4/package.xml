@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<umbPackage>
+  <files>
+    <file>
+      <guid>Delete.html</guid>
+      <orgPath>/App_Plugins/CMUmbracoTools/backoffice/Contents</orgPath>
+      <orgName>Delete.html</orgName>
+    </file>
+    <file>
+      <guid>Edit.html</guid>
+      <orgPath>/App_Plugins/CMUmbracoTools/backoffice/Contents</orgPath>
+      <orgName>Edit.html</orgName>
+    </file>
+    <file>
+      <guid>Examine.html</guid>
+      <orgPath>/App_Plugins/CMUmbracoTools/backoffice/Contents</orgPath>
+      <orgName>Examine.html</orgName>
+    </file>
+    <file>
+      <guid>PermanentRedirects.html</guid>
+      <orgPath>/App_Plugins/CMUmbracoTools/backoffice/SEO</orgPath>
+      <orgName>PermanentRedirects.html</orgName>
+    </file>
+    <file>
+      <guid>PermanentRedirectsEdit.html</guid>
+      <orgPath>/App_Plugins/CMUmbracoTools/backoffice/SEO</orgPath>
+      <orgName>PermanentRedirectsEdit.html</orgName>
+    </file>
+    <file>
+      <guid>PermanentRedirectsOptions.html</guid>
+      <orgPath>/App_Plugins/CMUmbracoTools/backoffice/SEO</orgPath>
+      <orgName>PermanentRedirectsOptions.html</orgName>
+    </file>
+    <file>
+      <guid>RobotsDotTxt.html</guid>
+      <orgPath>/App_Plugins/CMUmbracoTools/backoffice/SEO</orgPath>
+      <orgName>RobotsDotTxt.html</orgName>
+    </file>
+    <file>
+      <guid>Sitemap.html</guid>
+      <orgPath>/App_Plugins/CMUmbracoTools/backoffice/SEO</orgPath>
+      <orgName>Sitemap.html</orgName>
+    </file>
+    <file>
+      <guid>Application.html</guid>
+      <orgPath>/App_Plugins/CMUmbracoTools/backoffice/Settings</orgPath>
+      <orgName>Application.html</orgName>
+    </file>
+    <file>
+      <guid>c01f21ba-221d-4045-96d7-f76c14ecc1d4_Delete.html</guid>
+      <orgPath>/App_Plugins/CMUmbracoTools/backoffice/Settings</orgPath>
+      <orgName>Delete.html</orgName>
+    </file>
+    <file>
+      <guid>e6c726cd-ba20-448e-b464-bab27d3cff93_Edit.html</guid>
+      <orgPath>/App_Plugins/CMUmbracoTools/backoffice/Settings</orgPath>
+      <orgName>Edit.html</orgName>
+    </file>
+    <file>
+      <guid>ApplicationPoolRestart.html</guid>
+      <orgPath>/App_Plugins/CMUmbracoTools/backoffice/System</orgPath>
+      <orgName>ApplicationPoolRestart.html</orgName>
+    </file>
+    <file>
+      <guid>80da7611-70d5-4a57-ab1a-32c7a9c00c8d_Delete.html</guid>
+      <orgPath>/App_Plugins/CMUmbracoTools/backoffice/System</orgPath>
+      <orgName>Delete.html</orgName>
+    </file>
+    <file>
+      <guid>a8ff85ba-04f6-49b8-adc8-7194460d97f4_Edit.html</guid>
+      <orgPath>/App_Plugins/CMUmbracoTools/backoffice/System</orgPath>
+      <orgName>Edit.html</orgName>
+    </file>
+    <file>
+      <guid>ViewLog.html</guid>
+      <orgPath>/App_Plugins/CMUmbracoTools/backoffice/System</orgPath>
+      <orgName>ViewLog.html</orgName>
+    </file>
+    <file>
+      <guid>CMUmbracoTools.dll</guid>
+      <orgPath>/bin</orgPath>
+      <orgName>CMUmbracoTools.dll</orgName>
+    </file>
+  </files>
+  <info>
+    <package>
+      <name>CM Umbraco Tools</name>
+      <version>1.4.0</version>
+      <license url="http://opensource.org/licenses/MIT">MIT License</license>
+      <url>https://our.umbraco.org/projects/developer-tools/cm-umbraco-tools/</url>
+      <requirements>
+        <major>3</major>
+        <minor>0</minor>
+        <patch>0</patch>
+      </requirements>
+    </package>
+    <author>
+      <name>Aristotelis Pitaridis</name>
+      <website>http://www.computermagic.gr/</website>
+    </author>
+    <readme><![CDATA[This package contains a set of tools for the developer and the administrator of an Umbraco site.]]></readme>
+  </info>
+  <DocumentTypes />
+  <Templates />
+  <Stylesheets />
+  <Macros />
+  <DictionaryItems />
+  <Languages />
+  <DataTypes />
+</umbPackage>
