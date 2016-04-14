@@ -15,8 +15,8 @@
     catch
     { }
     Layout = "Master.cshtml";
+    SlurpService sl = new SlurpService("http://www.property24.com/for-sale/strubensvallei/roodepoort/gauteng/832/103776259");
 }
-<div style="width:100%;height:150px"></div>
 <!-- WRAPPER -->
 		<div id="wrapper">
 
@@ -32,38 +32,19 @@
 								900px images required!
 							-->
 							<div class="owl-carousel controlls-over" data-plugin-options='{"autoPlay":true, "stopOnHover":false, "items": 1, "singleItem": true, "navigation": true, "pagination": true, "transitionStyle":"fadeUp", "itemsScaleUp":true}'>
-								<div>
+								
+                                @foreach (var image in sl.ImageList)
+                                {
+                                <div>
 									<div class="owl-caption text-left">
 										<p class="hidden-xs"><!-- hide on mobile -->
-											Lorem Ipsum Dolor Sit Amet...
+											R 2.7 Mil
 										</p>
 									</div>
-									<img alt="" class="img-responsive" src="assets/images/demo/realestate/images/1.jpg" width="900" />
+									<img alt="" class="img-responsive" src="@image" width="900" />
 								</div>
-								<div>
-									<div class="owl-caption text-left">
-										<p class="hidden-xs"><!-- hide on mobile -->
-											Lorem Ipsum Dolor Sit Amet...
-										</p>
-									</div>
-									<img alt="" class="img-responsive" src="assets/images/demo/realestate/images/6.jpg" width="900" />
-								</div>
-								<div>
-									<div class="owl-caption text-left">
-										<p class="hidden-xs"><!-- hide on mobile -->
-											Lorem Ipsum Dolor Sit Amet...
-										</p>
-									</div>
-									<img alt="" class="img-responsive" src="assets/images/demo/realestate/images/3.jpg" width="900" />
-								</div>
-								<div>
-									<div class="owl-caption text-left">
-										<p class="hidden-xs"><!-- hide on mobile -->
-											Lorem Ipsum Dolor Sit Amet...
-										</p>
-									</div>
-									<img alt="" class="img-responsive" src="assets/images/demo/realestate/images/5.jpg" width="900" />
-								</div>
+                                }
+								
 							</div>
 							<!-- /carousel -->
 
@@ -142,15 +123,7 @@
 
 
 
-						<div class="white-row">
-
-							<!-- PROPERTY VIDEO -->
-							<h3 class="page-header margin-bottom40">
-								RH1001 <strong class="styleColor">Video</strong>
-							</h3>
-
-							<iframe src="http://player.vimeo.com/video/73221098" width="800" height="450"></iframe>
-						</div><!-- /.white-row -->
+				@Html.Raw(sl.InnerHtml)
 
 
 
@@ -187,176 +160,7 @@
 						</div><!-- /.white-row -->
 
 
-						<div class="white-row">
-
-							<!-- PROPERTY CONTACT -->
-							<h3 class="page-header margin-bottom40">
-								RH1001 <strong class="styleColor">Contact</strong>
-							</h3>
-
-							<div class="row">
-
-								<!-- AGENT -->
-								<div class="col-md-7 col-sm-7">
-									<!-- agent name -->
-
-									<!-- agent image -->
-									<figure class="agent-figure pull-left hidden-xs">
-										<img src="assets/images/demo/people/6.jpg" height="210" alt="agent" />
-									</figure>
-
-									<!-- agent detail -->
-									<p>
-										<strong class="styleSecondColor fsize17">Jessica Doe</strong>
-									</p>
-									<p>
-
-										<span class="block">
-											<strong>Office:</strong> 0800-123-12345
-										</span>
-										<span class="block">
-											<strong>Mobile:</strong> 0800-123-12345
-										</span>
-
-									</p>
-
-									<p class="fsize13">
-										Lorem ipsum dolor sit amet, consectetuer adipiscing elit, 
-										sed diam nonummy nibh euismod tincidunt ut laoreet 
-										dolore magna aliquam erat volutpat. Ut wisi enim ad...
-									</p>
-
-									<hr class="half-margins" />
-
-									<div class="hidden-xs">
-										<a href="#" class="social fa fa-facebook"></a>
-										<a href="#" class="social fa fa-google-plus"></a>
-										<a href="#" class="social fa fa-twitter"></a>
-										<a href="#" class="social fa fa-linkedin"></a>
-									</div>
-
-								</div>
-
-								<!-- AGENT CONTACT -->
-								<div class="col-md-5 col-sm-5">
-									<p>
-										<strong class="styleSecondColor fsize17">Contact</strong>
-									</p>
-
-									<form method="post" action="#" class="input-group fullwidth">
-
-										<div class="form-group">
-											<input required type="text" value="" placeholder="Name" data-msg-required="Please enter your name." maxlength="100" class="form-control" name="name" id="name">
-										</div>
-
-										<div class="form-group">
-											<input required type="email" value="" placeholder="Email" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="email" id="email">
-										</div>
-
-										<div class="form-group">
-											<textarea required maxlength="5000" placeholder="Message" data-msg-required="Please enter your message." rows="3" class="form-control" name="message" id="message"></textarea>
-										</div>
-
-										<button class="btn btn-primary fullwidth noborder">SEND MESSAGE</button>
-
-									</form>
-
-								</div>
-
-							</div>
-
-						</div><!-- /.white-row -->
-
-
-						<hr /><!-- divider -->
-
-
-						<!-- RELATED -->
-						<div class="hidden-xs">
-
-							<h3 class="page-header">
-								<strong class="styleColor">Related</strong> Properties
-							</h3>
-
-							<div class="row">
-
-								<div class="col-md-4 col-sm-6 col-xs-12">
-
-									<!-- item -->
-									<div class="item-box">
-										<figure>
-											<a class="item-hover" href="realestate-single.html">
-												<span class="overlay color2"></span>
-												<span class="inner">
-													<span class="block fa fa-plus fsize20"></span>
-													<strong>VIEW</strong> OFFER
-												</span>
-											</a>
-											<img alt="" class="img-responsive" src="assets/images/demo/realestate/images/thumb/3.jpg" width="409" height="271" />
-										</figure>
-										<div class="item-box-desc">
-											<h4>1903 Hollywood Blvd, FL</h4>
-											<small>$750.000</small>
-											<p>Billions of people travel in China during Lunar New Year. Check out the mind-boggling figures.</p>
-										</div>
-									</div>
-									<!-- /item -->
-
-								</div>
-
-								<div class="col-md-4 col-sm-6 col-xs-12">
-
-									<!-- item -->
-									<div class="item-box">
-										<figure>
-											<a class="item-hover" href="realestate-single.html">
-												<span class="overlay color2"></span>
-												<span class="inner">
-													<span class="block fa fa-plus fsize20"></span>
-													<strong>VIEW</strong> OFFER
-												</span>
-											</a>
-											<img alt="" class="img-responsive" src="assets/images/demo/realestate/images/thumb/4.jpg" width="409" height="271" />
-										</figure>
-										<div class="item-box-desc">
-											<h4>1903 Hollywood Blvd, FL</h4>
-											<small>$750.000</small>
-											<p>Billions of people travel in China during Lunar New Year. Check out the mind-boggling figures.</p>
-										</div>
-									</div>
-									<!-- /item -->
-
-								</div>
-
-								<div class="col-md-4 col-sm-6 col-xs-12">
-
-									<!-- item -->
-									<div class="item-box">
-										<figure>
-											<a class="item-hover" href="realestate-single.html">
-												<span class="overlay color2"></span>
-												<span class="inner">
-													<span class="block fa fa-plus fsize20"></span>
-													<strong>VIEW</strong> OFFER
-												</span>
-											</a>
-											<img alt="" class="img-responsive" src="assets/images/demo/realestate/images/thumb/5.jpg" width="409" height="271" />
-										</figure>
-										<div class="item-box-desc">
-											<h4>1903 Hollywood Blvd, FL</h4>
-											<small>$750.000</small>
-											<p>Billions of people travel in China during Lunar New Year. Check out the mind-boggling figures.</p>
-										</div>
-									</div>
-									<!-- /item -->
-
-								</div>
-
-							</div>
-
-						</div>
-						<!-- /RELATED -->
-
+						
 					</div>
 
 					<!-- side column -->
@@ -546,15 +350,15 @@
 						</h3>
 
 						<p>
-							<a href="#">@tweetuser</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+							<a href="#">tweetuser</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
 							<small class="block styleColor">12 hours ago</small>
 						</p>
 						<p>
-							<a href="#">@tweetuser</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+							<a href="#">tweetuser</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
 							<small class="block styleColor">12 hours ago</small>
 						</p>
 						<p>
-							<a href="#">@tweetuser</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+							<a href="#">tweetuser</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
 							<small class="block styleColor">12 hours ago</small>
 						</p>
 
@@ -578,72 +382,9 @@
 			</section>
 
 
-			<section class="container">
+			
 
-				<!-- CALLOUT -->
-				<div class="row bs-callout">
-					<div class="col-md-8 text-center">
-						<h3 class="padding20">Subscribe <strong>now</strong> and get the most <strong>important</strong> news.</h3>
-					</div>
-					<div class="col-md-4">
-
-						<p class="nomargin">Type your best E-mail Address</p>
-
-						<form method="get" action="#" class="input-group">
-							<input type="text" class="form-control" name="k" id="k" value="" placeholder="E-mail Address" />
-							<span class="input-group-btn">
-								<button class="btn btn-primary"><i class="fa fa-search"></i></button>
-							</span>
-						</form>
-
-					</div>
-				</div>
-				<!-- /CALLOUT -->
-
-			</section>
-
-			<section class="container">
-					
-				<div class="row">
-					<div class="col-md-3 col-sm-6 col-xs-12">
-						<div class="featured-box noradius responsive-line-bottom">
-							<i class="lightgray fa fa-map-marker hidden-xs"></i>
-							<h4>Listing</h4>
-							<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus.</p>
-							<a href="page-left-sidebar.html" class="btn btn-primary btn-xs">READ MORE</a>
-						</div>
-					</div>
-
-					<div class="col-md-3 col-sm-6 col-xs-12">
-						<div class="featured-box noradius line-left responsive-line-bottom">
-							<i class="lightgray fa fa-globe hidden-xs"></i>
-							<h4>Advertise</h4>
-							<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus.</p>
-							<a href="page-pricing.html" class="btn btn-primary btn-xs">READ MORE</a>
-						</div>
-					</div>
-
-					<div class="col-md-3 col-sm-6 col-xs-12">
-						<div class="featured-box noradius line-left">
-							<i class="lightgray fa fa-road hidden-xs"></i>
-							<h4>Guidance</h4>
-							<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus.</p>
-							<a href="page-right-sidebar.html" class="btn btn-primary btn-xs">READ MORE</a>
-						</div>
-					</div>
-
-					<div class="col-md-3 col-sm-6 col-xs-12">
-						<div class="featured-box noradius line-left">
-							<i class="lightgray fa fa-key hidden-xs"></i>
-							<h4>Free Tiral</h4>
-							<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus. </p>
-							<a href="page-full-width.html" class="btn btn-primary btn-xs">READ MORE</a>
-						</div>
-					</div>
-
-				</div>
-					
-			</section>
+		
 
 
 		</div>

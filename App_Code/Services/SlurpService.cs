@@ -13,6 +13,7 @@ public class SlurpService
     {
         GetAllImages(url);
     }
+    private List<string> imageList2 = new List<string>();
     private List<string> imageList = new List<string>();
     public List<string> DivList = new List<string>();
     String innerHtml = "";
@@ -21,7 +22,7 @@ public class SlurpService
     {
         get
         {
-            return imageList;
+            return imageList.Distinct().ToList();
         }
 
         set
@@ -51,6 +52,7 @@ public class SlurpService
         string source = x.DownloadString(url);
         // Declaring 'document' as new HtmlAgilityPack() method
         HtmlAgilityPack.HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
+        
         // Loading document's source via HtmlAgilityPack
         document.LoadHtml(source);
         // For every tag in the HTML containing the node img.
@@ -61,25 +63,58 @@ public class SlurpService
             // Storing all links found in an array. You can declare this however you want.]
             try
             {
-                ImageList.Add(link.Value);
+                var divlist = link.OwnerNode.Ancestors();
+                foreach(var d in divlist)
+                {
+                    if(d.Id == "MainGalleryImageList")
+                    {
+                        if (link.Value.Contains("FetchImage.ashx"))
+                        {
+                            var myarray = link.Value.Split('&');
+
+                            imageList.Add(myarray[0]);
+                        }
+                    }
+                }
+              
             }
             catch
             { }
 
-           
+
         }
-        foreach (var content in document.DocumentNode
-                             .Descendants("div")
-                             .Select(s => s.Attributes["class"] ))
+        foreach (var link in document.DocumentNode
+                             .Descendants("img")
+                             .Select(s => s.Attributes["lazy-src"]))
         {
             // Storing all links found in an array. You can declare this however you want.]
             try
             {
-                if(content.Value == "p24_details")
+                if (link.Value.Contains("FetchImage.ashx"))
+                {
+                    var myarray = link.Value.Split('&');
+
+                    imageList.Add(myarray[0]);
+                }
+            }
+            catch
+            { }
+
+
+        }
+       
+        foreach (var content in document.DocumentNode
+                             .Descendants("div")
+                             .Select(s => s.Attributes["class"]))
+        {
+            // Storing all links found in an array. You can declare this however you want.]
+            try
+            {
+                if (content.Value == "p24_details")
                 {
                     InnerHtml = content.OwnerNode.InnerHtml;
                 }
-               
+
             }
             catch
             { }
@@ -88,6 +123,6 @@ public class SlurpService
         }
     }
 
-    
+
 
 }
