@@ -455,6 +455,94 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 	}
 
+	/// <summary>__RegisterUser</summary>
+	[PublishedContentModel("registerUser")]
+	public partial class RegisterUser : Master
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "registerUser";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public RegisterUser(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<RegisterUser, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+	}
+
+	/// <summary>__RegisterUserFormula</summary>
+	[PublishedContentModel("registerUserFormula")]
+	public partial class RegisterUserFormula : Master
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "registerUserFormula";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public RegisterUserFormula(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<RegisterUserFormula, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// Email
+		///</summary>
+		[ImplementPropertyType("email")]
+		public string Email
+		{
+			get { return this.GetPropertyValue<string>("email"); }
+		}
+
+		///<summary>
+		/// First Name
+		///</summary>
+		[ImplementPropertyType("firstName")]
+		public string FirstName
+		{
+			get { return this.GetPropertyValue<string>("firstName"); }
+		}
+
+		///<summary>
+		/// Last Name
+		///</summary>
+		[ImplementPropertyType("lastName")]
+		public string LastName
+		{
+			get { return this.GetPropertyValue<string>("lastName"); }
+		}
+
+		///<summary>
+		/// Password
+		///</summary>
+		[ImplementPropertyType("password")]
+		public string Password
+		{
+			get { return this.GetPropertyValue<string>("password"); }
+		}
+	}
+
 	/// <summary>Folder</summary>
 	[PublishedContentModel("Folder")]
 	public partial class Folder : PublishedContentModel

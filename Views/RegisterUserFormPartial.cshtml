@@ -1,0 +1,25 @@
+﻿@using InShow.Models
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<RegisterUserModel>
+@using InShow.Controllers
+
+<div class="container">
+    <div style="margin-top:300px" class="container-fluid">
+
+        @using (Html.BeginUmbracoForm<RegisterUserSurfaceController>("HandleRegistrationPost"))
+        {
+            <label for="firstName">First Name</label>
+            @Html.TextBoxFor(model => model.FirstName, new { @class = "firstName", placeholder = "First Name" })
+            <br />
+            <label for="lastName">Last Name</label>
+            @Html.TextBoxFor(model => model.LastName, new { @class = "lastName", placeholder = "Last Name" })
+            <br />
+            <label for="email">Email</label>
+            @Html.TextBoxFor(model => model.Email, new { @class = "email", placeholder = "Email" })
+            <br />
+            <label for="password">Password</label>
+            @Html.TextBoxFor(model => model.Password, new { @class = "password", placeholder = "Password" })
+            <br />
+            <input type="submit" value="Submit" />
+        }
+    </div>
+</div>
