@@ -7,7 +7,7 @@ using  Umbraco.Core.Models.PublishedContent;
 using  Umbraco.Web;
 using  Umbraco.ModelsBuilder;
 using  Umbraco.ModelsBuilder.Umbraco;
-[assembly: PureLiveAssembly, System.Reflection.AssemblyVersion("0.0.0.3")]
+[assembly: PureLiveAssembly, System.Reflection.AssemblyVersion("0.0.0.2")]
 
 
 // FILE: models.generated.cs
@@ -487,6 +487,68 @@ namespace Umbraco.Web.PublishedContentModels
 		public string P24Url
 		{
 			get { return this.GetPropertyValue<string>("p24Url"); }
+		}
+
+		///<summary>
+		/// Shedule
+		///</summary>
+		[ImplementPropertyType("shedule")]
+		public object Shedule
+		{
+			get { return this.GetPropertyValue("shedule"); }
+		}
+	}
+
+	/// <summary>Schedule</summary>
+	[PublishedContentModel("schedule")]
+	public partial class Schedule : Master
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "schedule";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public Schedule(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<Schedule, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// Agent
+		///</summary>
+		[ImplementPropertyType("agent")]
+		public object Agent
+		{
+			get { return this.GetPropertyValue("agent"); }
+		}
+
+		///<summary>
+		/// End Time
+		///</summary>
+		[ImplementPropertyType("endTime")]
+		public DateTime EndTime
+		{
+			get { return this.GetPropertyValue<DateTime>("endTime"); }
+		}
+
+		///<summary>
+		/// Start Time
+		///</summary>
+		[ImplementPropertyType("startTime")]
+		public DateTime StartTime
+		{
+			get { return this.GetPropertyValue<DateTime>("startTime"); }
 		}
 	}
 
