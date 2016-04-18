@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace InShow.Models
+namespace InShow.RegisterUserModel
 {
     public class RegisterUserModel
     {

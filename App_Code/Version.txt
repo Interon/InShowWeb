@@ -3,5 +3,5 @@
 
 
 
-registerUser ver. 0.01
-Implementation of Register user and pushed for consideration...
+registerUser ver. 0.02
+Registration MVC
