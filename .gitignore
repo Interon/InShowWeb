@@ -73,6 +73,7 @@ artifacts/
 *_i.h
 *.ilk
 *.meta
+*.sdf
 *.obj
 *.pch
 *.pgc
