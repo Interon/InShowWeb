@@ -3,5 +3,5 @@
 
 
 
-registerUser ver. 0.02
-Registration MVC
+registerUser ver. 0.03
+created member properties, implemented registration form

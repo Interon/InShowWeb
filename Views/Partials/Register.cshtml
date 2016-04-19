@@ -1,0 +1,156 @@
+@using System.Web.Mvc.Html
+@using Umbraco.Web
+@using InShow.Controllers
+@using InShow.Models
+@model RegisterViewModel
+
+
+
+<div class='container' style="margin-top:150px;">
+    <div id="rootwizard">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    <ul>
+                        <li><a href="#tab1" data-toggle="tab">First</a></li>
+                        <li><a href="#tab2" data-toggle="tab">Second</a></li>
+                        <li><a href="#tab3" data-toggle="tab">Third</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="bar" class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane" id="tab1">
+                1
+            </div>
+            <div class="tab-pane" id="tab2">
+
+                @{
+                    Html.EnableClientValidation(true);
+                    Html.EnableUnobtrusiveJavaScript(true);
+                }
+
+                @if (Convert.ToBoolean(TempData["IsSuccessful"]))
+            {
+                    <div class="alert alert-success">
+                        <h4>Yay!</h4>
+                        <p>Registered succesfully - please your mailbox to continue</p>
+                    </div>
+                }
+                else
+                {
+                    using (Html.BeginUmbracoForm<AuthSurfaceController>("HandleRegister"))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(false)
+
+                        <fieldset>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.FirstName, "First Name", new { @class = "control-label" })
+                                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", placeholder = "Your first name" })
+                                @Html.ValidationMessageFor(model => model.FirstName, string.Empty, new { @class = "help-block" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.LastName, "Last Name", new { @class = "control-label" })
+                                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", placeholder = "Your surname" })
+                                @Html.ValidationMessageFor(model => model.LastName, string.Empty, new { @class = "help-block" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.EmailAddress, "Email address", new { @class = "control-label" })
+                                @Html.TextBoxFor(model => model.EmailAddress, new { @class = "form-control", placeholder = "Email Address" })
+                                @Html.ValidationMessageFor(model => model.EmailAddress, string.Empty, new { @class = "help-block" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Cellphone, "Cell Number", new { @class = "control-label" })
+                                @Html.TextBoxFor(model => model.Cellphone, new { @class = "form-control", placeholder = "Cell Number" })
+                                @Html.ValidationMessageFor(model => model.Cellphone, string.Empty, new { @class = "help-block" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Password, "Password", new { @class = "control-label" })
+                                @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password" })
+                                @Html.ValidationMessageFor(model => model.Password, string.Empty, new { @class = "help-block" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ConfirmPassword, "Confirm password", new { @class = "control-label" })
+                                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword, string.Empty, new { @class = "help-block" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ProfileURL, new { @class = "control-label" })
+                                <div class="input-group">
+                                    <span class="input-group-addon">http://site.com/user/</span>
+                                    @Html.TextBoxFor(model => model.ProfileURL, new { @class = "form-control", placeholder = "joebloggs" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.ProfileURL, string.Empty, new { @class = "help-block" })
+                            </div>
+
+                            <button type="submit" class="btn btn-default">Register</button>
+
+                        </fieldset>
+                    }
+                }
+
+            </div>
+
+            <div class="tab-pane" id="tab3">
+                3
+            </div>
+            <ul class="pager wizard">
+                <li class="previous first" style="display:none;"><a href="#">First</a></li>
+                <li class="previous"><a href="#">Previous</a></li>
+                <li class="next last" style="display:none;"><a href="#">Last</a></li>
+                <li class="next"><a href="#">Next</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <script>
+        $(document).ready(function () {
+            $('#rootwizard').bootstrapWizard({
+                onNext: function (tab, navigation, index) {
+                    if (index == -1) {
+                        // Make sure we entered the name
+                        if (!$('#name').val()) {
+                            alert('You must enter your name');
+                            $('#name').focus();
+                            return false;
+                        }
+                    }
+
+                    // Set the name for the next tab
+                    $('#tab-1').html('Hello, ' + $('#name').val());
+
+                }, onTabShow: function (tab, navigation, index) {
+                    var $total = navigation.find('li').length;
+                    var $current = index + 1;
+                    var $percent = ($current / $total) * 100;
+                    $('#rootwizard .progress-bar').css({ width: $percent + '%' });
+                }
+            });
+            window.prettyPrint && prettyPrint()
+
+            $('#rootwizard').bootstrapWizard({
+                onTabShow: function (tab, navigation, index) {
+                    var $total = navigation.find('li').length;
+                    var $current = index + 1;
+                    var $percent = ($current / $total) * 100;
+                    $('#rootwizard').find('.bar').css({ width: $percent + '%' });
+                }
+            });
+            $('#rootwizard .finish').click(function () {
+                alert('Finished!, Starting over!');
+                $('#rootwizard').find("a[href*='tab1']").trigger('click');
+            });
+
+        });
+    </script>

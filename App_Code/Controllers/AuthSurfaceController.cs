@@ -4,7 +4,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using InShow.Code;
+using InShow.Helpers;
 using InShow.Models;
 using Umbraco.Core;
 using Umbraco.Core.Persistence.Querying;
@@ -299,12 +299,15 @@ namespace InShow.Controllers
         /// <returns></returns>
         public ActionResult RenderRegister()
         {
+
             return PartialView("Register", new RegisterViewModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult HandleRegister(RegisterViewModel model)
+        
+        
         {
             var membershipService = ApplicationContext.Current.Services.MemberService;
 
@@ -318,7 +321,7 @@ namespace InShow.Controllers
             {
                 //Member createMember = Member.MakeNew(model.Name, model.EmailAddress, model.EmailAddress, umbJobMemberType, umbUser);
                 // WARNING: update to your desired MembertypeAlias...
-                var createMember = membershipService.CreateMember(model.EmailAddress, model.EmailAddress, model.Name, "CMember");
+                var createMember = membershipService.CreateMember(model.EmailAddress, model.EmailAddress, model.FirstName + " " + model.LastName, "buyer");
 
                 //Set the verified email to false
                 createMember.Properties["hasVerifiedEmail"].Value = false;

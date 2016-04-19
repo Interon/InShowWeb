@@ -1,0 +1,25 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using System.Web.Mvc.Html
+@using Umbraco.Web
+@using wg2k.umbraco
+@using ExtensionMethods
+@using InShow.Controllers
+@using InShow.Models
+
+
+@{
+    try
+    {
+        if (Request.QueryString["x"].ToString() == "true")
+        {
+            
+            @((new uHateoas(Model,true)).Process())
+            return;
+        }
+    }
+    catch
+    { }
+    Layout = "Master.cshtml";
+}
+
+@Html.Action("RenderEditProfile", "ProfileSurface")
