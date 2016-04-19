@@ -3,5 +3,11 @@
 
 
 
-registerUser ver. 0.02
-Registration MVC
+registerUser ver. 0.04
+segregated agent and buyer mvc
+
+
+
+
+
+

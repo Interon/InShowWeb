@@ -6,7 +6,7 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Web;
 
-namespace InShow.Code
+namespace InShow.Helpers
 {
     public class EmailHelper
     {

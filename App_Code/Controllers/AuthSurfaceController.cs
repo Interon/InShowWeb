@@ -4,7 +4,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using InShow.Code;
+using InShow.Helpers;
 using InShow.Models;
 using Umbraco.Core;
 using Umbraco.Core.Persistence.Querying;
@@ -299,12 +299,15 @@ namespace InShow.Controllers
         /// <returns></returns>
         public ActionResult RenderRegister()
         {
+
             return PartialView("Register", new RegisterViewModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult HandleRegister(RegisterViewModel model)
+        
+        
         {
             var membershipService = ApplicationContext.Current.Services.MemberService;
 
@@ -318,7 +321,77 @@ namespace InShow.Controllers
             {
                 //Member createMember = Member.MakeNew(model.Name, model.EmailAddress, model.EmailAddress, umbJobMemberType, umbUser);
                 // WARNING: update to your desired MembertypeAlias...
-                var createMember = membershipService.CreateMember(model.EmailAddress, model.EmailAddress, model.Name, "CMember");
+                var createMember = membershipService.CreateMember(model.EmailAddress, model.EmailAddress, model.FirstName + " " + model.LastName, "buyer");
+
+                //Set the verified email to false
+                createMember.Properties["hasVerifiedEmail"].Value = false;
+
+                //Set the profile URL to be the member ID, so they have a unqie profile ID, until they go to set it
+                createMember.Properties["profileURL"].Value = model.ProfileURL;
+
+                //Save the changes, if we do not do so, we cannot save the password.
+                membershipService.Save(createMember);
+
+                //Set password on the newly created member
+                membershipService.SavePassword(createMember, model.Password);
+            }
+            catch (Exception ex)
+            {
+                //EG: Duplicate email address - already exists
+                ModelState.AddModelError("memberCreation", ex.Message);
+
+                return CurrentUmbracoPage();
+            }
+
+            //Create temporary GUID
+            var tempGUID = Guid.NewGuid();
+
+            //Fetch our new member we created by their email
+            var updateMember = membershipService.GetByEmail(model.EmailAddress);
+
+            //Just to be sure...
+            if (updateMember != null)
+            {
+                //Set the verification email GUID value on the member
+                updateMember.Properties["emailVerifyGUID"].Value = tempGUID.ToString();
+
+                //Set the Joined Date label on the member
+                updateMember.Properties["joinedDate"].Value = DateTime.Now.ToString("dd/MM/yyyy @ HH:mm:ss");
+
+                //Save changes
+                membershipService.Save(updateMember);
+            }
+
+            //Send out verification email, with GUID in it
+            EmailHelper email = new EmailHelper();
+            email.SendVerifyEmail(model.EmailAddress, tempGUID.ToString());
+
+            //Update success flag (in a TempData key)
+            TempData["IsSuccessful"] = true;
+
+            //All done - redirect back to page
+            return CurrentUmbracoPage();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult HandleRegisterAgent(RegisterAgentViewModel model)
+
+
+        {
+            var membershipService = ApplicationContext.Current.Services.MemberService;
+
+            if (!ModelState.IsValid)
+            {
+                return PartialView("Register", model);
+            }
+
+            //Model valid let's create the member
+            try
+            {
+                //Member createMember = Member.MakeNew(model.Name, model.EmailAddress, model.EmailAddress, umbJobMemberType, umbUser);
+                // WARNING: update to your desired MembertypeAlias...
+                var createMember = membershipService.CreateMember(model.EmailAddress, model.EmailAddress, model.FirstName + " " + model.LastName, "buyer");
 
                 //Set the verified email to false
                 createMember.Properties["hasVerifiedEmail"].Value = false;
