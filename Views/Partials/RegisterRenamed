@@ -1,0 +1,16 @@
+﻿
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<InShow.Models.RegisterUserModel>
+
+@using (Html.BeginUmbracoForm<InShow.Controllers.RegisterUserSurfaceController>("HandleUserRegister"))
+{
+
+    <label for="firstName">First Name</label>@Html.TextBoxFor(x => x.FirstName, new { @class = "firstName", placeholder = "First Name" })
+    <br />
+    <label for="lastName">Last Name</label>@Html.TextBoxFor(x => x.LastName, new { @class = "lastName", placeholder = "Last Name" })
+    <br />
+    <label for="email">Email</label>@Html.TextBoxFor(x => x.Email, new { @class = "email", placeholder = "Email" })
+    <br />
+    <label for="password">Password</label>@Html.TextBoxFor(x => x.Password, new { @class = "password", placeholder = "Password" })
+    <br />
+    <input type="submit" value="Submit" />
+}

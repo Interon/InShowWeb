@@ -5,7 +5,7 @@
 @using ExtensionMethods
 @using InShow.Controllers
 @using InShow.Models
-
+@using umbraco.cms.businesslogic.member
 
 @{
     try
@@ -22,8 +22,3 @@
     Layout = "Master.cshtml";
 
 }
-
-
-
-
-@Html.Action("RenderRegister", "AuthSurface")
