@@ -3,5 +3,11 @@
 
 
 
-registerUser ver. 0.03
-created member properties, implemented registration form
+registerUser ver. 0.04
+segregated agent and buyer mvc
+
+
+
+
+
+

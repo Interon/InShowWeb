@@ -24,80 +24,189 @@
         </div>
         <div class="tab-content">
             <div class="tab-pane" id="tab1">
-                1
+                Welcome to In Show. 
+                <br />
+                Are you a buyer or an represent an agency?
+                <br/><br />
+
+
+
+                <ul class="pager wizard">
+                    <li class="next buyerButton"><a href="#">Buyer</a></li>
+                    <li class="next agentButton"><a href="#">Agent</a></li>
+                </ul>
+
             </div>
+
             <div class="tab-pane" id="tab2">
 
-                @{
-                    Html.EnableClientValidation(true);
-                    Html.EnableUnobtrusiveJavaScript(true);
-                }
+                <div id="buyerForm">
 
-                @if (Convert.ToBoolean(TempData["IsSuccessful"]))
-            {
-                    <div class="alert alert-success">
-                        <h4>Yay!</h4>
-                        <p>Registered succesfully - please your mailbox to continue</p>
-                    </div>
-                }
-                else
-                {
-                    using (Html.BeginUmbracoForm<AuthSurfaceController>("HandleRegister"))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(false)
-
-                        <fieldset>
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.FirstName, "First Name", new { @class = "control-label" })
-                                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", placeholder = "Your first name" })
-                                @Html.ValidationMessageFor(model => model.FirstName, string.Empty, new { @class = "help-block" })
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.LastName, "Last Name", new { @class = "control-label" })
-                                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", placeholder = "Your surname" })
-                                @Html.ValidationMessageFor(model => model.LastName, string.Empty, new { @class = "help-block" })
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.EmailAddress, "Email address", new { @class = "control-label" })
-                                @Html.TextBoxFor(model => model.EmailAddress, new { @class = "form-control", placeholder = "Email Address" })
-                                @Html.ValidationMessageFor(model => model.EmailAddress, string.Empty, new { @class = "help-block" })
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Cellphone, "Cell Number", new { @class = "control-label" })
-                                @Html.TextBoxFor(model => model.Cellphone, new { @class = "form-control", placeholder = "Cell Number" })
-                                @Html.ValidationMessageFor(model => model.Cellphone, string.Empty, new { @class = "help-block" })
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Password, "Password", new { @class = "control-label" })
-                                @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password" })
-                                @Html.ValidationMessageFor(model => model.Password, string.Empty, new { @class = "help-block" })
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.ConfirmPassword, "Confirm password", new { @class = "control-label" })
-                                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
-                                @Html.ValidationMessageFor(model => model.ConfirmPassword, string.Empty, new { @class = "help-block" })
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.ProfileURL, new { @class = "control-label" })
-                                <div class="input-group">
-                                    <span class="input-group-addon">http://site.com/user/</span>
-                                    @Html.TextBoxFor(model => model.ProfileURL, new { @class = "form-control", placeholder = "joebloggs" })
-                                </div>
-                                @Html.ValidationMessageFor(model => model.ProfileURL, string.Empty, new { @class = "help-block" })
-                            </div>
-
-                            <button type="submit" class="btn btn-default">Register</button>
-
-                        </fieldset>
+                    @{
+                        Html.EnableClientValidation(true);
+                        Html.EnableUnobtrusiveJavaScript(true);
                     }
-                }
+
+                    @if (Convert.ToBoolean(TempData["IsSuccessful"]))
+                    {
+                        <div class="alert alert-success">
+                            <h4>Yay!</h4>
+                            <p>Registered succesfully - please your mailbox to continue</p>
+                        </div>
+                    }
+                    else
+                    {
+                        using (Html.BeginUmbracoForm<AuthSurfaceController>("HandleRegister"))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(false)
+
+                            <h1>Buyer Form</h1>
+
+                            <fieldset>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.FirstName, "First Name", new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", placeholder = "Your first name" })
+                                    @Html.ValidationMessageFor(model => model.FirstName, string.Empty, new { @class = "help-block" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.LastName, "Last Name", new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", placeholder = "Your surname" })
+                                    @Html.ValidationMessageFor(model => model.LastName, string.Empty, new { @class = "help-block" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.EmailAddress, "Email address", new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.EmailAddress, new { @class = "form-control", placeholder = "Email Address" })
+                                    @Html.ValidationMessageFor(model => model.EmailAddress, string.Empty, new { @class = "help-block" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Cellphone, "Cell Number", new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.Cellphone, new { @class = "form-control", placeholder = "Cell Number" })
+                                    @Html.ValidationMessageFor(model => model.Cellphone, string.Empty, new { @class = "help-block" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Password, "Password", new { @class = "control-label" })
+                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password" })
+                                    @Html.ValidationMessageFor(model => model.Password, string.Empty, new { @class = "help-block" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ConfirmPassword, "Confirm password", new { @class = "control-label" })
+                                    @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, string.Empty, new { @class = "help-block" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ProfileURL, new { @class = "control-label" })
+                                    <div class="input-group">
+                                        <span class="input-group-addon">http://site.com/user/</span>
+                                        @Html.TextBoxFor(model => model.ProfileURL, new { @class = "form-control", placeholder = "joebloggs" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.ProfileURL, string.Empty, new { @class = "help-block" })
+                                </div>
+
+                                <button type="submit" class="btn btn-default">Register</button>
+
+                            </fieldset>
+                        }
+                    }
+
+                </div>
+
+
+                <div id="agentForm">
+
+                    @{
+                        Html.EnableClientValidation(true);
+                        Html.EnableUnobtrusiveJavaScript(true);
+                    }
+
+                    @if (Convert.ToBoolean(TempData["IsSuccessful"]))
+                    {
+                        <div class="alert alert-success">
+                            <h4>Yay!</h4>
+                            <p>Registered succesfully - please your mailbox to continue</p>
+                        </div>
+                    }
+                    else
+                    {
+                        using (Html.BeginUmbracoForm<AuthSurfaceController>("HandleRegister"))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(false)
+                            
+                            <h1>Agent Form</h1>
+                            
+                            <fieldset>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.FirstName, "First Name", new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", placeholder = "Your first name" })
+                                    @Html.ValidationMessageFor(model => model.FirstName, string.Empty, new { @class = "help-block" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.LastName, "Last Name", new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", placeholder = "Your surname" })
+                                    @Html.ValidationMessageFor(model => model.LastName, string.Empty, new { @class = "help-block" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.EmailAddress, "Email address", new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.EmailAddress, new { @class = "form-control", placeholder = "Email Address" })
+                                    @Html.ValidationMessageFor(model => model.EmailAddress, string.Empty, new { @class = "help-block" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Cellphone, "Cell Number", new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.Cellphone, new { @class = "form-control", placeholder = "Cell Number" })
+                                    @Html.ValidationMessageFor(model => model.Cellphone, string.Empty, new { @class = "help-block" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Cellphone, "Agency", new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.Cellphone, new { @class = "form-control", placeholder = "Agency" })
+                                    @Html.ValidationMessageFor(model => model.Cellphone, string.Empty, new { @class = "help-block" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Cellphone, "Agency Pin", new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.Cellphone, new { @class = "form-control", placeholder = "Agency Pin" })
+                                    @Html.ValidationMessageFor(model => model.Cellphone, string.Empty, new { @class = "help-block" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Password, "Password", new { @class = "control-label" })
+                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password" })
+                                    @Html.ValidationMessageFor(model => model.Password, string.Empty, new { @class = "help-block" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ConfirmPassword, "Confirm password", new { @class = "control-label" })
+                                    @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, string.Empty, new { @class = "help-block" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ProfileURL, new { @class = "control-label" })
+                                    <div class="input-group">
+                                        <span class="input-group-addon">http://site.com/user/</span>
+                                        @Html.TextBoxFor(model => model.ProfileURL, new { @class = "form-control", placeholder = "joebloggs" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.ProfileURL, string.Empty, new { @class = "help-block" })
+                                </div>
+
+                                <button type="submit" class="btn btn-default">Register</button>
+
+                            </fieldset>
+                        }
+                    }
+
+                </div>
+
 
             </div>
 
@@ -116,27 +225,7 @@
 
     <script>
         $(document).ready(function () {
-            $('#rootwizard').bootstrapWizard({
-                onNext: function (tab, navigation, index) {
-                    if (index == -1) {
-                        // Make sure we entered the name
-                        if (!$('#name').val()) {
-                            alert('You must enter your name');
-                            $('#name').focus();
-                            return false;
-                        }
-                    }
 
-                    // Set the name for the next tab
-                    $('#tab-1').html('Hello, ' + $('#name').val());
-
-                }, onTabShow: function (tab, navigation, index) {
-                    var $total = navigation.find('li').length;
-                    var $current = index + 1;
-                    var $percent = ($current / $total) * 100;
-                    $('#rootwizard .progress-bar').css({ width: $percent + '%' });
-                }
-            });
             window.prettyPrint && prettyPrint()
 
             $('#rootwizard').bootstrapWizard({
@@ -147,9 +236,14 @@
                     $('#rootwizard').find('.bar').css({ width: $percent + '%' });
                 }
             });
-            $('#rootwizard .finish').click(function () {
-                alert('Finished!, Starting over!');
-                $('#rootwizard').find("a[href*='tab1']").trigger('click');
+            $('#rootwizard .buyerButton').click(function () {
+                document.getElementById("agentForm").style.display = "none";
+                alert('buyer');
+            });
+
+            $('#rootwizard .agentButton').click(function () {
+                document.getElementById("buyerForm").style.display = "none";
+                alert('agent');
             });
 
         });
