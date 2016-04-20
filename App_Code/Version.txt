@@ -3,8 +3,8 @@
 
 
 
-registerUser ver. 0.06
-usync export
+registerUser ver. 0.07
+deleted usync content and re-publish register-user
 
 
 
