@@ -8,6 +8,8 @@ using Umbraco.Web.Models;
 
 namespace InShow.Models
 {
+
+
     /// <summary>
     /// Login View Model
     /// </summary>
@@ -27,11 +29,48 @@ namespace InShow.Models
         public string ReturnUrl { get; set; }
     }
 
+
+
+
+
+
+
     /// <summary>
     /// Register Buyer View Model
     /// </summary>
     public class RegisterViewModel
     {
+        public RegisterViewModel()
+        {
+            StepIndex = 0;
+            CheckUser = new CheckUser();
+            RegisterBuyer = new RegisterBuyer();
+            RegisterAgent = new RegisterAgent();
+        }
+
+        public bool Previous { get; set; }
+        public bool Next { get; set; }
+        public int StepIndex { get; set; }
+
+        public string UserType { get; set; }
+        public bool Complete { get; set; }
+
+        public CheckUser CheckUser { get; set; }
+        public RegisterBuyer RegisterBuyer { get; set; }
+        public RegisterAgent RegisterAgent { get; set; }
+    }
+
+
+    public class CheckUser
+    {
+        [Required]
+        public string Name { get; set; }
+
+    }
+
+    public class RegisterBuyer
+    {
+
         [Required(ErrorMessage = "Please enter your first name")]
         public string FirstName { get; set; }
 
@@ -39,7 +78,7 @@ namespace InShow.Models
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Please enter your cell number")]
-        public string Cellphone { get; set; }
+        public int Cellphone { get; set; }
 
         [DisplayName("Email address")]
         [Required(ErrorMessage = "Please enter your email address")]
@@ -61,13 +100,12 @@ namespace InShow.Models
         [Remote("CheckProfileURLAvailable", "ProfileSurface", ErrorMessage = "The profile URL is already in use")]
         [DisplayName("Profile URL")]
         public string ProfileURL { get; set; }
+
     }
 
-    /// <summary>
-    /// Register Agent View Model
-    /// </summary>
-    public class RegisterAgentViewModel
+    public class RegisterAgent
     {
+
         [Required(ErrorMessage = "Please enter your first name")]
         public string FirstName { get; set; }
 
@@ -75,20 +113,20 @@ namespace InShow.Models
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Please enter your cell number")]
-        public string Cellphone { get; set; }
+        public int Cellphone { get; set; }
 
-        [DisplayName("Email address")]
-        [Required(ErrorMessage = "Please enter your email address")]
-        [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        [Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
-        public string EmailAddress { get; set; }
-
-        [Required(ErrorMessage = "Please enter your cell number")]
-        public string AgencyPin { get; set; }
-
-        [Required(ErrorMessage = "Please enter your cell number")]
+        [Required(ErrorMessage = "Please enter your realestate agency")]
         public string Agency { get; set; }
 
+        [Required(ErrorMessage = "Please enter your realestate agency pin number")]
+        public int AgencyPin { get; set; }
+
+        [DisplayName("Email address")]
+        [Required(ErrorMessage = "Please enter your email address")]
+        [EmailAddress(ErrorMessage = "Please enter a valid email address")]
+        [Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
+        public string EmailAddress { get; set; }
+
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Please enter your password")]
         public string Password { get; set; }
@@ -103,7 +141,21 @@ namespace InShow.Models
         [Remote("CheckProfileURLAvailable", "ProfileSurface", ErrorMessage = "The profile URL is already in use")]
         [DisplayName("Profile URL")]
         public string ProfileURL { get; set; }
+
+        [Required]
+        [Display(Name = "I agree to the terms and conditions")]
+        //[Compare("IsTrue", ErrorMessage = "Please agree to Terms and Conditions")]
+        public bool Agreed { get; set; }
+
+        public bool IsTrue
+        { get { return true; } }
     }
+
+
+
+
+
+
 
     //Forgotten Password View Model
     public class ForgottenPasswordViewModel

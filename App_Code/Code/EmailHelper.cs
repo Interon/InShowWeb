@@ -12,7 +12,7 @@ namespace InShow.Helpers
     {
         //private const string SendGridUsername   = "sendGridUsername";
         //private const string SendGridPassword   = "sendGridPassword";
-        private const string EmailFromAddress   = "you@yoursite.com";
+        private const string EmailFromAddress   = "aj@interon.co.za";
 
         public void SendResetPasswordEmail(string memberEmail, string resetGUID)
         {
@@ -88,7 +88,8 @@ namespace InShow.Helpers
             var transportSMTP = new SmtpClient();
 
             // Send the email.
-            transportSMTP.Send(myMessage);
+            // below line is uncommented for testing purposes
+            //transportSMTP.Send(myMessage);
         }
     }
 }
