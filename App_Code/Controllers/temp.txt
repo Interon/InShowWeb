@@ -1,127 +1,75 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
-using Umbraco.Web;
-using Umbraco.Core.Models;
-using System.Globalization;
-using Umbraco.Web.Models;
+﻿@using System.Web.Mvc.Html
+@using Umbraco.Web
+@using InShow.Controllers
+@using InShow.Models
+@model RegisterUserTestViewModel
 
-namespace InShow.Models
-{
-    /// <summary>
-    /// Login View Model
-    /// </summary>
-    public class LoginViewModel
+<div class='container' style="margin-top:150px;">
+
+    @if (TempData.ContainsKey("CustomMessage"))
     {
-        [DisplayName("Email address")]
-        [DataType(DataType.EmailAddress)]
-        [Required(ErrorMessage = "Please enter your email address")]
-        [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        public string EmailAddress { get; set; }
+        <div>Hooray! - @TempData["CustomMessage"]</div>
+    }
+    else
+    {
+        using (Html.BeginUmbracoForm<AuthSurfaceController>("FormSubmit"))
+        {
+            switch (Model.StepIndex)
+            {
+                case 0:
+                    @Html.LabelFor(m => Model.CheckUser.Name)
+                    @Html.EditorFor(m => Model.CheckUser.Name)
+                    @Html.ValidationMessageFor(m => Model.CheckUser.Name)<br />
 
-        [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Please enter your password")]
-        public string Password { get; set; }
+                    @Html.LabelFor(m => Model.CheckUser.Email)
+                    @Html.EditorFor(m => Model.CheckUser.Email)
+                    @Html.ValidationMessageFor(m => Model.CheckUser.Email)
 
-        [HiddenInput(DisplayValue = false)]
-        public string ReturnUrl { get; set; }
+                    @Html.EditorFor(x => Model.RegisterBuyer, "HiddenForAll", "RegisterBuyer")
+                    @Html.EditorFor(x => Model.RegisterAgent, "HiddenForAll", "RegisterAgent")
+
+                    break;
+                case 1:
+                    @Html.LabelFor(m => Model.RegisterBuyer.EventId)
+                    @Html.EditorFor(m => Model.RegisterBuyer.EventId)
+                    @Html.ValidationMessageFor(m => Model.RegisterBuyer.EventId)<br />
+
+                    @Html.LabelFor(m => Model.RegisterBuyer.NumberOfTickets)
+                    @Html.EditorFor(m => Model.RegisterBuyer.NumberOfTickets)
+                    @Html.ValidationMessageFor(m => Model.RegisterBuyer.NumberOfTickets)
+
+                    @Html.EditorFor(x => Model.CheckUser, "HiddenForAll", "CheckUser")
+                    @Html.EditorFor(x => Model.RegisterAgent, "HiddenForAll", "RegisterAgent")
+
+                    break;
+                case 2:
+                    @Html.LabelFor(m => Model.RegisterAgent.Agreed)
+                    @Html.EditorFor(m => Model.RegisterAgent.Agreed)
+                    @Html.ValidationMessageFor(m => Model.RegisterAgent.Agreed)
+
+                    @Html.EditorFor(x => Model.CheckUser, "HiddenForAll", "PCheckUser")
+                    @Html.EditorFor(x => Model.RegisterBuyer, "HiddenForAll", "RegisterBuyer")
+
+                    break;
+            }
+
+            <input type="hidden" name="StepIndex" value="@Model.StepIndex" />
+
+            <button type="submit" name="Previous" value="true">Previous</button>
+            <button type="submit" name="Next" value="true">Next</button>
+        }
     }
 
-    /// <summary>
-    /// Register Buyer View Model
-    /// </summary>
-    public class RegisterViewModel
-    {
-        [Required(ErrorMessage = "Please enter your first name")]
-        public string FirstName { get; set; }
-
-        [Required(ErrorMessage = "Please enter your surname")]
-        public string LastName { get; set; }
-
-        [Required(ErrorMessage = "Please enter your cell number")]
-        public string Cellphone { get; set; }
-
-        [DisplayName("Email address")]
-        [Required(ErrorMessage = "Please enter your email address")]
-        [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        [Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
-        public string EmailAddress { get; set; }
-
-        [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Please enter your password")]
-        public string Password { get; set; }
-
-        [DataType(DataType.Password)]
-        [DisplayName("Confirm Password")]
-        [Required(ErrorMessage = "Please enter your password")]
-        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Your passwords do not match")]
-        public string ConfirmPassword { get; set; }
-
-        //[Required]
-        [Remote("CheckProfileURLAvailable", "ProfileSurface", ErrorMessage = "The profile URL is already in use")]
-        [DisplayName("Profile URL")]
-        public string ProfileURL { get; set; }
-    }
-
-    /// <summary>
-    /// Register Buyer View Model
-    /// </summary>
-    public class RegisterAgentViewModel
-    {
-        [Required(ErrorMessage = "Please enter yourname")]
-        public string Name { get; set; }
-
-        [DisplayName("Email address")]
-        [Required(ErrorMessage = "Please enter your email address")]
-        [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        [Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
-        public string EmailAddress { get; set; }
-
-        [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Please enter your password")]
-        public string Password { get; set; }
-
-        [DataType(DataType.Password)]
-        [DisplayName("Confirm Password")]
-        [Required(ErrorMessage = "Please enter your password")]
-        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Your passwords do not match")]
-        public string ConfirmPassword { get; set; }
-
-        //[Required]
-        [Remote("CheckProfileURLAvailable", "ProfileSurface", ErrorMessage = "The profile URL is already in use")]
-        [DisplayName("Profile URL")]
-        public string ProfileURL { get; set; }
-    }
+</div>
 
 
 
 
-    //Forgotten Password View Model
-    public class ForgottenPasswordViewModel
-    {
-        [DisplayName("Email address")]
-        [Required(ErrorMessage = "Please enter your email address")]
-        [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        public string EmailAddress { get; set; }
-    }
 
 
-    //Reset Password View Model
-    public class ResetPasswordViewModel
-    {
-        [DisplayName("Email address")]
-        [Required(ErrorMessage = "Please enter your email address")]
-        [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        public string EmailAddress { get; set; }
 
-        [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Please enter your password")]
-        public string Password { get; set; }
 
-        [DataType(DataType.Password)]
-        [DisplayName("Confirm Password")]
-        [Required(ErrorMessage = "Please enter your password")]
-        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Your passwords do not match")]
-        public string ConfirmPassword { get; set; }
-    }
-}
+
+
+
+
