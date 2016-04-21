@@ -306,16 +306,6 @@ namespace InShow.Controllers
         [ChildActionOnly]
         public ActionResult RenderRegister(RegisterViewModel model)
         {
-
-
-            return PartialView("Register", model);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult HandleRegister(RegisterViewModel model)
-        {
-
             model = model ?? new RegisterViewModel();
 
             if (model.UserType == "Buyer")
@@ -328,6 +318,18 @@ namespace InShow.Controllers
                 model.StepIndex = 2;
             }
 
+
+
+
+
+            return PartialView("Register", model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult HandleRegister(RegisterViewModel model)
+        {
+
             //ignore validation or saving data when going backwards
             if (model.Previous)
                 return CurrentUmbracoPage();
@@ -336,7 +338,9 @@ namespace InShow.Controllers
 
             switch (model.StepIndex)
             {
-
+                case 0:
+                    validationStep = "CheckUser";
+                    break;
                 case 1:
                     validationStep = "RegisterBuyer";
                     break;
@@ -434,9 +438,6 @@ namespace InShow.Controllers
                 //Update success flag (in a TempData key)
                 TempData["IsSuccessful"] = true;
 
-                TempData.Add("CustomMessage", "Your form was successfully submitted at " + DateTime.Now);
-
-
                 //All done - redirect back to page
                 return CurrentUmbracoPage();
 
@@ -508,8 +509,6 @@ namespace InShow.Controllers
 
                 //Update success flag (in a TempData key)
                 TempData["IsSuccessful"] = true;
-
-                TempData.Add("CustomMessage", "Your form was successfully submitted at " + DateTime.Now);
 
                 //All done - redirect back to page
                 return CurrentUmbracoPage();

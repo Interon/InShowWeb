@@ -43,6 +43,7 @@ namespace InShow.Models
         public RegisterViewModel()
         {
             StepIndex = 0;
+            CheckUser = new CheckUser();
             RegisterBuyer = new RegisterBuyer();
             RegisterAgent = new RegisterAgent();
         }
@@ -54,11 +55,18 @@ namespace InShow.Models
         public string UserType { get; set; }
         public bool Complete { get; set; }
 
+        public CheckUser CheckUser { get; set; }
         public RegisterBuyer RegisterBuyer { get; set; }
         public RegisterAgent RegisterAgent { get; set; }
     }
 
 
+    public class CheckUser
+    {
+        [Required]
+        public string Name { get; set; }
+
+    }
 
     public class RegisterBuyer
     {
@@ -75,7 +83,7 @@ namespace InShow.Models
         [DisplayName("Email address")]
         [Required(ErrorMessage = "Please enter your email address")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        //[Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
+        [Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
         public string EmailAddress { get; set; }
 
         [DataType(DataType.Password)]
@@ -116,7 +124,7 @@ namespace InShow.Models
         [DisplayName("Email address")]
         [Required(ErrorMessage = "Please enter your email address")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        //[Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
+        [Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
         public string EmailAddress { get; set; }
 
         [DataType(DataType.Password)]

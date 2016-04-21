@@ -3,8 +3,8 @@
 
 
 
-registerUser ver. 0.09
-implementation of client side authentication, hide and show buyer/agent, splash page for form completion
+registerUser ver. 0.08
+"republish entire site""
 
 
 
