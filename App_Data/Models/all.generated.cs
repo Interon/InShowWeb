@@ -273,7 +273,7 @@ namespace Umbraco.Web.PublishedContentModels
 
 	/// <summary>Content About</summary>
 	[PublishedContentModel("contentAbout")]
-	public partial class ContentAbout : Master
+	public partial class ContentAbout : Master, IWelcome
 	{
 #pragma warning disable 0109 // new is redundant
 		public new const string ModelTypeAlias = "contentAbout";
@@ -294,6 +294,24 @@ namespace Umbraco.Web.PublishedContentModels
 		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<ContentAbout, TValue>> selector)
 		{
 			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// Description
+		///</summary>
+		[ImplementPropertyType("description")]
+		public IHtmlString Description
+		{
+			get { return Welcome.GetDescription(this); }
+		}
+
+		///<summary>
+		/// Heading
+		///</summary>
+		[ImplementPropertyType("heading")]
+		public string Heading
+		{
+			get { return Welcome.GetHeading(this); }
 		}
 	}
 
@@ -325,7 +343,7 @@ namespace Umbraco.Web.PublishedContentModels
 
 	/// <summary>Content Info</summary>
 	[PublishedContentModel("contentInfo")]
-	public partial class ContentInfo : Master
+	public partial class ContentInfo : Master, IWelcome
 	{
 #pragma warning disable 0109 // new is redundant
 		public new const string ModelTypeAlias = "contentInfo";
@@ -355,6 +373,24 @@ namespace Umbraco.Web.PublishedContentModels
 		public object Image
 		{
 			get { return this.GetPropertyValue("image"); }
+		}
+
+		///<summary>
+		/// Description
+		///</summary>
+		[ImplementPropertyType("description")]
+		public IHtmlString Description
+		{
+			get { return Welcome.GetDescription(this); }
+		}
+
+		///<summary>
+		/// Heading
+		///</summary>
+		[ImplementPropertyType("heading")]
+		public string Heading
+		{
+			get { return Welcome.GetHeading(this); }
 		}
 	}
 
@@ -838,9 +874,20 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 	}
 
+	// Mixin content Type 1396 with alias "welcome"
+	/// <summary>__Welcome</summary>
+	public partial interface IWelcome : IPublishedContent
+	{
+		/// <summary>Description</summary>
+		IHtmlString Description { get; }
+
+		/// <summary>Heading</summary>
+		string Heading { get; }
+	}
+
 	/// <summary>__Welcome</summary>
 	[PublishedContentModel("welcome")]
-	public partial class Welcome : PublishedContentModel
+	public partial class Welcome : PublishedContentModel, IWelcome
 	{
 #pragma warning disable 0109 // new is redundant
 		public new const string ModelTypeAlias = "welcome";
@@ -869,8 +916,11 @@ namespace Umbraco.Web.PublishedContentModels
 		[ImplementPropertyType("description")]
 		public IHtmlString Description
 		{
-			get { return this.GetPropertyValue<IHtmlString>("description"); }
+			get { return GetDescription(this); }
 		}
+
+		/// <summary>Static getter for Description</summary>
+		public static IHtmlString GetDescription(IWelcome that) { return that.GetPropertyValue<IHtmlString>("description"); }
 
 		///<summary>
 		/// Heading
@@ -878,8 +928,11 @@ namespace Umbraco.Web.PublishedContentModels
 		[ImplementPropertyType("heading")]
 		public string Heading
 		{
-			get { return this.GetPropertyValue<string>("heading"); }
+			get { return GetHeading(this); }
 		}
+
+		/// <summary>Static getter for Heading</summary>
+		public static string GetHeading(IWelcome that) { return that.GetPropertyValue<string>("heading"); }
 	}
 
 	/// <summary>Folder</summary>
