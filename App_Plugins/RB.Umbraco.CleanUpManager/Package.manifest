@@ -1,0 +1,14 @@
+﻿{
+    javascript: [        
+        "~/App_Plugins/RB.Umbraco.CleanUpManager/filters/dataTypesFilter.js",
+        "~/App_Plugins/RB.Umbraco.CleanUpManager/animations/listAnimations.js",
+        "~/App_Plugins/RB.Umbraco.CleanUpManager/services/dataTypesService.js",
+        "~/App_Plugins/RB.Umbraco.CleanUpManager/controllers/dataTypesController.js",
+        "~/App_Plugins/RB.Umbraco.CleanUpManager/services/contentTypesService.js",
+        "~/App_Plugins/RB.Umbraco.CleanUpManager/controllers/contentTypesController.js"
+    ],
+    css: [        
+        "~/App_Plugins/RB.Umbraco.CleanUpManager/assets/css/animations.css",
+        "~/App_Plugins/RB.Umbraco.CleanUpManager/assets/css/styles.css"
+    ]
+}

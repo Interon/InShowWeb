@@ -1404,6 +1404,7 @@ footer  {
 	color:#87919F;
 	font-size:13px;
 	overflow:hidden;
+    margin-top: 50px
 }
 footer a, footer a:hover {
 	color:#fff;

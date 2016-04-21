@@ -123,6 +123,15 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// Counter
+		///</summary>
+		[ImplementPropertyType("counter")]
+		public int Counter
+		{
+			get { return this.GetPropertyValue<int>("counter"); }
+		}
+
+		///<summary>
 		/// umbracoInternalRedirectId
 		///</summary>
 		[ImplementPropertyType("umbracoInternalRedirectId")]
@@ -273,7 +282,7 @@ namespace Umbraco.Web.PublishedContentModels
 
 	/// <summary>Content About</summary>
 	[PublishedContentModel("contentAbout")]
-	public partial class ContentAbout : Master, IWelcome
+	public partial class ContentAbout : Master
 	{
 #pragma warning disable 0109 // new is redundant
 		public new const string ModelTypeAlias = "contentAbout";
@@ -294,24 +303,6 @@ namespace Umbraco.Web.PublishedContentModels
 		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<ContentAbout, TValue>> selector)
 		{
 			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
-		}
-
-		///<summary>
-		/// Description
-		///</summary>
-		[ImplementPropertyType("description")]
-		public IHtmlString Description
-		{
-			get { return Welcome.GetDescription(this); }
-		}
-
-		///<summary>
-		/// Heading
-		///</summary>
-		[ImplementPropertyType("heading")]
-		public string Heading
-		{
-			get { return Welcome.GetHeading(this); }
 		}
 	}
 
@@ -343,7 +334,7 @@ namespace Umbraco.Web.PublishedContentModels
 
 	/// <summary>Content Info</summary>
 	[PublishedContentModel("contentInfo")]
-	public partial class ContentInfo : Master, IWelcome
+	public partial class ContentInfo : Master
 	{
 #pragma warning disable 0109 // new is redundant
 		public new const string ModelTypeAlias = "contentInfo";
@@ -374,24 +365,6 @@ namespace Umbraco.Web.PublishedContentModels
 		{
 			get { return this.GetPropertyValue("image"); }
 		}
-
-		///<summary>
-		/// Description
-		///</summary>
-		[ImplementPropertyType("description")]
-		public IHtmlString Description
-		{
-			get { return Welcome.GetDescription(this); }
-		}
-
-		///<summary>
-		/// Heading
-		///</summary>
-		[ImplementPropertyType("heading")]
-		public string Heading
-		{
-			get { return Welcome.GetHeading(this); }
-		}
 	}
 
 	/// <summary>Property</summary>
@@ -420,6 +393,60 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// Bathrooms
+		///</summary>
+		[ImplementPropertyType("bathrooms")]
+		public int Bathrooms
+		{
+			get { return this.GetPropertyValue<int>("bathrooms"); }
+		}
+
+		///<summary>
+		/// Bedrooms
+		///</summary>
+		[ImplementPropertyType("bedrooms")]
+		public int Bedrooms
+		{
+			get { return this.GetPropertyValue<int>("bedrooms"); }
+		}
+
+		///<summary>
+		/// Description
+		///</summary>
+		[ImplementPropertyType("description")]
+		public string Description
+		{
+			get { return this.GetPropertyValue<string>("description"); }
+		}
+
+		///<summary>
+		/// Filters
+		///</summary>
+		[ImplementPropertyType("filters")]
+		public object Filters
+		{
+			get { return this.GetPropertyValue("filters"); }
+		}
+
+		///<summary>
+		/// Garages
+		///</summary>
+		[ImplementPropertyType("garages")]
+		public int Garages
+		{
+			get { return this.GetPropertyValue<int>("garages"); }
+		}
+
+		///<summary>
+		/// Images
+		///</summary>
+		[ImplementPropertyType("images")]
+		public string Images
+		{
+			get { return this.GetPropertyValue<string>("images"); }
+		}
+
+		///<summary>
 		/// P24Url
 		///</summary>
 		[ImplementPropertyType("p24Url")]
@@ -429,12 +456,30 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// Selling Price
+		///</summary>
+		[ImplementPropertyType("sellingPrice")]
+		public int SellingPrice
+		{
+			get { return this.GetPropertyValue<int>("sellingPrice"); }
+		}
+
+		///<summary>
 		/// Shedule
 		///</summary>
 		[ImplementPropertyType("shedule")]
 		public object Shedule
 		{
 			get { return this.GetPropertyValue("shedule"); }
+		}
+
+		///<summary>
+		/// Title
+		///</summary>
+		[ImplementPropertyType("title")]
+		public string Title
+		{
+			get { return this.GetPropertyValue<string>("title"); }
 		}
 	}
 
@@ -488,6 +533,119 @@ namespace Umbraco.Web.PublishedContentModels
 		public DateTime StartTime
 		{
 			get { return this.GetPropertyValue<DateTime>("startTime"); }
+		}
+	}
+
+	/// <summary>Dashboard Master</summary>
+	[PublishedContentModel("dashboardMaster")]
+	public partial class DashboardMaster : PublishedContentModel
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "dashboardMaster";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public DashboardMaster(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<DashboardMaster, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// umbracoInternalRedirectId
+		///</summary>
+		[ImplementPropertyType("umbracoInternalRedirectId")]
+		public object UmbracoInternalRedirectId
+		{
+			get { return this.GetPropertyValue("umbracoInternalRedirectId"); }
+		}
+	}
+
+	/// <summary>Dasboard Home</summary>
+	[PublishedContentModel("dasboardHome")]
+	public partial class DasboardHome : DashboardMaster
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "dasboardHome";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public DasboardHome(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<DasboardHome, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+	}
+
+	/// <summary>Dashboard Error</summary>
+	[PublishedContentModel("dashboardError")]
+	public partial class DashboardError : DashboardMaster
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "dashboardError";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public DashboardError(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<DashboardError, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+	}
+
+	/// <summary>Dashboard Login</summary>
+	[PublishedContentModel("dashboardLogin")]
+	public partial class DashboardLogin : DashboardMaster
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "dashboardLogin";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public DashboardLogin(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<DashboardLogin, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
 		}
 	}
 
@@ -579,16 +737,16 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 	}
 
-	/// <summary>Dashboard Master</summary>
-	[PublishedContentModel("dashboardMaster")]
-	public partial class DashboardMaster : PublishedContentModel
+	/// <summary>PerplexMail</summary>
+	[PublishedContentModel("Perplexmail")]
+	public partial class Perplexmail : PublishedContentModel
 	{
 #pragma warning disable 0109 // new is redundant
-		public new const string ModelTypeAlias = "dashboardMaster";
+		public new const string ModelTypeAlias = "Perplexmail";
 		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
 #pragma warning restore 0109
 
-		public DashboardMaster(IPublishedContent content)
+		public Perplexmail(IPublishedContent content)
 			: base(content)
 		{ }
 
@@ -599,31 +757,40 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 #pragma warning restore 0109
 
-		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<DashboardMaster, TValue>> selector)
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<Perplexmail, TValue>> selector)
 		{
 			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
 		}
 
 		///<summary>
-		/// umbracoInternalRedirectId
+		/// Internal remarks: This tekst is only for internal remarks and is not displayed or used anywhere.
 		///</summary>
-		[ImplementPropertyType("umbracoInternalRedirectId")]
-		public object UmbracoInternalRedirectId
+		[ImplementPropertyType("internalRemarks")]
+		public string InternalRemarks
 		{
-			get { return this.GetPropertyValue("umbracoInternalRedirectId"); }
+			get { return this.GetPropertyValue<string>("internalRemarks"); }
+		}
+
+		///<summary>
+		/// Hide from navigation?
+		///</summary>
+		[ImplementPropertyType("umbracoNaviHide")]
+		public bool UmbracoNaviHide
+		{
+			get { return this.GetPropertyValue<bool>("umbracoNaviHide"); }
 		}
 	}
 
-	/// <summary>Dashboard Login</summary>
-	[PublishedContentModel("dashboardLogin")]
-	public partial class DashboardLogin : DashboardMaster
+	/// <summary>Email base</summary>
+	[PublishedContentModel("EmailBase")]
+	public partial class EmailBase : Perplexmail
 	{
 #pragma warning disable 0109 // new is redundant
-		public new const string ModelTypeAlias = "dashboardLogin";
+		public new const string ModelTypeAlias = "EmailBase";
 		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
 #pragma warning restore 0109
 
-		public DashboardLogin(IPublishedContent content)
+		public EmailBase(IPublishedContent content)
 			: base(content)
 		{ }
 
@@ -634,22 +801,174 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 #pragma warning restore 0109
 
-		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<DashboardLogin, TValue>> selector)
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<EmailBase, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// Attachments
+		///</summary>
+		[ImplementPropertyType("attachments")]
+		public string Attachments
+		{
+			get { return this.GetPropertyValue<string>("attachments"); }
+		}
+
+		///<summary>
+		/// BCC
+		///</summary>
+		[ImplementPropertyType("bcc")]
+		public Newtonsoft.Json.Linq.JToken Bcc
+		{
+			get { return this.GetPropertyValue<Newtonsoft.Json.Linq.JToken>("bcc"); }
+		}
+
+		///<summary>
+		/// Body
+		///</summary>
+		[ImplementPropertyType("body")]
+		public IHtmlString Body
+		{
+			get { return this.GetPropertyValue<IHtmlString>("body"); }
+		}
+
+		///<summary>
+		/// CC
+		///</summary>
+		[ImplementPropertyType("cc")]
+		public Newtonsoft.Json.Linq.JToken Cc
+		{
+			get { return this.GetPropertyValue<Newtonsoft.Json.Linq.JToken>("cc"); }
+		}
+
+		///<summary>
+		/// Disable automated logging
+		///</summary>
+		[ImplementPropertyType("disableAutomatedLogging")]
+		public bool DisableAutomatedLogging
+		{
+			get { return this.GetPropertyValue<bool>("disableAutomatedLogging"); }
+		}
+
+		///<summary>
+		/// Email template: Select the template that this e-mail will use for basic layout and content.    Take note that you can only select published templates
+		///</summary>
+		[ImplementPropertyType("emailTemplate")]
+		public string EmailTemplate
+		{
+			get { return this.GetPropertyValue<string>("emailTemplate"); }
+		}
+
+		///<summary>
+		/// From
+		///</summary>
+		[ImplementPropertyType("from")]
+		public Newtonsoft.Json.Linq.JToken From
+		{
+			get { return this.GetPropertyValue<Newtonsoft.Json.Linq.JToken>("from"); }
+		}
+
+		///<summary>
+		/// Log expiration: If this value is left blank, the global (parent's) value will be used instead
+		///</summary>
+		[ImplementPropertyType("logExpiration")]
+		public object LogExpiration
+		{
+			get { return this.GetPropertyValue("logExpiration"); }
+		}
+
+		///<summary>
+		/// Reply to
+		///</summary>
+		[ImplementPropertyType("replyTo")]
+		public Newtonsoft.Json.Linq.JToken ReplyTo
+		{
+			get { return this.GetPropertyValue<Newtonsoft.Json.Linq.JToken>("replyTo"); }
+		}
+
+		///<summary>
+		/// Send test e-mail: Enter the recipient's e-mailaddress.    Please take note that test emails will only be sent to the specified receiver here and not to BCC or CC receivers.
+		///</summary>
+		[ImplementPropertyType("sendTestEMail")]
+		public Newtonsoft.Json.Linq.JToken SendTestEmail
+		{
+			get { return this.GetPropertyValue<Newtonsoft.Json.Linq.JToken>("sendTestEMail"); }
+		}
+
+		///<summary>
+		/// Statistics
+		///</summary>
+		[ImplementPropertyType("statistics")]
+		public Newtonsoft.Json.Linq.JToken Statistics
+		{
+			get { return this.GetPropertyValue<Newtonsoft.Json.Linq.JToken>("statistics"); }
+		}
+
+		///<summary>
+		/// Subject
+		///</summary>
+		[ImplementPropertyType("subject")]
+		public string Subject
+		{
+			get { return this.GetPropertyValue<string>("subject"); }
+		}
+
+		///<summary>
+		/// Text version: (Optional) Provide an alternate text-only (non-HTML) version of your e-mail that is read by recipient devices that do not support complex HTML.
+		///</summary>
+		[ImplementPropertyType("textVersion")]
+		public string TextVersion
+		{
+			get { return this.GetPropertyValue<string>("textVersion"); }
+		}
+
+		///<summary>
+		/// To
+		///</summary>
+		[ImplementPropertyType("to")]
+		public Newtonsoft.Json.Linq.JToken To
+		{
+			get { return this.GetPropertyValue<Newtonsoft.Json.Linq.JToken>("to"); }
+		}
+	}
+
+	/// <summary>Action email</summary>
+	[PublishedContentModel("ActionEmail")]
+	public partial class ActionEmail : EmailBase
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "ActionEmail";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public ActionEmail(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<ActionEmail, TValue>> selector)
 		{
 			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
 		}
 	}
 
-	/// <summary>Dasboard Home</summary>
-	[PublishedContentModel("dasboardHome")]
-	public partial class DasboardHome : DashboardMaster
+	/// <summary>Email folder</summary>
+	[PublishedContentModel("EmailFolder")]
+	public partial class EmailFolder : Perplexmail
 	{
 #pragma warning disable 0109 // new is redundant
-		public new const string ModelTypeAlias = "dasboardHome";
+		public new const string ModelTypeAlias = "EmailFolder";
 		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
 #pragma warning restore 0109
 
-		public DasboardHome(IPublishedContent content)
+		public EmailFolder(IPublishedContent content)
 			: base(content)
 		{ }
 
@@ -660,22 +979,155 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 #pragma warning restore 0109
 
-		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<DasboardHome, TValue>> selector)
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<EmailFolder, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// BCC
+		///</summary>
+		[ImplementPropertyType("bcc")]
+		public Newtonsoft.Json.Linq.JToken Bcc
+		{
+			get { return this.GetPropertyValue<Newtonsoft.Json.Linq.JToken>("bcc"); }
+		}
+
+		///<summary>
+		/// CC
+		///</summary>
+		[ImplementPropertyType("cc")]
+		public Newtonsoft.Json.Linq.JToken Cc
+		{
+			get { return this.GetPropertyValue<Newtonsoft.Json.Linq.JToken>("cc"); }
+		}
+
+		///<summary>
+		/// From
+		///</summary>
+		[ImplementPropertyType("from")]
+		public Newtonsoft.Json.Linq.JToken From
+		{
+			get { return this.GetPropertyValue<Newtonsoft.Json.Linq.JToken>("from"); }
+		}
+
+		///<summary>
+		/// Log expiration
+		///</summary>
+		[ImplementPropertyType("logExpiration")]
+		public object LogExpiration
+		{
+			get { return this.GetPropertyValue("logExpiration"); }
+		}
+
+		///<summary>
+		/// Reply to
+		///</summary>
+		[ImplementPropertyType("replyTo")]
+		public Newtonsoft.Json.Linq.JToken ReplyTo
+		{
+			get { return this.GetPropertyValue<Newtonsoft.Json.Linq.JToken>("replyTo"); }
+		}
+
+		///<summary>
+		/// Statistics
+		///</summary>
+		[ImplementPropertyType("statistics")]
+		public Newtonsoft.Json.Linq.JToken Statistics
+		{
+			get { return this.GetPropertyValue<Newtonsoft.Json.Linq.JToken>("statistics"); }
+		}
+
+		///<summary>
+		/// To
+		///</summary>
+		[ImplementPropertyType("to")]
+		public Newtonsoft.Json.Linq.JToken To
+		{
+			get { return this.GetPropertyValue<Newtonsoft.Json.Linq.JToken>("to"); }
+		}
+	}
+
+	/// <summary>Email template</summary>
+	[PublishedContentModel("EmailTemplate")]
+	public partial class EmailTemplate : Perplexmail
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "EmailTemplate";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public EmailTemplate(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<EmailTemplate, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// CSS
+		///</summary>
+		[ImplementPropertyType("css")]
+		public string Css
+		{
+			get { return this.GetPropertyValue<string>("css"); }
+		}
+
+		///<summary>
+		/// Template: Use the tag [#content#] to specify where the content of the e-mail should be rendered
+		///</summary>
+		[ImplementPropertyType("template")]
+		public string Template
+		{
+			get { return this.GetPropertyValue<string>("template"); }
+		}
+	}
+
+	/// <summary>Email template folder</summary>
+	[PublishedContentModel("EmailTemplateFolder")]
+	public partial class EmailTemplateFolder : Perplexmail
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "EmailTemplateFolder";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public EmailTemplateFolder(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<EmailTemplateFolder, TValue>> selector)
 		{
 			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
 		}
 	}
 
-	/// <summary>Dashboard Error</summary>
-	[PublishedContentModel("dashboardError")]
-	public partial class DashboardError : DashboardMaster
+	/// <summary>PerplexMail folder</summary>
+	[PublishedContentModel("PerplexmailFolder")]
+	public partial class PerplexmailFolder : Perplexmail
 	{
 #pragma warning disable 0109 // new is redundant
-		public new const string ModelTypeAlias = "dashboardError";
+		public new const string ModelTypeAlias = "PerplexmailFolder";
 		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
 #pragma warning restore 0109
 
-		public DashboardError(IPublishedContent content)
+		public PerplexmailFolder(IPublishedContent content)
 			: base(content)
 		{ }
 
@@ -686,7 +1138,7 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 #pragma warning restore 0109
 
-		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<DashboardError, TValue>> selector)
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<PerplexmailFolder, TValue>> selector)
 		{
 			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
 		}
@@ -874,20 +1326,9 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 	}
 
-	// Mixin content Type 1396 with alias "welcome"
-	/// <summary>__Welcome</summary>
-	public partial interface IWelcome : IPublishedContent
-	{
-		/// <summary>Description</summary>
-		IHtmlString Description { get; }
-
-		/// <summary>Heading</summary>
-		string Heading { get; }
-	}
-
 	/// <summary>__Welcome</summary>
 	[PublishedContentModel("welcome")]
-	public partial class Welcome : PublishedContentModel, IWelcome
+	public partial class Welcome : PublishedContentModel
 	{
 #pragma warning disable 0109 // new is redundant
 		public new const string ModelTypeAlias = "welcome";
@@ -916,11 +1357,8 @@ namespace Umbraco.Web.PublishedContentModels
 		[ImplementPropertyType("description")]
 		public IHtmlString Description
 		{
-			get { return GetDescription(this); }
+			get { return this.GetPropertyValue<IHtmlString>("description"); }
 		}
-
-		/// <summary>Static getter for Description</summary>
-		public static IHtmlString GetDescription(IWelcome that) { return that.GetPropertyValue<IHtmlString>("description"); }
 
 		///<summary>
 		/// Heading
@@ -928,11 +1366,8 @@ namespace Umbraco.Web.PublishedContentModels
 		[ImplementPropertyType("heading")]
 		public string Heading
 		{
-			get { return GetHeading(this); }
+			get { return this.GetPropertyValue<string>("heading"); }
 		}
-
-		/// <summary>Static getter for Heading</summary>
-		public static string GetHeading(IWelcome that) { return that.GetPropertyValue<string>("heading"); }
 	}
 
 	/// <summary>Folder</summary>
@@ -1263,15 +1698,6 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// Email Verify GUID
-		///</summary>
-		[ImplementPropertyType("emailVerifyGUID")]
-		public string EmailVerifyGuid
-		{
-			get { return this.GetPropertyValue<string>("emailVerifyGUID"); }
-		}
-
-		///<summary>
 		/// First Name
 		///</summary>
 		[ImplementPropertyType("firstName")]
@@ -1281,39 +1707,12 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// hasVerifiedEmal
-		///</summary>
-		[ImplementPropertyType("hasVerifiedEmal")]
-		public bool HasVerifiedEmal
-		{
-			get { return this.GetPropertyValue<bool>("hasVerifiedEmal"); }
-		}
-
-		///<summary>
-		/// Joined Date
-		///</summary>
-		[ImplementPropertyType("joinedDate")]
-		public string JoinedDate
-		{
-			get { return this.GetPropertyValue<string>("joinedDate"); }
-		}
-
-		///<summary>
 		/// Last Name
 		///</summary>
 		[ImplementPropertyType("lastName")]
 		public string LastName
 		{
 			get { return this.GetPropertyValue<string>("lastName"); }
-		}
-
-		///<summary>
-		/// Profile URL
-		///</summary>
-		[ImplementPropertyType("profileURL")]
-		public string ProfileUrl
-		{
-			get { return this.GetPropertyValue<string>("profileURL"); }
 		}
 
 		///<summary>
@@ -1424,42 +1823,6 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// Email Verify GUID
-		///</summary>
-		[ImplementPropertyType("emailVerifyGUID")]
-		public string EmailVerifyGuid
-		{
-			get { return this.GetPropertyValue<string>("emailVerifyGUID"); }
-		}
-
-		///<summary>
-		/// Has Verified Email
-		///</summary>
-		[ImplementPropertyType("hasVerifiedEmail")]
-		public bool HasVerifiedEmail
-		{
-			get { return this.GetPropertyValue<bool>("hasVerifiedEmail"); }
-		}
-
-		///<summary>
-		/// Joined Date
-		///</summary>
-		[ImplementPropertyType("joinedDate")]
-		public string JoinedDate
-		{
-			get { return this.GetPropertyValue<string>("joinedDate"); }
-		}
-
-		///<summary>
-		/// Profile URL
-		///</summary>
-		[ImplementPropertyType("profileURL")]
-		public string ProfileUrl
-		{
-			get { return this.GetPropertyValue<string>("profileURL"); }
-		}
-
-		///<summary>
 		/// Is Approved
 		///</summary>
 		[ImplementPropertyType("umbracoMemberApproved")]
@@ -1567,12 +1930,30 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// emailVerifyGUID
+		/// Cell Number
 		///</summary>
-		[ImplementPropertyType("emailVerifyGUID")]
-		public string EmailVerifyGuid
+		[ImplementPropertyType("cellNumber")]
+		public string CellNumber
 		{
-			get { return this.GetPropertyValue<string>("emailVerifyGUID"); }
+			get { return this.GetPropertyValue<string>("cellNumber"); }
+		}
+
+		///<summary>
+		/// First Name
+		///</summary>
+		[ImplementPropertyType("firstName")]
+		public string FirstName
+		{
+			get { return this.GetPropertyValue<string>("firstName"); }
+		}
+
+		///<summary>
+		/// Has Verified Cell
+		///</summary>
+		[ImplementPropertyType("hasVerifiedCell")]
+		public bool HasVerifiedCell
+		{
+			get { return this.GetPropertyValue<bool>("hasVerifiedCell"); }
 		}
 
 		///<summary>
@@ -1585,21 +1966,200 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// Joined Date
+		/// Last Name
 		///</summary>
-		[ImplementPropertyType("joinedDate")]
-		public string JoinedDate
+		[ImplementPropertyType("lastName")]
+		public string LastName
 		{
-			get { return this.GetPropertyValue<string>("joinedDate"); }
+			get { return this.GetPropertyValue<string>("lastName"); }
 		}
 
 		///<summary>
-		/// Profile URL
+		/// OTP
 		///</summary>
-		[ImplementPropertyType("profileURL")]
+		[ImplementPropertyType("oTP")]
+		public int OTP
+		{
+			get { return this.GetPropertyValue<int>("oTP"); }
+		}
+
+		///<summary>
+		/// Profile Url
+		///</summary>
+		[ImplementPropertyType("profileUrl")]
 		public string ProfileUrl
 		{
-			get { return this.GetPropertyValue<string>("profileURL"); }
+			get { return this.GetPropertyValue<string>("profileUrl"); }
+		}
+
+		///<summary>
+		/// Is Approved
+		///</summary>
+		[ImplementPropertyType("umbracoMemberApproved")]
+		public bool UmbracoMemberApproved
+		{
+			get { return this.GetPropertyValue<bool>("umbracoMemberApproved"); }
+		}
+
+		///<summary>
+		/// Comments
+		///</summary>
+		[ImplementPropertyType("umbracoMemberComments")]
+		public string UmbracoMemberComments
+		{
+			get { return this.GetPropertyValue<string>("umbracoMemberComments"); }
+		}
+
+		///<summary>
+		/// Failed Password Attempts
+		///</summary>
+		[ImplementPropertyType("umbracoMemberFailedPasswordAttempts")]
+		public string UmbracoMemberFailedPasswordAttempts
+		{
+			get { return this.GetPropertyValue<string>("umbracoMemberFailedPasswordAttempts"); }
+		}
+
+		///<summary>
+		/// Last Lockout Date
+		///</summary>
+		[ImplementPropertyType("umbracoMemberLastLockoutDate")]
+		public string UmbracoMemberLastLockoutDate
+		{
+			get { return this.GetPropertyValue<string>("umbracoMemberLastLockoutDate"); }
+		}
+
+		///<summary>
+		/// Last Login Date
+		///</summary>
+		[ImplementPropertyType("umbracoMemberLastLogin")]
+		public string UmbracoMemberLastLogin
+		{
+			get { return this.GetPropertyValue<string>("umbracoMemberLastLogin"); }
+		}
+
+		///<summary>
+		/// Last Password Change Date
+		///</summary>
+		[ImplementPropertyType("umbracoMemberLastPasswordChangeDate")]
+		public string UmbracoMemberLastPasswordChangeDate
+		{
+			get { return this.GetPropertyValue<string>("umbracoMemberLastPasswordChangeDate"); }
+		}
+
+		///<summary>
+		/// Is Locked Out
+		///</summary>
+		[ImplementPropertyType("umbracoMemberLockedOut")]
+		public bool UmbracoMemberLockedOut
+		{
+			get { return this.GetPropertyValue<bool>("umbracoMemberLockedOut"); }
+		}
+
+		///<summary>
+		/// Password Answer
+		///</summary>
+		[ImplementPropertyType("umbracoMemberPasswordRetrievalAnswer")]
+		public string UmbracoMemberPasswordRetrievalAnswer
+		{
+			get { return this.GetPropertyValue<string>("umbracoMemberPasswordRetrievalAnswer"); }
+		}
+
+		///<summary>
+		/// Password Question
+		///</summary>
+		[ImplementPropertyType("umbracoMemberPasswordRetrievalQuestion")]
+		public string UmbracoMemberPasswordRetrievalQuestion
+		{
+			get { return this.GetPropertyValue<string>("umbracoMemberPasswordRetrievalQuestion"); }
+		}
+	}
+
+	/// <summary>Agency</summary>
+	[PublishedContentModel("agency")]
+	public partial class Agency : PublishedContentModel
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "agency";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Member;
+#pragma warning restore 0109
+
+		public Agency(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<Agency, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// Address
+		///</summary>
+		[ImplementPropertyType("address")]
+		public string Address
+		{
+			get { return this.GetPropertyValue<string>("address"); }
+		}
+
+		///<summary>
+		/// Agency Admin
+		///</summary>
+		[ImplementPropertyType("agencyAdmin")]
+		public object AgencyAdmin
+		{
+			get { return this.GetPropertyValue("agencyAdmin"); }
+		}
+
+		///<summary>
+		/// Agency Credits
+		///</summary>
+		[ImplementPropertyType("agencyCredits")]
+		public int AgencyCredits
+		{
+			get { return this.GetPropertyValue<int>("agencyCredits"); }
+		}
+
+		///<summary>
+		/// Agency Pin
+		///</summary>
+		[ImplementPropertyType("agencyPin")]
+		public string AgencyPin
+		{
+			get { return this.GetPropertyValue<string>("agencyPin"); }
+		}
+
+		///<summary>
+		/// Agents
+		///</summary>
+		[ImplementPropertyType("agents")]
+		public string Agents
+		{
+			get { return this.GetPropertyValue<string>("agents"); }
+		}
+
+		///<summary>
+		/// Name
+		///</summary>
+		[ImplementPropertyType("agenyName")]
+		public string AgenyName
+		{
+			get { return this.GetPropertyValue<string>("agenyName"); }
+		}
+
+		///<summary>
+		/// Logo
+		///</summary>
+		[ImplementPropertyType("logo")]
+		public Umbraco.Web.Models.ImageCropDataSet Logo
+		{
+			get { return this.GetPropertyValue<Umbraco.Web.Models.ImageCropDataSet>("logo"); }
 		}
 
 		///<summary>
@@ -1737,15 +2297,6 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// Email Verify GUID
-		///</summary>
-		[ImplementPropertyType("emailVerifyGUID")]
-		public string EmailVerifyGuid
-		{
-			get { return this.GetPropertyValue<string>("emailVerifyGUID"); }
-		}
-
-		///<summary>
 		/// First Name
 		///</summary>
 		[ImplementPropertyType("firstName")]
@@ -1755,21 +2306,12 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// Has Verified Email
+		/// InShow
 		///</summary>
-		[ImplementPropertyType("hasVerifiedEmail")]
-		public bool HasVerifiedEmail
+		[ImplementPropertyType("inShow")]
+		public string InShow
 		{
-			get { return this.GetPropertyValue<bool>("hasVerifiedEmail"); }
-		}
-
-		///<summary>
-		/// Joined Date
-		///</summary>
-		[ImplementPropertyType("joinedDate")]
-		public string JoinedDate
-		{
-			get { return this.GetPropertyValue<string>("joinedDate"); }
+			get { return this.GetPropertyValue<string>("inShow"); }
 		}
 
 		///<summary>
@@ -1782,155 +2324,21 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// Profile URL
+		/// Listings
 		///</summary>
-		[ImplementPropertyType("profileURL")]
-		public string ProfileUrl
+		[ImplementPropertyType("listings")]
+		public string Listings
 		{
-			get { return this.GetPropertyValue<string>("profileURL"); }
+			get { return this.GetPropertyValue<string>("listings"); }
 		}
 
 		///<summary>
-		/// Is Approved
+		/// Picture
 		///</summary>
-		[ImplementPropertyType("umbracoMemberApproved")]
-		public bool UmbracoMemberApproved
+		[ImplementPropertyType("picture")]
+		public object Picture
 		{
-			get { return this.GetPropertyValue<bool>("umbracoMemberApproved"); }
-		}
-
-		///<summary>
-		/// Comments
-		///</summary>
-		[ImplementPropertyType("umbracoMemberComments")]
-		public string UmbracoMemberComments
-		{
-			get { return this.GetPropertyValue<string>("umbracoMemberComments"); }
-		}
-
-		///<summary>
-		/// Failed Password Attempts
-		///</summary>
-		[ImplementPropertyType("umbracoMemberFailedPasswordAttempts")]
-		public string UmbracoMemberFailedPasswordAttempts
-		{
-			get { return this.GetPropertyValue<string>("umbracoMemberFailedPasswordAttempts"); }
-		}
-
-		///<summary>
-		/// Last Lockout Date
-		///</summary>
-		[ImplementPropertyType("umbracoMemberLastLockoutDate")]
-		public string UmbracoMemberLastLockoutDate
-		{
-			get { return this.GetPropertyValue<string>("umbracoMemberLastLockoutDate"); }
-		}
-
-		///<summary>
-		/// Last Login Date
-		///</summary>
-		[ImplementPropertyType("umbracoMemberLastLogin")]
-		public string UmbracoMemberLastLogin
-		{
-			get { return this.GetPropertyValue<string>("umbracoMemberLastLogin"); }
-		}
-
-		///<summary>
-		/// Last Password Change Date
-		///</summary>
-		[ImplementPropertyType("umbracoMemberLastPasswordChangeDate")]
-		public string UmbracoMemberLastPasswordChangeDate
-		{
-			get { return this.GetPropertyValue<string>("umbracoMemberLastPasswordChangeDate"); }
-		}
-
-		///<summary>
-		/// Is Locked Out
-		///</summary>
-		[ImplementPropertyType("umbracoMemberLockedOut")]
-		public bool UmbracoMemberLockedOut
-		{
-			get { return this.GetPropertyValue<bool>("umbracoMemberLockedOut"); }
-		}
-
-		///<summary>
-		/// Password Answer
-		///</summary>
-		[ImplementPropertyType("umbracoMemberPasswordRetrievalAnswer")]
-		public string UmbracoMemberPasswordRetrievalAnswer
-		{
-			get { return this.GetPropertyValue<string>("umbracoMemberPasswordRetrievalAnswer"); }
-		}
-
-		///<summary>
-		/// Password Question
-		///</summary>
-		[ImplementPropertyType("umbracoMemberPasswordRetrievalQuestion")]
-		public string UmbracoMemberPasswordRetrievalQuestion
-		{
-			get { return this.GetPropertyValue<string>("umbracoMemberPasswordRetrievalQuestion"); }
-		}
-	}
-
-	/// <summary>Agency</summary>
-	[PublishedContentModel("agency")]
-	public partial class Agency : PublishedContentModel
-	{
-#pragma warning disable 0109 // new is redundant
-		public new const string ModelTypeAlias = "agency";
-		public new const PublishedItemType ModelItemType = PublishedItemType.Member;
-#pragma warning restore 0109
-
-		public Agency(IPublishedContent content)
-			: base(content)
-		{ }
-
-#pragma warning disable 0109 // new is redundant
-		public new static PublishedContentType GetModelContentType()
-		{
-			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
-		}
-#pragma warning restore 0109
-
-		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<Agency, TValue>> selector)
-		{
-			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
-		}
-
-		///<summary>
-		/// Email Verify GUID
-		///</summary>
-		[ImplementPropertyType("emailVerifyGUID")]
-		public string EmailVerifyGuid
-		{
-			get { return this.GetPropertyValue<string>("emailVerifyGUID"); }
-		}
-
-		///<summary>
-		/// Has Verified Email
-		///</summary>
-		[ImplementPropertyType("hasVerifiedEmail")]
-		public bool HasVerifiedEmail
-		{
-			get { return this.GetPropertyValue<bool>("hasVerifiedEmail"); }
-		}
-
-		///<summary>
-		/// Joined Date
-		///</summary>
-		[ImplementPropertyType("joinedDate")]
-		public string JoinedDate
-		{
-			get { return this.GetPropertyValue<string>("joinedDate"); }
-		}
-
-		///<summary>
-		/// Profile URL
-		///</summary>
-		[ImplementPropertyType("profileURL")]
-		public string ProfileUrl
-		{
-			get { return this.GetPropertyValue<string>("profileURL"); }
+			get { return this.GetPropertyValue("picture"); }
 		}
 
 		///<summary>
@@ -2038,42 +2446,6 @@ namespace Umbraco.Web.PublishedContentModels
 		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<Member, TValue>> selector)
 		{
 			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
-		}
-
-		///<summary>
-		/// Email Verify GUID
-		///</summary>
-		[ImplementPropertyType("emailVerifyGUID")]
-		public string EmailVerifyGuid
-		{
-			get { return this.GetPropertyValue<string>("emailVerifyGUID"); }
-		}
-
-		///<summary>
-		/// Has Verified Email
-		///</summary>
-		[ImplementPropertyType("hasVerifiedEmail")]
-		public bool HasVerifiedEmail
-		{
-			get { return this.GetPropertyValue<bool>("hasVerifiedEmail"); }
-		}
-
-		///<summary>
-		/// Joined Date
-		///</summary>
-		[ImplementPropertyType("joinedDate")]
-		public string JoinedDate
-		{
-			get { return this.GetPropertyValue<string>("joinedDate"); }
-		}
-
-		///<summary>
-		/// Profile URL
-		///</summary>
-		[ImplementPropertyType("profileURL")]
-		public string ProfileUrl
-		{
-			get { return this.GetPropertyValue<string>("profileURL"); }
 		}
 
 		///<summary>

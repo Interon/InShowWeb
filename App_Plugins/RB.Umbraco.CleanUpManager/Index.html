@@ -1,0 +1,178 @@
+﻿
+<div class="panel-group" id="accordion">
+    <div class="dataTypes" data-ng-controller="RB.Umbraco.CleanUpManager.DataTypesController">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                        <span class="icon-folder-outline"></span>&nbsp;Orphan Data Types : <span>{{totalDataTypeRecords}}</span> Records
+                    </a><i class="indicator icon icon-navigation-bottom pull-right"></i>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="pull-left">
+                            <div class="btn-toolbar" role="toolbar" aria-label="Pagination">
+                                <div class="btn-group" role="group">
+                                    <button type="button" data-ng-click="refreshDataTypes()" class="btn btn-primary actionButton"><span class="icon icon-refresh"></span> Refresh</button>
+                                    <button type="button" data-ng-click="deleteDataTypes()" class="btn btn-danger actionButton"><span class="icon icon-trash"></span> Delete All</button>
+                                </div>
+                                <div class="btn-group" role="group" aria-label="First group" data-ng-class="{disabled : totalDataTypePages == 0}">
+                                    <button data-ng-class="{disabled : dataTypeCurrentPage==1}" type="button" data-ng-click="firstPage()" class="btn btn-secondary actionButton"><span class="icon icon-navigation-first"></span> First Page</button>
+                                    <button data-ng-class="{disabled : dataTypeCurrentPage==1}" type="button" data-ng-click="previousPage()" class="btn btn-secondary"><span class="icon icon-navigation-left"></span> Previous</button>
+                                    <button type="button" class="btn btn-primary"><span class="icon"></span> Page {{dataTypeCurrentPage}} of {{totalDataTypePages}}</button>
+                                    <button data-ng-class="{disabled : dataTypeCurrentPage==totalDataTypePages}" type="button" data-ng-click="nextPage()" class="btn btn-secondary actionButton"><span class="icon icon-navigation-right"></span> Next</button>
+                                    <button data-ng-class="{disabled : dataTypeCurrentPage==totalDataTypePages}" type="button" data-ng-click="lastPage()" class="btn btn-secondary actionButton"><span class="icon icon-navigation-last"></span> Last Page</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pull-right" role="search">
+                            <form name="dataTypesSearchForm" id="dataTypesSearchForm">
+                                <div class="input-group" data-ng-class="{disabled : totalDataTypePages == 0}">
+                                    <input type="text" class="form-control" placeholder="Search..." data-ng-model="dataTypeSearchText">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default actionButton" data-ng-click="search()" type="submit"><i class="icon icon-search"></i></button>
+                                        <button class="btn btn-default actionButton" data-ng-click="clearSearch()" type="submit"><i class="icon icon-wrong"></i></button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row gridContainer dataTypesTable show-hide-animation">
+                        <div class="">
+                            <div>
+                                <br />
+                                <table class="table table-striped table-condensed table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th>&nbsp;</th>
+                                            <th data-ng-click="setOrder('Name')">Name</th>
+                                            <th data-ng-click="setOrder('PropertyEditorAlias')">Property Editor Alias</th>
+                                            <th data-ng-click="setOrder('DbType')">Db Type</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-ng-repeat="dataType in dataTypes">
+                                            <td><a data-ng-click="showNode(dataType.NodeId)" class="actionButton"><img data-ng-src="/App_Plugins/RB.Umbraco.CleanUpManager/assets/images/data-types.png" class="cardImage" alt="Orphan Data Type" /></a></td>
+                                            <td><a data-ng-click="showNode(dataType.NodeId)" class="actionButton">{{dataType.Name}}</a></td>
+                                            <td><a data-ng-click="showNode(dataType.NodeId)" class="actionButton">{{dataType.PropertyEditorAlias}}</a></td>
+                                            <td>{{dataType.DbType}}</td>
+                                            <td>
+                                                <div class="btn-toolbar" role="toolbar">
+                                                    <div class="btn-group" role="group">
+                                                        <button class="btn btn-danger actionButton" data-ng-click="deleteDataType(dataType.NodeId, dataType.PropertyEditorAlias)"><span class="icon icon-trash"></span> Delete</button>
+                                                    </div>
+                                                    <div class="btn-group" role="group">
+                                                        <button class="btn btn-primary actionButton" data-ng-click="showNode(dataType.NodeId)"><span class="icon icon-edit"></span> View</button>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="row show-hide-animation" data-ng-show="dataTypes.length == 0">
+                            <div class="col-span-12">
+                                <h4>No dataTypes found</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contentTypes" data-ng-controller="RB.Umbraco.CleanUpManager.ContentTypesController">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                        <span class="icon-folder-outline"></span>&nbsp;Orphan Content Types : <span>{{totalContentTypeRecords}}</span> Records
+                    </a><i class="indicator icon icon-navigation-bottom pull-right"></i>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="pull-left">
+                            <div class="btn-toolbar" role="toolbar" aria-label="Pagination">
+                                <div class="btn-group" role="group">
+                                    <button type="button" data-ng-click="refreshContentTypes()" class="btn btn-primary actionButton"><span class="icon icon-refresh"></span> Refresh</button>
+                                    <button type="button" data-ng-click="deleteContentTypes()" class="btn btn-danger actionButton"><span class="icon icon-trash"></span> Delete All</button>
+                                </div>
+                                <div class="btn-group" role="group" aria-label="First group" data-ng-class="{disabled : totalContentTypePages == 0}">
+                                    <button data-ng-class="{disabled : contentTypeCurrentPage==1}" type="button" data-ng-click="firstPage()" class="btn btn-secondary actionButton"><span class="icon icon-navigation-first"></span> First Page</button>
+                                    <button data-ng-class="{disabled : contentTypeCurrentPage==1}" type="button" data-ng-click="previousPage()" class="btn btn-secondary actionButton"><span class="icon icon-navigation-left"></span> Previous</button>
+                                    <button type="button" class="btn btn-primary"><span class="icon"></span> Page {{contentTypeCurrentPage}} of {{totalContentTypePages}}</button>
+                                    <button data-ng-class="{disabled : contentTypeCurrentPage==totalContentTypePages}" type="button" data-ng-click="nextPage()" class="btn btn-secondary actionButton"><span class="icon icon-navigation-right"></span> Next</button>
+                                    <button data-ng-class="{disabled : contentTypeCurrentPage==totalContentTypePages}" type="button" data-ng-click="lastPage()" class="btn btn-secondary actionButton"><span class="icon icon-navigation-last"></span> Last Page</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pull-right" role="search">
+                            <form name="contentTypesSearchForm" id="contentTypesSearchForm">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search..." data-ng-model="contentTypeSearchText">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default actionButton" data-ng-click="search()" type="submit"><i class="icon icon-search"></i></button>
+                                        <button class="btn btn-default actionButton" data-ng-click="clearSearch()" type="submit"><i class="icon icon-wrong"></i></button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row gridContainer contentTypesTable show-hide-animation">
+                        <div class="">
+                            <div>
+                                <br />
+                                <table class="table table-striped table-condensed table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th>&nbsp;</th>
+                                            <th data-ng-click="setOrder('PropertyEditorAlias')">Content Type Alias</th>
+                                            <th data-ng-click="setOrder('DbType')">Name</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-ng-repeat="contentType in contentTypes">
+                                            <td><a data-ng-click="showNode(contentType.Id)" class="actionButton"><img data-ng-src="/App_Plugins/RB.Umbraco.CleanUpManager/assets/images/property-types.png" class="cardImage" alt="Orphan Content Type" /></a></td>
+                                            <td><a data-ng-click="showNode(contentType.Id)" class="actionButton">{{contentType.Alias}}</a></td>
+                                            <td>{{contentType.Name}}</td>
+                                            <td>
+                                                <div class="btn-toolbar" role="toolbar">
+                                                    <div class="btn-group" role="group">
+                                                        <button class="btn btn-danger actionButton" data-ng-click="deleteContentType(contentType.Id, contentType.Alias)"><span class="icon icon-trash"></span> Delete</button>
+                                                    </div>
+                                                    <div class="btn-group" role="group">
+                                                        <button class="btn btn-primary actionButton" data-ng-click="showNode(contentType.Id)"><span class="icon icon-edit"></span> View</button>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="row show-hide-animation" data-ng-show="contentTypes.length == 0">
+                            <div class="col-span-12">
+                                <h4>No contentTypes found</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
