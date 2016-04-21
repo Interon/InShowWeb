@@ -83,54 +83,48 @@ namespace InShow.Controllers
             return RedirectToCurrentUmbracoPage();
         }
 
-        //public ActionResult RenderMemberProfile(string profileURLtoCheck)
-        //{
-        //    var membershipService = ApplicationContext.Services.MemberService;
+        public ActionResult RenderMemberProfile()
+        {
+            var membershipService = ApplicationContext.Services.MemberService;
 
-        //    //Try and find member with the QueryString value ?profileURLtoCheck=warrenbuckley
-        //    //Member findMember = Member.GetAllAsList().FirstOrDefault(x => x.getProperty("profileURL").Value.ToString() == profileURLtoCheck);
-        //    var findMember = membershipService.GetMembersByPropertyValue("profileURL", profileURL, StringPropertyMatchType.Exact).SingleOrDefault();
+            //Try and find member with the QueryString value ?profileURLtoCheck=warrenbuckley
+            //Member findMember = Member.GetAllAsList().FirstOrDefault(x => x.getProperty("profileURL").Value.ToString() == profileURLtoCheck);
+            var findMember = membershipService.GetById(Members.GetCurrentMemberId());
 
-        //    //Create a view model
-        //    ViewProfileViewModel profile = new ViewProfileViewModel();
+            //Create a view model
+            ViewProfileViewModel profile = new ViewProfileViewModel();
 
-        //    //Check if we found member
-        //    if (findMember != null)
-        //    {
-        //        //Increment profile view counter by one
-        //        int noOfProfileViews = 0;
-        //        int.TryParse(findMember.Properties["numberOfProfileViews"].Value.ToString(), out noOfProfileViews);
+            //Check if we found member
+            if (findMember != null)
+            {
+                //Increment profile view counter by one
+                //int noOfProfileViews = 0;
+                //int.TryParse(findMember.Properties["numberOfProfileViews"].Value.ToString(), out noOfProfileViews);
 
-        //        //Increment counter by one
-        //        findMember.Properties["numberOfProfileViews"].Value = noOfProfileViews + 1;
+                //Increment counter by one
+                //findMember.Properties["numberOfProfileViews"].Value = noOfProfileViews + 1;
 
-        //        //Save it down to the member
-        //        membershipService.Save(findMember);
+                //Save it down to the member
+              //  membershipService.Save(findMember);
 
-        //        //Got the member lets bind the data to the view model
-        //        profile.Name                    = findMember.Name;
-        //        profile.MemberID                = findMember.Id;
-        //        profile.EmailAddress            = findMember.Email;
-        //        profile.MemberType              = findMember.ContentTypeAlias; //Groups.Values.Cast<MemberGroup>().First().Text;
+                //Got the member lets bind the data to the view model
+                profile.Name = findMember.Name;
+                profile.MemberID = findMember.Id;
+                profile.EmailAddress = findMember.Email;
+                profile.MemberType = findMember.ContentTypeAlias; //Groups.Values.Cast<MemberGroup>().First().Text;
 
-        //        profile.Description             = findMember.Properties["description"].Value.ToString();
+              //  profile.Description = findMember.Properties["description"].Value.ToString();
 
-        //        profile.LinkedIn                = findMember.Properties["linkedIn"].Value.ToString();
-        //        profile.Skype                   = findMember.Properties["skype"].Value.ToString();
-        //        profile.Twitter                 = findMember.Properties["twitter"].Value.ToString();
+             
+            }
+            else
+            {
+                //Couldn't find the member return a 404
+                return new HttpNotFoundResult("The member profile does not exist");
+            }
 
-        //        profile.NumberOfLogins          = Convert.ToInt32(findMember.Properties["numberOfLogins"].Value.ToString());
-        //        profile.LastLoginDate           = DateTime.ParseExact(findMember.Properties["lastLoggedIn"].Value.ToString(), "dd/MM/yyyy @ HH:mm:ss", null);
-        //        profile.NumberOfProfileViews    = Convert.ToInt32(findMember.Properties["numberOfProfileViews"].Value.ToString());
-        //    }
-        //    else
-        //    {
-        //        //Couldn't find the member return a 404
-        //        return new HttpNotFoundResult("The member profile does not exist");
-        //    }
-
-        //    return PartialView("ViewProfile", profile);
-        //}
+            return PartialView("ViewProfile", profile);
+        }
 
         //REMOTE Validation
         public JsonResult CheckEmailIsUsed(string emailAddress)

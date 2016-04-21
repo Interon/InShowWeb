@@ -50,7 +50,7 @@ namespace InShow.Controllers
             //Member already logged in - redirect to home
             if (Members.IsLoggedIn())
             {
-                return Redirect("/");
+                return Redirect("/dashboard/home");
             }
 
             //Lets TRY to log the user in

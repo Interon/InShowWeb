@@ -1156,7 +1156,7 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 	}
 
-	/// <summary>__Login</summary>
+	/// <summary>Login</summary>
 	[PublishedContentModel("login")]
 	public partial class Login : Master
 	{
@@ -1307,6 +1307,32 @@ namespace Umbraco.Web.PublishedContentModels
 #pragma warning restore 0109
 
 		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<VerifyEmail, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+	}
+
+	/// <summary>ViewMember</summary>
+	[PublishedContentModel("viewMember")]
+	public partial class ViewMember : PublishedContentModel
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "viewMember";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public ViewMember(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<ViewMember, TValue>> selector)
 		{
 			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
 		}

@@ -48,7 +48,7 @@ namespace InShow.Models
         [DisplayName("Email address")]
         public string EmailAddress { get; set; }
 
-        [HiddenInput(DisplayValue = false)]
+      
         public string MemberType { get; set; }
 
         public string Description { get; set; }
