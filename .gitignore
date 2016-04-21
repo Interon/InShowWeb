@@ -10,7 +10,7 @@
 **/App_Data/[Pp]review/
 **/App_Data/TEMP/
 **/App_Data/NuGetBackup/
-
+/App_Data/Umbraco.sdf
 # Ignore Umbraco content cache file
 **/App_Data/umbraco.config
 **/App_Data/umbraco.sdf
@@ -77,7 +77,7 @@ artifacts/
 *.obj
 *.pch
 *.pgc
-*.sdf
+
 *.pgd
 *.rsp
 *.sbr
