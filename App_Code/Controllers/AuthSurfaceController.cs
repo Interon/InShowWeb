@@ -63,7 +63,7 @@ namespace InShow.Controllers
 
                     //Get the member from their email address
                     var checkMember = membershipService.GetByEmail(model.EmailAddress);
-                    
+
                     //Check the member exists
                     if (checkMember != null)
                     {
@@ -85,11 +85,11 @@ namespace InShow.Controllers
                             checkMember.LastLoginDate = DateTime.Now;
 
                             //Update label with last logged in IP address & Host Name
-                            string hostName         = Dns.GetHostName();
-                            string clientIPAddress  = Dns.GetHostAddresses(hostName).GetValue(0).ToString();
+                            string hostName = Dns.GetHostName();
+                            string clientIPAddress = Dns.GetHostAddresses(hostName).GetValue(0).ToString();
 
                             checkMember.Properties["hostNameOfLastLogin"].Value = hostName;
-                            checkMember.Properties["iPofLastLogin"].Value       = clientIPAddress;
+                            checkMember.Properties["iPofLastLogin"].Value = clientIPAddress;
 
                             //Save the details
                             membershipService.Save(checkMember);
@@ -300,12 +300,22 @@ namespace InShow.Controllers
         /// <returns></returns>
 
 
- 
+
 
 
         [ChildActionOnly]
         public ActionResult RenderRegister(RegisterViewModel model)
         {
+
+
+            return PartialView("Register", model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult HandleRegister(RegisterViewModel model)
+        {
+
             model = model ?? new RegisterViewModel();
 
             if (model.UserType == "Buyer")
@@ -318,18 +328,6 @@ namespace InShow.Controllers
                 model.StepIndex = 2;
             }
 
-
-
-
-
-            return PartialView("Register", model);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult HandleRegister(RegisterViewModel model)
-        {
-
             //ignore validation or saving data when going backwards
             if (model.Previous)
                 return CurrentUmbracoPage();
@@ -338,9 +336,7 @@ namespace InShow.Controllers
 
             switch (model.StepIndex)
             {
-                case 0:
-                    validationStep = "CheckUser";
-                    break;
+
                 case 1:
                     validationStep = "RegisterBuyer";
                     break;
@@ -365,7 +361,7 @@ namespace InShow.Controllers
             //Its the final step, do some saving
             if (model.StepIndex == 0)
             {
-                
+
                 //TODO: Do something with the form data
 
                 return RedirectToCurrentUmbracoPage();
@@ -437,6 +433,9 @@ namespace InShow.Controllers
 
                 //Update success flag (in a TempData key)
                 TempData["IsSuccessful"] = true;
+
+                TempData.Add("CustomMessage", "Your form was successfully submitted at " + DateTime.Now);
+
 
                 //All done - redirect back to page
                 return CurrentUmbracoPage();
@@ -510,6 +509,8 @@ namespace InShow.Controllers
                 //Update success flag (in a TempData key)
                 TempData["IsSuccessful"] = true;
 
+                TempData.Add("CustomMessage", "Your form was successfully submitted at " + DateTime.Now);
+
                 //All done - redirect back to page
                 return CurrentUmbracoPage();
 
@@ -518,7 +519,7 @@ namespace InShow.Controllers
             //Its the final step, do some saving
             if (model.StepIndex == 3)
             {
-                
+
 
                 //TODO: Do something with the form data
 

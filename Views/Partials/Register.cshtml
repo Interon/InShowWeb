@@ -6,87 +6,55 @@
 
 <div class='container' style="margin-top:150px;">
 
-    <div id="rootwizard">
-        <div class="navbar">
-            <div class="navbar-inner">
-                <div class="container">
+    @if (TempData.ContainsKey("CustomMessage"))
+    {
+        <h1>Congragulations!</h1>
+
+        <div>You have successfully registered with In Show. Please varify your email address - @TempData["CustomMessage"]</div>
+
+    }
+    else
+    {
+
+
+        <div id="rootwizard">
+            <div class="navbar">
+                <div class="navbar-inner">
+
                     <ul>
                         <li><a href="#tab1" data-toggle="tab">User Type</a></li>
                         <li><a href="#tab2" data-toggle="tab">Buyer</a></li>
-                        <li><a href="#tab3" data-toggle="tab">Client</a></li>
+                        <li><a href="#tab3" data-toggle="tab">Agent</a></li>
                     </ul>
+
                 </div>
             </div>
-        </div>
-        <div id="bar" class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-        </div>
-        <div class="tab-content">
-            <div class="tab-pane" id="tab1">
-                
-
+            <div id="bar" class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
             </div>
+            <div class="tab-content">
+                <div class="tab-pane" id="tab1">
+
+                    <h1>Welcome to In Show</h1>
+
+                    <p>Are you buyer or an agent</p>
+
+                    <ul class="pager wizard">
+                        <li class="buyer"><a href="#">Buyer</a></li>
+                        <li class="agent"><a href="#">Agent</a></li>
+                    </ul>
+
+                </div>
 
 
-            <div class="tab-pane" id="tab2">
+                <div class="tab-pane" id="tab2">
 
-                 @if (TempData.ContainsKey("CustomMessage"))
-        {
-            <h1>Finished</h1>
-
-            <div id="bar2" class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 66%;"></div>
-            </div>
-
-            <div>Hooray! - @TempData["CustomMessage"]</div>
-
-
-        }
-        else
-        {
-            using (Html.BeginUmbracoForm<AuthSurfaceController>("HandleRegister"))
-            {
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(false)
-
-                switch (Model.StepIndex)
+                    @using (Html.BeginUmbracoForm<AuthSurfaceController>("HandleRegister"))
                 {
-                    case 0:
-
-                        <h1>Welcome to In Show</h1>
-
-                        <div id="bar0" class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-                        </div>
-
-                        <div style="display:none">
-                        @Html.LabelFor(m => Model.CheckUser.Name)
-                        @Html.EditorFor(m => Model.CheckUser.Name)
-                        </div>
-
-                        <input type="hidden" name="Language" value="English">
-
-
-                        <br />
-                        <input type="hidden" name="StepIndex" value="@Model.StepIndex" />
-                        <br />
-                        <button type="submit" class="btn btn-default" name="UserType" value="Buyer">Buyer</button>
-           
-                        <button type="submit" class="btn btn-default" name="UserType" value="Agent">Agent</button>
-                        <br />
-
-                        @Html.EditorFor(x => Model.RegisterBuyer, "HiddenForAll", "RegisterBuyer")
-                        @Html.EditorFor(x => Model.RegisterBuyer, "HiddenForAll", "RegisterAgent")
-
-
-                        break;
-                    case 1:
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(false)
 
                         <h1>Buyer Form</h1>
-
-                        <div id="bar1" class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-                        </div>
 
                         <fieldset>
                             <div class="form-group">
@@ -136,23 +104,23 @@
 
 
 
-                            <button type="submit" class="btn btn-default">Register</button>
+                            <button type="submit" name="UserType" value="Buyer" class="btn btn-default">Register</button>
 
                         </fieldset>
 
+                    }
 
-                            @Html.EditorFor(x => Model.CheckUser, "HiddenForAll", "CheckUser")
-                            @Html.EditorFor(x => Model.RegisterAgent, "HiddenForAll", "RegisterAgent")
+                </div>
 
-                        break;
 
-                    case 2:
+                <div class="tab-pane" id="tab3">
+
+                    @using (Html.BeginUmbracoForm<AuthSurfaceController>("HandleRegister"))
+                {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(false)
 
                         <h1>Agency Form</h1>
-
-                        <div id="bar1" class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 33%;"></div>
-                        </div>
 
                         <fieldset>
                             <div class="form-group">
@@ -212,57 +180,28 @@
                                 @Html.ValidationMessageFor(model => model.RegisterAgent.ProfileURL, string.Empty, new { @class = "help-block" })
                             </div>
 
-                            <button type="submit" class="btn btn-default">Register</button>
+                            <button type="submit" name="UserType" value="Agent" class="btn btn-default">Register</button>
 
 
                         </fieldset>
 
+                    }
 
-                        @Html.EditorFor(x => Model.CheckUser, "HiddenForAll", "CheckUser")
-                        @Html.EditorFor(x => Model.RegisterBuyer, "HiddenForAll", "RegisterBuyer")
-
-                        break;
-
-                }
+                </div>
 
 
-            }
-        }
-
-
-
-
-
+                <ul class="pager wizard">
+                    <li class="previous first" style="display:none;"><a href="#">First</a></li>
+                    <li class="previous"><a href="#">Previous</a></li>
+                    <li class="next last" style="display:none;"><a href="#">Last</a></li>
+                    <li class="next"><a href="#">Next</a></li>
+                </ul>
 
 
             </div>
-
-
-            <div class="tab-pane" id="tab3">
-                
-
-
-
-
-
-
-            </div>
-
-
-            <ul class="pager wizard">
-                <li class="previous first" style="display:none;"><a href="#">First</a></li>
-                <li class="previous"><a href="#">Previous</a></li>
-                <li class="next last" style="display:none;"><a href="#">Last</a></li>
-                <li class="next"><a href="#">Next</a></li>
-            </ul>
         </div>
-    </div>
 
-
-
-       
-
-
+    }
 </div>
 
 
@@ -270,26 +209,6 @@
 <script>
 
     $(document).ready(function () {
-
-        $('#bar0').bootstrapWizard({
-            onTabShow: function (tab, navigation, index) {
-                $('#bar0 .progress-bar').css({ width: 33 + '%' });
-            }
-        });
-
-        $('#bar1').bootstrapWizard({
-            onTabShow: function (tab, navigation, index) {
-                $('#bar1 .progress-bar').css({ width: 66 + '%' });
-            }
-        });
-
-        $('#bar2').bootstrapWizard({
-            onTabShow: function (tab, navigation, index) {
-                $('#bar2 .progress-bar').css({ width: 100 + '%' });
-            }
-        });
-
-
 
         $('#rootwizard').bootstrapWizard({
             onTabShow: function (tab, navigation, index) {
@@ -300,9 +219,19 @@
             }
         });
 
+        $('#rootwizard .buyer').click(function () {
+            $('#rootwizard').find("a[href*='tab2']").trigger('click');
+        });
+
+        $('#rootwizard .agent').click(function () {
+            $('#rootwizard').find("a[href*='tab3']").trigger('click');
+        });
+
 
 
     });
+
+
 
 
 
