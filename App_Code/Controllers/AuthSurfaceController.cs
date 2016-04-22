@@ -26,7 +26,7 @@ namespace InShow.Controllers
 
             loginModel.ReturnUrl = string.IsNullOrEmpty(HttpContext.Request["ReturnUrl"]) ? "/" : HttpContext.Request["ReturnUrl"];
 
-            return PartialView("Login", loginModel);
+            return PartialView("LoginPartialView", loginModel);
         }
 
 
@@ -328,6 +328,13 @@ namespace InShow.Controllers
                 model.StepIndex = 2;
             }
 
+            if (model.UserType == "Agency")
+            {
+                model.StepIndex = 3;
+            }
+
+
+
             //ignore validation or saving data when going backwards
             if (model.Previous)
                 return CurrentUmbracoPage();
@@ -343,6 +350,10 @@ namespace InShow.Controllers
                 case 2:
                     validationStep = "RegisterAgent";
                     break;
+                case 3:
+                    validationStep = "RegisterAgency";
+                    break;
+
             }
 
             //remove all errors except for the current step
@@ -390,9 +401,6 @@ namespace InShow.Controllers
 
                     //Set the verified email to false
                     createMember.Properties["hasVerifiedEmail"].Value = false;
-
-                    //Set the profile URL to be the member ID, so they have a unqie profile ID, until they go to set it
-                    createMember.Properties["profileURL"].Value = model.RegisterBuyer.ProfileURL;
 
                     //Save the changes, if we do not do so, we cannot save the password.
                     membershipService.Save(createMember);
@@ -466,9 +474,6 @@ namespace InShow.Controllers
                     //Set the verified email to false
                     createMember.Properties["hasVerifiedEmail"].Value = false;
 
-                    //Set the profile URL to be the member ID, so they have a unqie profile ID, until they go to set it
-                    createMember.Properties["profileURL"].Value = model.RegisterAgent.ProfileURL;
-
                     //Save the changes, if we do not do so, we cannot save the password.
                     membershipService.Save(createMember);
 
@@ -520,13 +525,70 @@ namespace InShow.Controllers
             if (model.StepIndex == 3)
             {
 
+                var membershipService = ApplicationContext.Current.Services.MemberService;
 
-                //TODO: Do something with the form data
+                if (!ModelState.IsValid)
+                {
+                    //return PartialView("Register", model);
+                    return CurrentUmbracoPage();
+                }
+
+                //Model valid let's create the member
+                try
+                {
+                    //Member createMember = Member.MakeNew(model.Name, model.EmailAddress, model.EmailAddress, umbJobMemberType, umbUser);
+                    // WARNING: update to your desired MembertypeAlias...
+                    var createMember = membershipService.CreateMember(model.RegisterAgent.EmailAddress, model.RegisterAgent.EmailAddress, model.RegisterAgent.FirstName + " " + model.RegisterAgent.LastName, "agent");
+
+                    //Set the verified email to false
+                    createMember.Properties["hasVerifiedEmail"].Value = false;
+
+                    //Save the changes, if we do not do so, we cannot save the password.
+                    membershipService.Save(createMember);
+
+                    //Set password on the newly created member
+                    membershipService.SavePassword(createMember, model.RegisterAgent.Password);
+                }
+                catch (Exception ex)
+                {
+                    //EG: Duplicate email address - already exists
+                    ModelState.AddModelError("memberCreation", ex.Message);
+
+                    return CurrentUmbracoPage();
+                }
+
+                //Create temporary GUID
+                var tempGUID = Guid.NewGuid();
+
+                //Fetch our new member we created by their email
+                var updateMember = membershipService.GetByEmail(model.RegisterAgent.EmailAddress);
+
+                //Just to be sure...
+                if (updateMember != null)
+                {
+                    //Set the verification email GUID value on the member
+                    updateMember.Properties["emailVerifyGUID"].Value = tempGUID.ToString();
+
+                    //Set the Joined Date label on the member
+                    updateMember.Properties["joinedDate"].Value = DateTime.Now.ToString("dd/MM/yyyy @ HH:mm:ss");
+
+                    //Save changes
+                    membershipService.Save(updateMember);
+                }
+
+                //Send out verification email, with GUID in it
+                EmailHelper email = new EmailHelper();
+                email.SendVerifyEmail(model.RegisterAgent.EmailAddress, tempGUID.ToString());
+
+                //Update success flag (in a TempData key)
+                TempData["IsSuccessful"] = true;
 
                 TempData.Add("CustomMessage", "Your form was successfully submitted at " + DateTime.Now);
-                return RedirectToCurrentUmbracoPage();
-            }
 
+                //All done - redirect back to page
+                return CurrentUmbracoPage();
+
+            }
 
 
             //All done - redirect back to page

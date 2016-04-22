@@ -1,1 +1,13 @@
 ﻿#slider * { color:#2e4f67; }
+
+.field-validation-error {
+    color: red;
+}
+
+ul li .validation-summary-errors {
+    color: red;
+}
+
+.help-block {
+    color: red;
+}

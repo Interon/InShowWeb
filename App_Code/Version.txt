@@ -3,8 +3,12 @@
 
 
 
-registerUser ver. 0.10
-Copy/paste changes from previous commit
+registerUser ver. 0.12
+1.	Please change the forms from one column to two columns 
+2.	All views named User must be changed to member
+Dashboard login
+Changed underscores on document types
+
 
 
 
