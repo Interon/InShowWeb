@@ -26,7 +26,7 @@ namespace InShow.Controllers
 
             loginModel.ReturnUrl = string.IsNullOrEmpty(HttpContext.Request["ReturnUrl"]) ? "/" : HttpContext.Request["ReturnUrl"];
 
-            return PartialView("Login", loginModel);
+            return PartialView("LoginPartialView", loginModel);
         }
 
 

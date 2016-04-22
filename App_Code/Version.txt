@@ -3,11 +3,11 @@
 
 
 
-registerUser ver. 0.11
-1.	In Show  should be InShow  one word
-2.	Create a tab for Agency and Agent 
-3.	Make the exeptions red 
-4.	Remove Profile url
+registerUser ver. 0.12
+1.	Please change the forms from one column to two columns 
+2.	All views named User must be changed to member
+Dashboard login
+Changed underscores on document types
 
 
 
