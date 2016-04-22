@@ -3,8 +3,12 @@
 
 
 
-registerUser ver. 0.10
-Copy/paste changes from previous commit
+registerUser ver. 0.11
+1.	In Show  should be InShow  one word
+2.	Create a tab for Agency and Agent 
+3.	Make the exeptions red 
+4.	Remove Profile url
+
 
 
 

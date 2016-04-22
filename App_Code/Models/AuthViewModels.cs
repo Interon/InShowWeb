@@ -56,6 +56,7 @@ namespace InShow.Models
 
         public RegisterBuyer RegisterBuyer { get; set; }
         public RegisterAgent RegisterAgent { get; set; }
+        public RegisterAgency RegisterAgency { get; set; }
     }
 
 
@@ -87,11 +88,6 @@ namespace InShow.Models
         [Required(ErrorMessage = "Please enter your password")]
         [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Your passwords do not match")]
         public string ConfirmPassword { get; set; }
-
-        //[Required]
-        [Remote("CheckProfileURLAvailable", "ProfileSurface", ErrorMessage = "The profile URL is already in use")]
-        [DisplayName("Profile URL")]
-        public string ProfileURL { get; set; }
 
     }
 
@@ -129,10 +125,48 @@ namespace InShow.Models
         [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Your passwords do not match")]
         public string ConfirmPassword { get; set; }
 
-        //[Required]
-        [Remote("CheckProfileURLAvailable", "ProfileSurface", ErrorMessage = "The profile URL is already in use")]
-        [DisplayName("Profile URL")]
-        public string ProfileURL { get; set; }
+        [Required]
+        [Display(Name = "I agree to the terms and conditions")]
+        //[Compare("IsTrue", ErrorMessage = "Please agree to Terms and Conditions")]
+        public bool Agreed { get; set; }
+
+        public bool IsTrue
+        { get { return true; } }
+    }
+
+    public class RegisterAgency
+    {
+
+        [Required(ErrorMessage = "Please enter your first name")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Please enter your surname")]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Please enter your cell number")]
+        public int Cellphone { get; set; }
+
+        [Required(ErrorMessage = "Please enter your realestate agency")]
+        public string Agency { get; set; }
+
+        [Required(ErrorMessage = "Please enter your realestate agency pin number")]
+        public int AgencyPin { get; set; }
+
+        [DisplayName("Email address")]
+        [Required(ErrorMessage = "Please enter your email address")]
+        [EmailAddress(ErrorMessage = "Please enter a valid email address")]
+        //[Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
+        public string EmailAddress { get; set; }
+
+        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "Please enter your password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [DisplayName("Confirm Password")]
+        [Required(ErrorMessage = "Please enter your password")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Your passwords do not match")]
+        public string ConfirmPassword { get; set; }
 
         [Required]
         [Display(Name = "I agree to the terms and conditions")]
