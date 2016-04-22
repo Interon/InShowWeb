@@ -1,4 +1,5 @@
-﻿<!doctype html>
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+<!doctype html>
 <html lang="en" ng-app="RDash">
 <head>
   <meta charset="UTF-8">
@@ -97,9 +98,7 @@
                   </li>
                   <li class="divider"></li>
                   <li class="link">
-                    <a href="#">
-                      Logout
-                    </a>
+                   @Html.ActionLink("Logout", "Logout", "AuthSurface")
                   </li>
                 </ul>
               </div>

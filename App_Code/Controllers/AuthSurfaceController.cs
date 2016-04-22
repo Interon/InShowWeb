@@ -39,6 +39,7 @@ namespace InShow.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult HandleLogin(LoginViewModel model)
         {
+            model.ReturnUrl = "/dashboard/home";
             var membershipService = ApplicationContext.Current.Services.MemberService;
 
             if (!ModelState.IsValid)
@@ -139,6 +140,7 @@ namespace InShow.Controllers
 
         //Used with an ActionLink
         //@Html.ActionLink("Logout", "Logout", "AuthSurface")
+       
         public ActionResult Logout()
         {
             //Member already logged in, lets log them out and redirect them home

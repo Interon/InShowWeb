@@ -1144,7 +1144,7 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 	}
 
-	/// <summary>__ForgottenPassword</summary>
+	/// <summary>ForgottenPassword</summary>
 	[PublishedContentModel("forgottenPassword")]
 	public partial class ForgottenPassword : Master
 	{
@@ -1196,7 +1196,7 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 	}
 
-	/// <summary>__Members</summary>
+	/// <summary>Members</summary>
 	[PublishedContentModel("members")]
 	public partial class Members : Master
 	{
@@ -1222,7 +1222,7 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 	}
 
-	/// <summary>__Profile</summary>
+	/// <summary>Profile</summary>
 	[PublishedContentModel("profile")]
 	public partial class Profile : Master
 	{
@@ -1248,7 +1248,7 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 	}
 
-	/// <summary>__ProfileEdit</summary>
+	/// <summary>ProfileEdit</summary>
 	[PublishedContentModel("profileEdit")]
 	public partial class ProfileEdit : Master
 	{
@@ -1274,7 +1274,7 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 	}
 
-	/// <summary>__ResetPassword</summary>
+	/// <summary>ResetPassword</summary>
 	[PublishedContentModel("resetPassword")]
 	public partial class ResetPassword : Master
 	{
@@ -1347,6 +1347,32 @@ namespace Umbraco.Web.PublishedContentModels
 #pragma warning restore 0109
 
 		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<ViewMember, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+	}
+
+	/// <summary>RegisterMember</summary>
+	[PublishedContentModel("registerMember")]
+	public partial class RegisterMember : Master
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "registerMember";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public RegisterMember(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<RegisterMember, TValue>> selector)
 		{
 			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
 		}
@@ -2332,12 +2358,39 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// hasVerifiedEmail
+		///</summary>
+		[ImplementPropertyType("hasVerifiedEmail")]
+		public bool HasVerifiedEmail
+		{
+			get { return this.GetPropertyValue<bool>("hasVerifiedEmail"); }
+		}
+
+		///<summary>
+		/// hostNameOfLastLogin
+		///</summary>
+		[ImplementPropertyType("hostNameOfLastLogin")]
+		public string HostNameOfLastLogin
+		{
+			get { return this.GetPropertyValue<string>("hostNameOfLastLogin"); }
+		}
+
+		///<summary>
 		/// InShow
 		///</summary>
 		[ImplementPropertyType("inShow")]
 		public string InShow
 		{
 			get { return this.GetPropertyValue<string>("inShow"); }
+		}
+
+		///<summary>
+		/// iPofLastLogin
+		///</summary>
+		[ImplementPropertyType("iPofLastLogin")]
+		public string IPofLastLogin
+		{
+			get { return this.GetPropertyValue<string>("iPofLastLogin"); }
 		}
 
 		///<summary>
@@ -2356,6 +2409,15 @@ namespace Umbraco.Web.PublishedContentModels
 		public string Listings
 		{
 			get { return this.GetPropertyValue<string>("listings"); }
+		}
+
+		///<summary>
+		/// numberOfLogins
+		///</summary>
+		[ImplementPropertyType("numberOfLogins")]
+		public int NumberOfLogins
+		{
+			get { return this.GetPropertyValue<int>("numberOfLogins"); }
 		}
 
 		///<summary>
