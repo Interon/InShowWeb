@@ -1736,12 +1736,39 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// Email Verify GUID
+		///</summary>
+		[ImplementPropertyType("emailVerifyGUID")]
+		public string EmailVerifyGuid
+		{
+			get { return this.GetPropertyValue<string>("emailVerifyGUID"); }
+		}
+
+		///<summary>
 		/// First Name
 		///</summary>
 		[ImplementPropertyType("firstName")]
 		public string FirstName
 		{
 			get { return this.GetPropertyValue<string>("firstName"); }
+		}
+
+		///<summary>
+		/// Has Verified Email
+		///</summary>
+		[ImplementPropertyType("hasVerifiedEmail")]
+		public bool HasVerifiedEmail
+		{
+			get { return this.GetPropertyValue<bool>("hasVerifiedEmail"); }
+		}
+
+		///<summary>
+		/// Joined Date
+		///</summary>
+		[ImplementPropertyType("joinedDate")]
+		public string JoinedDate
+		{
+			get { return this.GetPropertyValue<string>("joinedDate"); }
 		}
 
 		///<summary>
@@ -1977,6 +2004,15 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// EmailVerifyGUID
+		///</summary>
+		[ImplementPropertyType("emailVerifyGUID")]
+		public string EmailVerifyGuid
+		{
+			get { return this.GetPropertyValue<string>("emailVerifyGUID"); }
+		}
+
+		///<summary>
 		/// First Name
 		///</summary>
 		[ImplementPropertyType("firstName")]
@@ -2001,6 +2037,15 @@ namespace Umbraco.Web.PublishedContentModels
 		public bool HasVerifiedEmail
 		{
 			get { return this.GetPropertyValue<bool>("hasVerifiedEmail"); }
+		}
+
+		///<summary>
+		/// JoinedDate
+		///</summary>
+		[ImplementPropertyType("joinedDate")]
+		public string JoinedDate
+		{
+			get { return this.GetPropertyValue<string>("joinedDate"); }
 		}
 
 		///<summary>
@@ -2165,6 +2210,15 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// Name
+		///</summary>
+		[ImplementPropertyType("agencyName")]
+		public string AgencyName
+		{
+			get { return this.GetPropertyValue<string>("agencyName"); }
+		}
+
+		///<summary>
 		/// Agency Pin
 		///</summary>
 		[ImplementPropertyType("agencyPin")]
@@ -2183,12 +2237,21 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// Name
+		/// EmailVerifyGUID
 		///</summary>
-		[ImplementPropertyType("agenyName")]
-		public string AgenyName
+		[ImplementPropertyType("emailVerifyGUID")]
+		public string EmailVerifyGuid
 		{
-			get { return this.GetPropertyValue<string>("agenyName"); }
+			get { return this.GetPropertyValue<string>("emailVerifyGUID"); }
+		}
+
+		///<summary>
+		/// JoinedDate
+		///</summary>
+		[ImplementPropertyType("joinedDate")]
+		public string JoinedDate
+		{
+			get { return this.GetPropertyValue<string>("joinedDate"); }
 		}
 
 		///<summary>
@@ -2335,6 +2398,15 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// EmailVerifyGUID
+		///</summary>
+		[ImplementPropertyType("emailVerifyGUID")]
+		public string EmailVerifyGuid
+		{
+			get { return this.GetPropertyValue<string>("emailVerifyGUID"); }
+		}
+
+		///<summary>
 		/// First Name
 		///</summary>
 		[ImplementPropertyType("firstName")]
@@ -2377,6 +2449,15 @@ namespace Umbraco.Web.PublishedContentModels
 		public string IPofLastLogin
 		{
 			get { return this.GetPropertyValue<string>("iPofLastLogin"); }
+		}
+
+		///<summary>
+		/// JoinedDate
+		///</summary>
+		[ImplementPropertyType("joinedDate")]
+		public string JoinedDate
+		{
+			get { return this.GetPropertyValue<string>("joinedDate"); }
 		}
 
 		///<summary>

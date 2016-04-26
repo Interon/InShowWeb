@@ -325,14 +325,19 @@ namespace InShow.Controllers
                 model.StepIndex = 1;
             }
 
-            if (model.UserType == "Agent")
+            if (model.UserType == "PrivateSeller")
             {
                 model.StepIndex = 2;
             }
 
-            if (model.UserType == "Agency")
+            if (model.UserType == "Agent")
             {
                 model.StepIndex = 3;
+            }
+
+            if (model.UserType == "Agency")
+            {
+                model.StepIndex = 4;
             }
 
 
@@ -350,9 +355,12 @@ namespace InShow.Controllers
                     validationStep = "RegisterBuyer";
                     break;
                 case 2:
-                    validationStep = "RegisterAgent";
+                    validationStep = "RegisterPrivateSeller";
                     break;
                 case 3:
+                    validationStep = "RegisterAgent";
+                    break;
+                case 4:
                     validationStep = "RegisterAgency";
                     break;
 
@@ -381,6 +389,8 @@ namespace InShow.Controllers
             }
 
             //Its the final step, do some saving
+
+
 
             //BUYER CONTROLLER
             if (model.StepIndex == 1)
@@ -433,6 +443,12 @@ namespace InShow.Controllers
                     //Set the Joined Date label on the member
                     updateMember.Properties["joinedDate"].Value = DateTime.Now.ToString("dd/MM/yyyy @ HH:mm:ss");
 
+                    updateMember.Properties["firstName"].Value = model.RegisterBuyer.FirstName;
+
+                    updateMember.Properties["lastName"].Value = model.RegisterBuyer.LastName;
+
+                    updateMember.Properties["cellNumber"].Value = model.RegisterBuyer.CellNumber;
+
                     //Save changes
                     membershipService.Save(updateMember);
                 }
@@ -454,7 +470,7 @@ namespace InShow.Controllers
 
             //Its the final step, do some saving
 
-            //AGENT CONTROLLER
+            //PRIVATE SELLER CONTROLLER
             if (model.StepIndex == 2)
             {
 
@@ -471,7 +487,7 @@ namespace InShow.Controllers
                 {
                     //Member createMember = Member.MakeNew(model.Name, model.EmailAddress, model.EmailAddress, umbJobMemberType, umbUser);
                     // WARNING: update to your desired MembertypeAlias...
-                    var createMember = membershipService.CreateMember(model.RegisterAgent.EmailAddress, model.RegisterAgent.EmailAddress, model.RegisterAgent.FirstName + " " + model.RegisterAgent.LastName, "agent");
+                    var createMember = membershipService.CreateMember(model.RegisterPrivateSeller.EmailAddress, model.RegisterPrivateSeller.EmailAddress, model.RegisterPrivateSeller.FirstName + " " + model.RegisterPrivateSeller.LastName, "private");
 
                     //Set the verified email to false
                     createMember.Properties["hasVerifiedEmail"].Value = false;
@@ -480,7 +496,7 @@ namespace InShow.Controllers
                     membershipService.Save(createMember);
 
                     //Set password on the newly created member
-                    membershipService.SavePassword(createMember, model.RegisterAgent.Password);
+                    membershipService.SavePassword(createMember, model.RegisterPrivateSeller.Password);
                 }
                 catch (Exception ex)
                 {
@@ -494,7 +510,7 @@ namespace InShow.Controllers
                 var tempGUID = Guid.NewGuid();
 
                 //Fetch our new member we created by their email
-                var updateMember = membershipService.GetByEmail(model.RegisterAgent.EmailAddress);
+                var updateMember = membershipService.GetByEmail(model.RegisterPrivateSeller.EmailAddress);
 
                 //Just to be sure...
                 if (updateMember != null)
@@ -505,18 +521,25 @@ namespace InShow.Controllers
                     //Set the Joined Date label on the member
                     updateMember.Properties["joinedDate"].Value = DateTime.Now.ToString("dd/MM/yyyy @ HH:mm:ss");
 
+                    updateMember.Properties["firstName"].Value = model.RegisterPrivateSeller.FirstName;
+
+                    updateMember.Properties["lastName"].Value = model.RegisterPrivateSeller.LastName;
+
+                    updateMember.Properties["cellNumber"].Value = model.RegisterPrivateSeller.CellNumber;
+
                     //Save changes
                     membershipService.Save(updateMember);
                 }
 
                 //Send out verification email, with GUID in it
                 EmailHelper email = new EmailHelper();
-                email.SendVerifyEmail(model.RegisterAgent.EmailAddress, tempGUID.ToString());
+                email.SendVerifyEmail(model.RegisterPrivateSeller.EmailAddress, tempGUID.ToString());
 
                 //Update success flag (in a TempData key)
                 TempData["IsSuccessful"] = true;
 
                 TempData.Add("CustomMessage", "Your form was successfully submitted at " + DateTime.Now);
+
 
                 //All done - redirect back to page
                 return CurrentUmbracoPage();
@@ -524,6 +547,8 @@ namespace InShow.Controllers
             }
 
             //Its the final step, do some saving
+
+            //AGENT CONTROLLER
             if (model.StepIndex == 3)
             {
 
@@ -573,6 +598,91 @@ namespace InShow.Controllers
 
                     //Set the Joined Date label on the member
                     updateMember.Properties["joinedDate"].Value = DateTime.Now.ToString("dd/MM/yyyy @ HH:mm:ss");
+
+                    updateMember.Properties["firstName"].Value = model.RegisterAgent.FirstName;
+
+                    updateMember.Properties["lastName"].Value = model.RegisterAgent.LastName;
+
+                    updateMember.Properties["cellNumber"].Value = model.RegisterAgent.CellNumber;
+
+                    updateMember.Properties["agencyPin"].Value = model.RegisterAgent.AgencyPin;
+
+                    updateMember.Properties["agency"].Value = model.RegisterAgent.Agency;
+
+                    //Save changes
+                    membershipService.Save(updateMember);
+                }
+
+                //Send out verification email, with GUID in it
+                EmailHelper email = new EmailHelper();
+                email.SendVerifyEmail(model.RegisterAgent.EmailAddress, tempGUID.ToString());
+
+                //Update success flag (in a TempData key)
+                TempData["IsSuccessful"] = true;
+
+                TempData.Add("CustomMessage", "Your form was successfully submitted at " + DateTime.Now);
+
+                //All done - redirect back to page
+                return CurrentUmbracoPage();
+
+            }
+
+            //Its the final step, do some saving
+            if (model.StepIndex == 4)
+            {
+
+                var membershipService = ApplicationContext.Current.Services.MemberService;
+
+                if (!ModelState.IsValid)
+                {
+                    //return PartialView("Register", model);
+                    return CurrentUmbracoPage();
+                }
+
+                //Model valid let's create the member
+                try
+                {
+                    //Member createMember = Member.MakeNew(model.Name, model.EmailAddress, model.EmailAddress, umbJobMemberType, umbUser);
+                    // WARNING: update to your desired MembertypeAlias...
+                    var createMember = membershipService.CreateMember(model.RegisterAgency.EmailAddress, model.RegisterAgency.EmailAddress, model.RegisterAgency.Agency, "agency");
+
+                    //Set the verified email to false
+                    createMember.Properties["hasVerifiedEmail"].Value = false;
+
+                    //Save the changes, if we do not do so, we cannot save the password.
+                    membershipService.Save(createMember);
+
+                    //Set password on the newly created member
+                    membershipService.SavePassword(createMember, model.RegisterAgent.Password);
+                }
+                catch (Exception ex)
+                {
+                    //EG: Duplicate email address - already exists
+                    ModelState.AddModelError("memberCreation", ex.Message);
+
+                    return CurrentUmbracoPage();
+                }
+
+                //Create temporary GUID
+                var tempGUID = Guid.NewGuid();
+
+                //Fetch our new member we created by their email
+                var updateMember = membershipService.GetByEmail(model.RegisterAgency.EmailAddress);
+
+                //Just to be sure...
+                if (updateMember != null)
+                {
+                    //Set the verification email GUID value on the member
+                    updateMember.Properties["emailVerifyGUID"].Value = tempGUID.ToString();
+
+                    //Set the Joined Date label on the member
+                    updateMember.Properties["joinedDate"].Value = DateTime.Now.ToString("dd/MM/yyyy @ HH:mm:ss");
+
+                    updateMember.Properties["cellNumber"].Value = model.RegisterAgency.CellNumber;
+
+                    updateMember.Properties["agencyPin"].Value = model.RegisterAgency.AgencyPin;
+
+                    updateMember.Properties["agency"].Value = model.RegisterAgency.Agency;
 
                     //Save changes
                     membershipService.Save(updateMember);
