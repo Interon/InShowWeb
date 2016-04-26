@@ -12,8 +12,8 @@
 </style>
 
 <div style="padding:50px;" ng-controller="ProfileTabs">
-
-
+@if (Model.MemberType == "agent")
+{
    <h1 style="color:#FF7C00">Agent Details</h1>
             <rd-widget >
                 <rd-widget-body >
@@ -22,7 +22,7 @@
 
                             <rd-widget>
                                 <rd-widget-header icon="fa-pen" title="Agent Login Details">
-                                    <a href="#">Edit</a> |
+                                 
                                     <a href="#">Reset Password</a>
                                 </rd-widget-header>
                                 <rd-widget-body>
@@ -53,7 +53,7 @@
                                     <ul>
                                         <li > Name:  @Model.RegisterAgent.FirstName;</li>
                                         <li > Last Name:  @Model.RegisterAgent.LastName;</li>
-                                        <li > Cell No: @Model.RegisterAgent.Cellphone</li>
+                                        <li > Cell No: @Model.RegisterAgent.CellNumber</li>
 
 
 
@@ -83,14 +83,133 @@
                 </rd-widget-body>
             </rd-widget>
 
+}
+
+    @if (Model.MemberType == "agency")
+    {
+        <h1 style="color:#FF7C00">Agency Details</h1>
+        <rd-widget>
+            <rd-widget-body>
+                <div class="row">
+                    <div class="col-md-5">
+
+                        <rd-widget>
+                            <rd-widget-header icon="fa-pen" title="Agent Login Details">
+                              
+                                <a href="#">Reset Password</a>
+                            </rd-widget-header>
+                            <rd-widget-body>
+                                Login:  @Model.Name;
+                            </rd-widget-body>
+                        </rd-widget>
+                        <br />
+                        <rd-widget>
+                            <rd-widget-header icon="fa-pen" title="Account Details">
+
+
+                            </rd-widget-header>
+                            <rd-widget-body>
+                                Credits:  @Model.RegisterAgency.Credits
+
+                                <button class="btn btn-primary">Buy Credits</button>
+                                <button class="btn btn-primary">Enter Voucher number</button>
+                            </rd-widget-body>
+                        </rd-widget>
+                    </div>
+                    <div class="col-md-5">
+
+                        <rd-widget>
+                            <rd-widget-header icon="fa-pen" title="Agent  Details">
+                                <a href="#">Edit</a>
+                            </rd-widget-header>
+                            <rd-widget-body>
+                                <ul>
+                                    <li> Name:  @Model.RegisterAgency.Name;</li>
+                                    <li> Last Name:  @Model.RegisterAgency.AgencyPin;</li>
+                                    <li> Cell No: @Model.RegisterAgency.CellNumber</li>
+                                   
 
 
 
-        
-        
-       
+                                </ul>
 
-       
+                            </rd-widget-body>
+                        </rd-widget>
+
+                    </div>
+
+                    <div class="col-md-2 text-center">
+                        <rd-widget>
+                            <rd-widget-header icon="fa-pen" title="Agent Picture">
+                                <a href="#">Edit</a>
+                            </rd-widget-header>
+                            <rd-widget-body>
+                                <img src="@Model.RegisterAgency.Logo" class="img-thumbnail" />
+                            </rd-widget-body>
+                        </rd-widget>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5">
+
+                        <rd-widget>
+                            <rd-widget-header icon="fa-pen" title="Agent List">
+                                <a href="#">Edit</a>
+                            </rd-widget-header>
+                            <rd-widget-body>
+                                <ul>
+                                    <li> Name:  @Model.RegisterAgency.Name;</li>
+                                    <li> Last Name:  @Model.RegisterAgency.AgencyPin;</li>
+                                    <li> Cell No: @Model.RegisterAgency.CellNumber</li>
+
+
+
+
+                                </ul>
+
+                            </rd-widget-body>
+                        </rd-widget>
+
+                    </div>
+
+                    <div class="col-md-5">
+
+                        <rd-widget>
+                            <rd-widget-header icon="fa-pen" title="Admin Users">
+                                <a href="#">Edit</a>
+                            </rd-widget-header>
+                            <rd-widget-body>
+                                <ul>
+                                    <li> Name:  @Model.RegisterAgency.Name;</li>
+                                    <li> Last Name:  @Model.RegisterAgency.AgencyPin;</li>
+                                    <li> Cell No: @Model.RegisterAgency.CellNumber</li>
+
+
+
+
+                                </ul>
+
+                            </rd-widget-body>
+                        </rd-widget>
+
+                    </div>
+
+                </div>
+               
+
+            </rd-widget-body>
+        </rd-widget>
+
+    }
+
+
+
+
+
+
 
     <hr />
 

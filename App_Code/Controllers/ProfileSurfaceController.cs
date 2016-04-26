@@ -116,10 +116,22 @@ namespace InShow.Controllers
                     profile.MemberType =  findMember.ContentTypeAlias; //Groups.Values.Cast<MemberGroup>().First().Text;
                     profile.RegisterAgent.FirstName = findMember.Properties["firstName"].Value.ToString();
                     profile.RegisterAgent.LastName = findMember.Properties["lastName"].Value.ToString();
-                    profile.RegisterAgent.Cellphone = findMember.Properties["cellNumber"].Value.ToString();
+                    profile.RegisterAgent.CellNumber = findMember.Properties["cellNumber"].Value.ToString();
                //     profile.RegisterAgent.Agency = findMember.Properties["agency"].Value ?? "";
-                    profile.RegisterAgent.AgencyPin = int.Parse(findMember.Properties["agencyPin"].Value.ToString());
+                    profile.RegisterAgent.AgencyPin = findMember.Properties["agencyPin"].Value.ToString();
                     profile.RegisterAgent.Picture = findMember.Properties["picture"].Value.ToString();
+                }
+                if (findMember.ContentTypeAlias == "agency")
+                {
+                    profile.Name = findMember.Name;
+
+                    profile.RegisterAgent.EmailAddress = findMember.Email;
+                    profile.MemberType = findMember.ContentTypeAlias; //Groups.Values.Cast<MemberGroup>().First().Text;
+                    profile.RegisterAgency.Name = findMember.Properties["agencyName"].Value.ToString();
+                    profile.RegisterAgency.CellNumber = findMember.Properties["cellNumber"].Value.ToString();
+                    //     profile.RegisterAgent.Agency = findMember.Properties["agency"].Value ?? "";
+                    profile.RegisterAgency.AgencyPin = findMember.Properties["agencyPin"].Value.ToString();
+                    profile.RegisterAgency.Logo = findMember.Properties["logo"].Value.ToString();
                 }
                 //  profile.Description = findMember.Properties["description"].Value.ToString();
 

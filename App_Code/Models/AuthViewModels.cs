@@ -139,7 +139,7 @@ namespace InShow.Models
         public string Agency { get; set; }
 
         [Required(ErrorMessage = "Please enter your realestate agency pin number")]
-        public int AgencyPin { get; set; }
+        public string AgencyPin { get; set; }
         public string Picture { get; set; }
         [DisplayName("Email address")]
         [Required(ErrorMessage = "Please enter your email address")]
@@ -168,12 +168,19 @@ namespace InShow.Models
 
     public class RegisterAgency
     {
-
         [Required(ErrorMessage = "Please enter your realestate agency")]
-        public string Agency { get; set; }
+        public string Name { get; set; }
+       
+
+
+
 
         [Required(ErrorMessage = "Please enter your realestate agency pin number")]
         public string AgencyPin { get; set; }
+        public string Logo { get; set; }
+        public string AdminAgents { get; set; }
+        public int  Credits { get; set; }
+        public int Agents { get; set; }
 
         [Required(ErrorMessage = "Please enter your cell number")]
         public string CellNumber { get; set; }

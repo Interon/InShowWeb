@@ -644,7 +644,7 @@ namespace InShow.Controllers
                 {
                     //Member createMember = Member.MakeNew(model.Name, model.EmailAddress, model.EmailAddress, umbJobMemberType, umbUser);
                     // WARNING: update to your desired MembertypeAlias...
-                    var createMember = membershipService.CreateMember(model.RegisterAgency.EmailAddress, model.RegisterAgency.EmailAddress, model.RegisterAgency.Agency, "agency");
+                    var createMember = membershipService.CreateMember(model.RegisterAgency.EmailAddress, model.RegisterAgency.EmailAddress, model.RegisterAgency.Name , "agency");
 
                     //Set the verified email to false
                     createMember.Properties["hasVerifiedEmail"].Value = false;
@@ -682,7 +682,7 @@ namespace InShow.Controllers
 
                     updateMember.Properties["agencyPin"].Value = model.RegisterAgency.AgencyPin;
 
-                    updateMember.Properties["agency"].Value = model.RegisterAgency.Agency;
+                    updateMember.Properties["agency"].Value = model.RegisterAgency.Name;
 
                     //Save changes
                     membershipService.Save(updateMember);
