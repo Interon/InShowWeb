@@ -33,10 +33,6 @@ namespace InShow.Models
 
 
 
-
-
-
-
     /// <summary>
     /// Register Buyer View Model
     /// </summary>
@@ -59,6 +55,7 @@ namespace InShow.Models
         public bool Complete { get; set; }
 
         public RegisterBuyer RegisterBuyer { get; set; }
+        public RegisterPrivateSeller RegisterPrivateSeller { get; set; }
         public RegisterAgent RegisterAgent { get; set; }
         public RegisterAgency RegisterAgency { get; set; }
     
@@ -76,7 +73,37 @@ namespace InShow.Models
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Please enter your cell number")]
-        public int Cellphone { get; set; }
+        public string CellNumber { get; set; }
+
+        [DisplayName("Email address")]
+        [Required(ErrorMessage = "Please enter your email address")]
+        [EmailAddress(ErrorMessage = "Please enter a valid email address")]
+        //[Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
+        public string EmailAddress { get; set; }
+
+        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "Please enter your password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [DisplayName("Confirm Password")]
+        [Required(ErrorMessage = "Please enter your password")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Your passwords do not match")]
+        public string ConfirmPassword { get; set; }
+
+    }
+
+    public class RegisterPrivateSeller
+    {
+
+        [Required(ErrorMessage = "Please enter your first name")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Please enter your surname")]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Please enter your cell number")]
+        public string CellNumber { get; set; }
 
         [DisplayName("Email address")]
         [Required(ErrorMessage = "Please enter your email address")]
@@ -106,7 +133,7 @@ namespace InShow.Models
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Please enter your cell number")]
-        public string Cellphone { get; set; }
+        public string CellNumber { get; set; }
 
         [Required(ErrorMessage = "Please enter your realestate agency")]
         public string Agency { get; set; }
@@ -142,28 +169,19 @@ namespace InShow.Models
     public class RegisterAgency
     {
 
-        [Required(ErrorMessage = "Please enter your first name")]
-        public string FirstName { get; set; }
-
-        [Required(ErrorMessage = "Please enter your surname")]
-        public string LastName { get; set; }
-
-        [Required(ErrorMessage = "Please enter your cell number")]
-        public int Cellphone { get; set; }
-
         [Required(ErrorMessage = "Please enter your realestate agency")]
         public string Agency { get; set; }
 
         [Required(ErrorMessage = "Please enter your realestate agency pin number")]
-        public int AgencyPin { get; set; }
-      
+        public string AgencyPin { get; set; }
 
-     
+        [Required(ErrorMessage = "Please enter your cell number")]
+        public string CellNumber { get; set; }
 
         [DisplayName("Email address")]
         [Required(ErrorMessage = "Please enter your email address")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        //[Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
+        [Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
         public string EmailAddress { get; set; }
 
         [DataType(DataType.Password)]
