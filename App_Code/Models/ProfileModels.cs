@@ -64,5 +64,6 @@ namespace InShow.Models
         public int NumberOfLogins { get; set; }
 
         public int NumberOfProfileViews { get; set; }
+        public string Picture { get; set; }
     }
 }

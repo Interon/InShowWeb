@@ -5,6 +5,8 @@ using Umbraco.Web;
 using Umbraco.Core.Models;
 using System.Globalization;
 using Umbraco.Web.Models;
+using Umbraco.Web.PublishedContentModels;
+using AutoMapper.Internal;
 
 namespace InShow.Models
 {
@@ -46,7 +48,9 @@ namespace InShow.Models
             RegisterBuyer = new RegisterBuyer();
             RegisterAgent = new RegisterAgent();
         }
-
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string MemberType { get; set; }
         public bool Previous { get; set; }
         public bool Next { get; set; }
         public int StepIndex { get; set; }
@@ -57,6 +61,7 @@ namespace InShow.Models
         public RegisterBuyer RegisterBuyer { get; set; }
         public RegisterAgent RegisterAgent { get; set; }
         public RegisterAgency RegisterAgency { get; set; }
+    
     }
 
 
@@ -101,14 +106,14 @@ namespace InShow.Models
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Please enter your cell number")]
-        public int Cellphone { get; set; }
+        public string Cellphone { get; set; }
 
         [Required(ErrorMessage = "Please enter your realestate agency")]
         public string Agency { get; set; }
 
         [Required(ErrorMessage = "Please enter your realestate agency pin number")]
         public int AgencyPin { get; set; }
-
+        public string Picture { get; set; }
         [DisplayName("Email address")]
         [Required(ErrorMessage = "Please enter your email address")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address")]
@@ -151,6 +156,9 @@ namespace InShow.Models
 
         [Required(ErrorMessage = "Please enter your realestate agency pin number")]
         public int AgencyPin { get; set; }
+      
+
+     
 
         [DisplayName("Email address")]
         [Required(ErrorMessage = "Please enter your email address")]

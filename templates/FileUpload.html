@@ -1,19 +1,14 @@
 ﻿
-
+<div ng-controller="AppController" class="row">
     <div class="col-md-3">
 
         <h3>Select files</h3>
 
         <div ng-show="uploader.isHTML5">
-            <!-- 3. nv-file-over uploader="link" over-class="className" -->
-            <div class="well my-drop-zone" nv-file-over="" uploader="uploader">
-                Base drop zone
-            </div>
-
-            <!-- Example: nv-file-drop="" uploader="{Object}" options="{Object}" filters="{String}" -->
+             <!-- Example: nv-file-drop="" uploader="{Object}" options="{Object}" filters="{String}" -->
             <div nv-file-drop="" uploader="uploader" options="{ url: '/foo' }">
                 <div nv-file-over="" uploader="uploader" over-class="another-file-over-class" class="well my-drop-zone">
-                    Another drop zone with its own settings
+                   Drag and drop the images here to be uploaded
                 </div>
             </div>
         </div>
@@ -24,7 +19,7 @@
     </div>
 
     <div class="col-md-9" style="margin-bottom: 40px">
-        <h2>Uploads only images (with canvas preview)</h2>
+        <h2> Please select files to be uploaded </h2>
         <h3>The queue</h3>
         <p>Queue length: {{ uploader.queue.length }}</p>
 
@@ -95,4 +90,5 @@
         </div>
 
     </div>
+    </div> 
 

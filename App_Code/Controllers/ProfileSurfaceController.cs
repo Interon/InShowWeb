@@ -92,7 +92,7 @@ namespace InShow.Controllers
             var findMember = membershipService.GetById(Members.GetCurrentMemberId());
 
             //Create a view model
-            ViewProfileViewModel profile = new ViewProfileViewModel();
+            RegisterViewModel profile = new RegisterViewModel();
 
             //Check if we found member
             if (findMember != null)
@@ -105,17 +105,25 @@ namespace InShow.Controllers
                 //findMember.Properties["numberOfProfileViews"].Value = noOfProfileViews + 1;
 
                 //Save it down to the member
-              //  membershipService.Save(findMember);
+                //  membershipService.Save(findMember);
 
                 //Got the member lets bind the data to the view model
-                profile.Name = findMember.Name;
-                profile.MemberID = findMember.Id;
-                profile.EmailAddress = findMember.Email;
-                profile.MemberType = findMember.ContentTypeAlias; //Groups.Values.Cast<MemberGroup>().First().Text;
+                if (findMember.ContentTypeAlias == "agent")
+                {
+                    profile.Name = findMember.Name;
+                    
+                    profile.RegisterAgent.EmailAddress = findMember.Email;
+                    profile.MemberType =  findMember.ContentTypeAlias; //Groups.Values.Cast<MemberGroup>().First().Text;
+                    profile.RegisterAgent.FirstName = findMember.Properties["firstName"].Value.ToString();
+                    profile.RegisterAgent.LastName = findMember.Properties["lastName"].Value.ToString();
+                    profile.RegisterAgent.Cellphone = findMember.Properties["cellNumber"].Value.ToString();
+               //     profile.RegisterAgent.Agency = findMember.Properties["agency"].Value ?? "";
+                    profile.RegisterAgent.AgencyPin = int.Parse(findMember.Properties["agencyPin"].Value.ToString());
+                    profile.RegisterAgent.Picture = findMember.Properties["picture"].Value.ToString();
+                }
+                //  profile.Description = findMember.Properties["description"].Value.ToString();
 
-              //  profile.Description = findMember.Properties["description"].Value.ToString();
 
-             
             }
             else
             {

@@ -1,22 +1,98 @@
 ﻿@using InShow.Models
-@inherits Umbraco.Web.Mvc.UmbracoViewPage<ViewProfileViewModel>
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<RegisterViewModel>
 
 @{
     @*Layout = "~/views/catsense2014.cshtml";*@
 }
 
+<style type="text/css">
+    form.tab-form-demo .tab-pane {
+        margin: 20px 20px;
+    }
+</style>
 
-<h2>@Model.Name</h2>
+<div style="padding:50px;" ng-controller="ProfileTabs">
 
-<div class="row">
-    <div class="col-9">
-        <h3>Email: @Model.EmailAddress</h3>
-        <h3>Description: @Model.Description</h3>
+
+   <h1 style="color:#FF7C00">Agent Details</h1>
+            <rd-widget >
+                <rd-widget-body >
+                    <div class="row">
+                        <div class="col-md-5">
+
+                            <rd-widget>
+                                <rd-widget-header icon="fa-pen" title="Agent Login Details">
+                                    <a href="#">Edit</a> |
+                                    <a href="#">Reset Password</a>
+                                </rd-widget-header>
+                                <rd-widget-body>
+                                    Login:  @Model.Name;
+                                </rd-widget-body>
+                            </rd-widget>
+                            <br />
+                            <rd-widget>
+                                <rd-widget-header icon="fa-pen" title="Account Details">
+                                   
+                                    
+                                </rd-widget-header>
+                                <rd-widget-body>
+                                    Credits:  3
+
+                                   <button class="btn btn-primary">Buy Credits</button>
+                                    <button class="btn btn-primary">Enter Voucher number</button>
+                                </rd-widget-body>
+                            </rd-widget>
+                        </div>
+                        <div class="col-md-5">
+
+                            <rd-widget>
+                                <rd-widget-header icon="fa-pen" title="Agent  Details">
+                                    <a href="#">Edit</a>
+                                </rd-widget-header>
+                                <rd-widget-body>
+                                    <ul>
+                                        <li > Name:  @Model.RegisterAgent.FirstName;</li>
+                                        <li > Last Name:  @Model.RegisterAgent.LastName;</li>
+                                        <li > Cell No: @Model.RegisterAgent.Cellphone</li>
+
+
+
+                                    </ul>
+
+                                </rd-widget-body>
+                            </rd-widget>
+
+                        </div>
+
+                        <div class="col-md-2 text-center">
+                            <rd-widget>
+                                <rd-widget-header icon="fa-pen" title="Agent Picture">
+                                    <a href="#">Edit</a>
+                                </rd-widget-header>
+                                <rd-widget-body>
+                                    <img src="@Model.RegisterAgent.Picture" class="img-thumbnail" />
+                                </rd-widget-body>
+                            </rd-widget>
+
+                        </div>
+
+                    </div>
+
+
+
+                </rd-widget-body>
+            </rd-widget>
+
+
+
 
         
-    </div>
-    <div class="col-3">
-        @*<!--<img src="@(Model.EmailAddress.GetGravatarUrl(250, string.Empty))" alt="@Model.Name" class="img-circle"/>-->*@
-    </div>
-</div>
+        
+       
 
+       
+
+    <hr />
+
+
+</div>
