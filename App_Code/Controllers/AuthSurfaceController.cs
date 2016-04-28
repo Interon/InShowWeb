@@ -627,10 +627,11 @@ namespace InShow.Controllers
 
             }
 
+            Boolean agencyCheck = false;
+
             //Its the final step, do some saving
             if (model.StepIndex == 4)
             {
-
                 var membershipService = ApplicationContext.Current.Services.MemberService;
 
                 if (!ModelState.IsValid)
@@ -638,6 +639,9 @@ namespace InShow.Controllers
                     //return PartialView("Register", model);
                     return CurrentUmbracoPage();
                 }
+
+
+                //First Create Agency...---------------------------------------------------------
 
                 //Model valid let's create the member
                 try
@@ -684,9 +688,14 @@ namespace InShow.Controllers
 
                     updateMember.Properties["agency"].Value = model.RegisterAgency.Agency;
 
+                    //Put the registration of the agent admin after agent member has been created. Here temporarilly for testing.
+                    updateMember.Properties["agent"].Value = model.RegisterAgent.EmailAddress;
+
                     //Save changes
                     membershipService.Save(updateMember);
                 }
+
+                //And cleanup for both agency and agent...------------------------------------------------
 
                 //Send out verification email, with GUID in it
                 EmailHelper email = new EmailHelper();
@@ -697,10 +706,90 @@ namespace InShow.Controllers
 
                 TempData.Add("CustomMessage", "Your form was successfully submitted at " + DateTime.Now);
 
-                //All done - redirect back to page
-                return CurrentUmbracoPage();
+                agencyCheck = true;
+            }
+
+            if (agencyCheck)
+            {
+                var membershipService = ApplicationContext.Current.Services.MemberService;
+
+                if (!ModelState.IsValid)
+                {
+                    //return PartialView("Register", model);
+                    return CurrentUmbracoPage();
+                }
+
+
+                //Then Create an Admin Agent...---------------------------------------------------------
+
+                //Model valid let's create the member
+                try
+                {
+                    //Member createMember = Member.MakeNew(model.Name, model.EmailAddress, model.EmailAddress, umbJobMemberType, umbUser);
+                    // WARNING: update to your desired MembertypeAlias...
+                    var createMember = membershipService.CreateMember(model.RegisterAgent.EmailAddress, model.RegisterAgent.EmailAddress, model.RegisterAgent.Agency, "agent");
+
+                    //Set the verified email to false
+                    createMember.Properties["hasVerifiedEmail"].Value = false;
+
+                    //Save the changes, if we do not do so, we cannot save the password.
+                    membershipService.Save(createMember);
+
+                    //Set password on the newly created member
+                    membershipService.SavePassword(createMember, model.RegisterAgent.Password);
+                }
+                catch (Exception ex)
+                {
+                    //EG: Duplicate email address - already exists
+                    ModelState.AddModelError("memberCreation", ex.Message);
+
+                    return CurrentUmbracoPage();
+                }
+
+                //Create temporary GUID
+                var tempGUID = Guid.NewGuid();
+
+                //Fetch our new member we created by their email
+                var updateMember = membershipService.GetByEmail(model.RegisterAgent.EmailAddress);
+
+                //Just to be sure...
+                if (updateMember != null)
+                {
+                    //Set the verification email GUID value on the member
+                    updateMember.Properties["emailVerifyGUID"].Value = tempGUID.ToString();
+
+                    //Set the Joined Date label on the member
+                    updateMember.Properties["joinedDate"].Value = DateTime.Now.ToString("dd/MM/yyyy @ HH:mm:ss");
+
+                    updateMember.Properties["firstName"].Value = model.RegisterAgent.FirstName;
+
+                    updateMember.Properties["lastName"].Value = model.RegisterAgent.LastName;
+
+                    updateMember.Properties["cellNumber"].Value = model.RegisterAgent.CellNumber;
+
+                    updateMember.Properties["agencyPin"].Value = model.RegisterAgency.AgencyPin;
+
+                    updateMember.Properties["agency"].Value = model.RegisterAgency.Agency;
+
+                    updateMember.Properties["isAdmin"].Value = true;
+
+                    //Save changes
+                    membershipService.Save(updateMember);
+                }
+
+                //And cleanup for both agency and agent...------------------------------------------------
+
+                //Send out verification email, with GUID in it
+                EmailHelper email = new EmailHelper();
+                email.SendVerifyEmail(model.RegisterAgent.EmailAddress, tempGUID.ToString());
+
+                //Update success flag (in a TempData key)
+                TempData["IsSuccessful"] = true;
+
+                TempData.Add("CustomMessage", "Your form was successfully submitted at " + DateTime.Now);
 
             }
+
 
 
             //All done - redirect back to page

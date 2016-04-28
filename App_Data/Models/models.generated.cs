@@ -2452,6 +2452,15 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// Is Admin
+		///</summary>
+		[ImplementPropertyType("isAdmin")]
+		public bool IsAdmin
+		{
+			get { return this.GetPropertyValue<bool>("isAdmin"); }
+		}
+
+		///<summary>
 		/// JoinedDate
 		///</summary>
 		[ImplementPropertyType("joinedDate")]
