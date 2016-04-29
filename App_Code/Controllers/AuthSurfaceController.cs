@@ -318,6 +318,9 @@ namespace InShow.Controllers
         public ActionResult HandleRegister(RegisterViewModel model)
         {
 
+            ViewBag.AgencyDropList = new SelectList(new[] { "myVal1", "myVal2", "myVal3" });
+
+
             model = model ?? new RegisterViewModel();
 
             if (model.UserType == "Buyer")

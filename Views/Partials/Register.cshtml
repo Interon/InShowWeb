@@ -2,6 +2,9 @@
 @using Umbraco.Web
 @using InShow.Controllers
 @using InShow.Models
+@using wg2k.umbraco
+
+
 @model RegisterViewModel
 
 <div class='container' style="margin-top:150px;">
@@ -248,6 +251,7 @@
                             <fieldset>
 
                                 <div class="col-sm-6">
+
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.RegisterAgent.FirstName, "First Name", new { @class = "control-label" })
                                         @Html.TextBoxFor(model => model.RegisterAgent.FirstName, new { @class = "form-control", placeholder = "Your first name" })
@@ -271,9 +275,18 @@
                                         @Html.TextBoxFor(model => model.RegisterAgent.CellNumber, new { @class = "form-control", placeholder = "Cell Number" })
                                         @Html.ValidationMessageFor(model => model.RegisterAgent.CellNumber, string.Empty, new { @class = "help-block" })
                                     </div>
+
+
+                                    <div calss="form-group">
+                                        @Html.LabelFor(model => model.RegisterBuyer.FirstName, "Agency", new { @class = "control-label" }) 
+                                        <br />
+                                        <!--Html.DropDownList("AgencyDropList",(SelectList) ViewBag.AgencyDropList)-->
+                                    </div>
+
                                 </div>
 
                                 <div class="col-sm-6">
+
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.RegisterAgent.Agency, "Agency", new { @class = "control-label" })
                                         @Html.TextBoxFor(model => model.RegisterAgent.Agency, new { @class = "form-control", placeholder = "Agency" })
@@ -298,8 +311,9 @@
                                         @Html.ValidationMessageFor(model => model.RegisterAgent.ConfirmPassword, string.Empty, new { @class = "help-block" })
                                     </div>
                                 </div>
-
+                                
                                 <div class="col-sm-12">
+                                    <br /><br />
                                     <button type="submit" name="UserType" value="Agent" class="btn btn-default">Register</button>
                                 </div>
 
