@@ -85,6 +85,7 @@
                             <fieldset>
 
                                 <div class="col-sm-6">
+
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.RegisterBuyer.FirstName, "First Name", new { @class = "control-label" })
                                         @Html.TextBoxFor(model => model.RegisterBuyer.FirstName, new { @class = "form-control", placeholder = "Your first name" })
@@ -131,6 +132,10 @@
 
                         }
                     </div>
+
+                    <ul class="pager wizard">
+                        <li class="previousRedirect" style="float:left"><a href="#">Previous</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -361,9 +366,9 @@
                                     <div class="col-sm-6">
                                         <p>Agency Information</p>
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.RegisterAgency.Agency, "Company Name", new { @class = "control-label" })
-                                            @Html.TextBoxFor(model => model.RegisterAgency.Agency, new { @class = "form-control", placeholder = "Agency" })
-                                            @Html.ValidationMessageFor(model => model.RegisterAgency.Agency, string.Empty, new { @class = "help-block" })
+                                            @Html.LabelFor(model => model.RegisterAgency.Name, "Company Name", new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.RegisterAgency.Name, new { @class = "form-control", placeholder = "Agency" })
+                                            @Html.ValidationMessageFor(model => model.RegisterAgency.Name, string.Empty, new { @class = "help-block" })
                                         </div>
 
                                         <div class="form-group">
@@ -397,10 +402,11 @@
                             </div>
 
                     <ul class="pager wizard">
-                        <li class="previous first" style="display:none;"><a href="#">First</a></li>
-                        <li class="previous"><a href="#">Previous</a></li>
+                        <li class="previous"><a href="#">Previous</a></li>                       
+                        <li class="previousRedirect" style="display:none; float:left"><a href="#">Previous</a></li>
                         <li class="next last" style="display:none;"><a href="#">Last</a></li>
                         <li class="next"><a href="#">Next</a></li>
+                        <li class="finish" style="display:none;"><a href="javascript:;">Finish</a></li>
                     </ul>
 
                 </div>
@@ -411,48 +417,6 @@
 
     }
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -486,9 +450,16 @@
                 var $current = index + 1;
                 var $percent = ($current / $total) * 100;
                 $('#rootwizardSellers .progress-bar').css({ width: $percent + '%' });
+                if (index === 0) {
+                    $(".previous").css("display", "none");
+                    $(".previousRedirect").css("display", "inline");
+                } else {
+                    $(".previous").css("display", "inline");
+                    $(".previousRedirect").css("display", "none");
+                }
+                console.log(index);
             }
         });
-
 
 
         $('#rootwizardSellers .private').click(function () {
@@ -503,19 +474,27 @@
             $('#rootwizardSellers').find("a[href*='tab4']").trigger('click');
         });
 
+
+        $('.previousRedirect').click(function () {
+            document.getElementById('members').style.display = 'inline';
+            document.getElementById('seller').style.display = 'none';
+            document.getElementById('buyer').style.display = 'none';
+
+        });
+
+
+
+
+
+
+
     });
-
-
-
-
-
-
 
 
 
     function toggleMember(member) {
 
-        alert(member);
+        
         console.log(member);
 
         if (member === 'buyer') {

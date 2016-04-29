@@ -11,6 +11,21 @@ using AutoMapper.Internal;
 namespace InShow.Models
 {
 
+    ////Debugmodeon
+
+    public class CreateUserModel
+    {
+        [Required]
+        [StringLength(6, MinimumLength = 3)]
+        [Remote("IsUID_Available", "Validation")]
+        [RegularExpression(@"(\S)+", ErrorMessage = "White space is not allowed.")]
+        [Editable(true)]
+        string UserName { get; set; }
+    }
+
+
+
+
 
     /// <summary>
     /// Login View Model
@@ -58,7 +73,7 @@ namespace InShow.Models
         public RegisterPrivateSeller RegisterPrivateSeller { get; set; }
         public RegisterAgent RegisterAgent { get; set; }
         public RegisterAgency RegisterAgency { get; set; }
-    
+
     }
 
 
@@ -78,7 +93,7 @@ namespace InShow.Models
         [DisplayName("Email address")]
         [Required(ErrorMessage = "Please enter your email address")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        //[Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
+        [Remote("CheckEmailIsUsed", "AuthSurface", HttpMethod = "POST", ErrorMessage = "The email address has already been registered")]
         public string EmailAddress { get; set; }
 
         [DataType(DataType.Password)]
@@ -90,6 +105,8 @@ namespace InShow.Models
         [Required(ErrorMessage = "Please enter your password")]
         [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Your passwords do not match")]
         public string ConfirmPassword { get; set; }
+
+
 
     }
 
@@ -108,7 +125,7 @@ namespace InShow.Models
         [DisplayName("Email address")]
         [Required(ErrorMessage = "Please enter your email address")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        //[Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
+        [Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
         public string EmailAddress { get; set; }
 
         [DataType(DataType.Password)]
@@ -144,7 +161,7 @@ namespace InShow.Models
         [DisplayName("Email address")]
         [Required(ErrorMessage = "Please enter your email address")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        //[Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
+        [Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
         public string EmailAddress { get; set; }
 
         [DataType(DataType.Password)]

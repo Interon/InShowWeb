@@ -1,0 +1,4 @@
+﻿
+
+registerMember ver. 0.15
+client validation, controller bugs, email verification
