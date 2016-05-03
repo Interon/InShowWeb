@@ -859,16 +859,23 @@ namespace InShow.Controllers
         /// </summary>
         /// <param name="emailAddress"></param>
         /// <returns></returns>
-        public JsonResult CheckEmailIsUsed(string EmailAddress)
+        public JsonResult CheckEmailIsUsed()
         {
-            System.Diagnostics.Debug.WriteLine("aarararagagagagggaga!!!!" + EmailAddress);
-            //Try and get member by email typed in
-            var checkEmail = Members.GetByEmail(EmailAddress);
-
-            if (checkEmail != null)
+            foreach (String key in Request.Params.AllKeys)
             {
-                return Json(String.Format("The email address '{0}' is already in use.", EmailAddress), JsonRequestBehavior.AllowGet);
+                if(key.Contains("EmailAddress"))
+                    {
+                    var checkEmail = Members.GetByEmail (Request.Params[key]);
+                    if (checkEmail != null)
+                    {
+                        return Json(String.Format("The email address '{0}' is already in use.", Request.Params[key].ToString()), JsonRequestBehavior.AllowGet);
+                    }
+                }
             }
+            //Try and get member by email typed in
+           
+
+            
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
