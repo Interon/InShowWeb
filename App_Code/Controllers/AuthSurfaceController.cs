@@ -769,7 +769,7 @@ namespace InShow.Controllers
 
                     updateMember.Properties["agencyPin"].Value = model.RegisterAgency.AgencyPin;
 
-                    updateMember.Properties["agency"].Value = model.RegisterAgency.Agency;
+                    updateMember.Properties["agency"].Value = model.RegisterAgency.Name;
 
                     updateMember.Properties["isAdmin"].Value = true;
 
