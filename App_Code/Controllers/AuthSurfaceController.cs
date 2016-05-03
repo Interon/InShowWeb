@@ -318,6 +318,9 @@ namespace InShow.Controllers
         public ActionResult HandleRegister(RegisterViewModel model)
         {
 
+            ViewBag.AgencyDropList = new SelectList(new[] { "myVal1", "myVal2", "myVal3" });
+
+
             model = model ?? new RegisterViewModel();
 
             if (model.UserType == "Buyer")
@@ -650,6 +653,7 @@ namespace InShow.Controllers
                     // WARNING: update to your desired MembertypeAlias...
                     var createMember = membershipService.CreateMember(model.RegisterAgency.EmailAddress, model.RegisterAgency.EmailAddress, model.RegisterAgency.Name , "agency");
 
+
                     //Set the verified email to false
                     createMember.Properties["hasVerifiedEmail"].Value = false;
 
@@ -661,6 +665,8 @@ namespace InShow.Controllers
                 }
                 catch (Exception ex)
                 {
+
+                    Console.WriteLine(ex.ToString());
                     //EG: Duplicate email address - already exists
                     ModelState.AddModelError("memberCreation", ex.Message);
 
@@ -686,10 +692,10 @@ namespace InShow.Controllers
 
                     updateMember.Properties["agencyPin"].Value = model.RegisterAgency.AgencyPin;
 
-                    updateMember.Properties["agency"].Value = model.RegisterAgency.Name;
+                    updateMember.Properties["agencyName"].Value = model.RegisterAgency.Name;
 
                     //Put the registration of the agent admin after agent member has been created. Here temporarilly for testing.
-                    updateMember.Properties["agent"].Value = model.RegisterAgent.EmailAddress;
+                    updateMember.Properties["agencyAdminEmail"].Value = model.RegisterAgent.EmailAddress;
 
                     //Save changes
                     membershipService.Save(updateMember);
@@ -704,7 +710,8 @@ namespace InShow.Controllers
                 //Update success flag (in a TempData key)
                 TempData["IsSuccessful"] = true;
 
-                TempData.Add("CustomMessage", "Your form was successfully submitted at " + DateTime.Now);
+                //TempData.Add("CustomMessage", "Your form was successfully submitted at " + DateTime.Now);
+
 
                 agencyCheck = true;
             }
@@ -727,7 +734,10 @@ namespace InShow.Controllers
                 {
                     //Member createMember = Member.MakeNew(model.Name, model.EmailAddress, model.EmailAddress, umbJobMemberType, umbUser);
                     // WARNING: update to your desired MembertypeAlias...
-                    var createMember = membershipService.CreateMember(model.RegisterAgent.EmailAddress, model.RegisterAgent.EmailAddress, model.RegisterAgent.Agency, "agent");
+                    //var createMember = membershipService.CreateMember(model.RegisterAgent.EmailAddress, model.RegisterAgent.EmailAddress, model.RegisterAgent.Agency, "agent");
+                    var createMember = membershipService.CreateMember(model.RegisterAgent.EmailAddress, model.RegisterAgent.EmailAddress, model.RegisterAgent.FirstName + " " + model.RegisterAgent.LastName, "agent");
+
+
 
                     //Set the verified email to false
                     createMember.Properties["hasVerifiedEmail"].Value = false;
@@ -740,6 +750,9 @@ namespace InShow.Controllers
                 }
                 catch (Exception ex)
                 {
+
+                    Console.WriteLine(ex.ToString());
+
                     //EG: Duplicate email address - already exists
                     ModelState.AddModelError("memberCreation", ex.Message);
 
@@ -769,7 +782,7 @@ namespace InShow.Controllers
 
                     updateMember.Properties["agencyPin"].Value = model.RegisterAgency.AgencyPin;
 
-                    updateMember.Properties["agency"].Value = model.RegisterAgency.Name;
+                    updateMember.Properties["agencyName"].Value = model.RegisterAgency.Name;
 
                     updateMember.Properties["isAdmin"].Value = true;
 
@@ -846,17 +859,44 @@ namespace InShow.Controllers
         /// </summary>
         /// <param name="emailAddress"></param>
         /// <returns></returns>
-        public JsonResult CheckEmailIsUsed(string emailAddress)
+        public JsonResult CheckEmailIsUsed(string EmailAddress)
         {
+            System.Diagnostics.Debug.WriteLine("aarararagagagagggaga!!!!" + EmailAddress);
             //Try and get member by email typed in
-            var checkEmail = Members.GetByEmail(emailAddress);
+            var checkEmail = Members.GetByEmail(EmailAddress);
 
             if (checkEmail != null)
             {
-                return Json(String.Format("The email address '{0}' is already in use.", emailAddress), JsonRequestBehavior.AllowGet);
+                return Json(String.Format("The email address '{0}' is already in use.", EmailAddress), JsonRequestBehavior.AllowGet);
             }
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
+
+
+
+
+
+
+
+
+        public JsonResult IsUID_Available(string Username)
+        {
+
+            System.Diagnostics.Debug.WriteLine("yadayadayada " + Username);
+            
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+
+
+
+
+
+
+
     }
 }

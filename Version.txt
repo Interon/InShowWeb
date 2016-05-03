@@ -1,0 +1,4 @@
+﻿
+
+registerMember ver. 0.16
+member fields added to match on local and on server, droplist of agencies on agent registration
