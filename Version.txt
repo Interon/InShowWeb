@@ -1,4 +1,4 @@
 ﻿
 
-registerMember ver. 0.17
-Email Verification
+registerMember ver. 0.18
+register agency mvc to exclude agent registartion, partial completion of emial GUID verification

@@ -276,13 +276,6 @@
                                         @Html.ValidationMessageFor(model => model.RegisterAgent.CellNumber, string.Empty, new { @class = "help-block" })
                                     </div>
 
-
-                                    <div calss="form-group">
-                                        @Html.LabelFor(model => model.RegisterBuyer.FirstName, "Agency", new { @class = "control-label" }) 
-                                        <br />
-                                        <!--Html.DropDownList("AgencyDropList",(SelectList) ViewBag.AgencyDropList)-->
-                                    </div>
-
                                 </div>
 
                                 <div class="col-sm-6">
@@ -332,69 +325,19 @@
 
                             <h1>Agency Form</h1>
 
-                                <p>Please Note: In addition to registering a realestate agency, kindly register a realestate agent who will act as the administrator to the agency</p>
-
+                                <p>Please Register an agency in order to add members to it.</p>
 
                                 <fieldset>
-
                                     <div class="col-sm-6">
-                                        <p>Your Information:</p>
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.RegisterAgent.FirstName, "First Name", new { @class = "control-label" })
-                                            @Html.TextBoxFor(model => model.RegisterAgent.FirstName, new { @class = "form-control", placeholder = "Your first name" })
-                                            @Html.ValidationMessageFor(model => model.RegisterAgent.FirstName, string.Empty, new { @class = "help-block" })
-                                        </div>
-
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.RegisterAgent.LastName, "Last Name", new { @class = "control-label" })
-                                            @Html.TextBoxFor(model => model.RegisterAgent.LastName, new { @class = "form-control", placeholder = "Your surname" })
-                                            @Html.ValidationMessageFor(model => model.RegisterAgent.LastName, string.Empty, new { @class = "help-block" })
-                                        </div>
-
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.RegisterAgent.EmailAddress, "Email address", new { @class = "control-label" })
-                                            @Html.TextBoxFor(model => model.RegisterAgent.EmailAddress, new { @class = "form-control", placeholder = "Email Address" })
-                                            @Html.ValidationMessageFor(model => model.RegisterAgent.EmailAddress, string.Empty, new { @class = "help-block" })
-                                        </div>
-
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.RegisterAgent.CellNumber, "Cell Number", new { @class = "control-label" })
-                                            @Html.TextBoxFor(model => model.RegisterAgent.CellNumber, new { @class = "form-control", placeholder = "Cell Number" })
-                                            @Html.ValidationMessageFor(model => model.RegisterAgent.CellNumber, string.Empty, new { @class = "help-block" })
-                                        </div>
-
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.RegisterAgent.Password, "Password", new { @class = "control-label" })
-                                            @Html.PasswordFor(model => model.RegisterAgent.Password, new { @class = "form-control", placeholder = "Password" })
-                                            @Html.ValidationMessageFor(model => model.RegisterAgent.Password, string.Empty, new { @class = "help-block" })
-                                        </div>
-
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.RegisterAgent.ConfirmPassword, "Confirm password", new { @class = "control-label" })
-                                            @Html.PasswordFor(model => model.RegisterAgent.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
-                                            @Html.ValidationMessageFor(model => model.RegisterAgent.ConfirmPassword, string.Empty, new { @class = "help-block" })
-                                        </div>
-
-                                    </div>
-
-                                    <div class="col-sm-6">
-                                        <p>Agency Information</p>
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.RegisterAgency.Name, "Company Name", new { @class = "control-label" })
                                             @Html.TextBoxFor(model => model.RegisterAgency.Name, new { @class = "form-control", placeholder = "Agency" })
                                             @Html.ValidationMessageFor(model => model.RegisterAgency.Name, string.Empty, new { @class = "help-block" })
                                         </div>
-
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.RegisterAgency.AgencyPin, "Agency Pin", new { @class = "control-label" })
                                             @Html.TextBoxFor(model => model.RegisterAgency.AgencyPin, new { @class = "form-control", placeholder = "Agency Pin" })
                                             @Html.ValidationMessageFor(model => model.RegisterAgency.AgencyPin, string.Empty, new { @class = "help-block" })
-                                        </div>
-
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.RegisterAgency.CellNumber, "Company Telephone Number", new { @class = "control-label" })
-                                            @Html.TextBoxFor(model => model.RegisterAgency.CellNumber, new { @class = "form-control", placeholder = "Company Telephone Number" })
-                                            @Html.ValidationMessageFor(model => model.RegisterAgency.CellNumber, string.Empty, new { @class = "help-block" })
                                         </div>
 
                                         <div class="form-group">
@@ -404,12 +347,28 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.RegisterAgency.CellNumber, "Company Telephone Number", new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.RegisterAgency.CellNumber, new { @class = "form-control", placeholder = "Company Telephone Number" })
+                                            @Html.ValidationMessageFor(model => model.RegisterAgency.CellNumber, string.Empty, new { @class = "help-block" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.RegisterAgency.Password, "Password", new { @class = "control-label" })
+                                            @Html.PasswordFor(model => model.RegisterAgency.Password, new { @class = "form-control", placeholder = "Password" })
+                                            @Html.ValidationMessageFor(model => model.RegisterAgency.Password, string.Empty, new { @class = "help-block" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.RegisterAgency.ConfirmPassword, "Confirm password", new { @class = "control-label" })
+                                            @Html.PasswordFor(model => model.RegisterAgency.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
+                                            @Html.ValidationMessageFor(model => model.RegisterAgency.ConfirmPassword, string.Empty, new { @class = "help-block" })
+                                        </div>
+                                    </div>
+
                                     <div class="col-sm-12">
                                         <button type="submit" name="UserType" value="Agency" class="btn btn-default">Register</button>
                                     </div>
-
                                 </fieldset>
-
 
                                 }
 

@@ -11,6 +11,7 @@ using Umbraco.Core.Persistence.Querying;
 using Umbraco.Web.Mvc;
 using System.Collections.Generic;
 
+
 namespace InShow.Controllers
 {
     public class AuthSurfaceController : SurfaceController
@@ -420,13 +421,45 @@ namespace InShow.Controllers
 
                     //Send verification Email
 
+                    //Create temporary GUID
+                    var tempGUID = Guid.NewGuid();
+
+                    //Fetch our new member we created by their email
+                    var updateMember = membershipService.GetByEmail(model.RegisterBuyer.EmailAddress);
+
+                    //Just to be sure...
+                    if (updateMember != null)
+                    {
+                        //Set the verification email GUID value on the member
+                        updateMember.Properties["emailVerifyGUID"].Value = tempGUID.ToString();
+
+                        //Set the Joined Date label on the member
+                        updateMember.Properties["joinedDate"].Value = DateTime.Now.ToString("dd/MM/yyyy @ HH:mm:ss");
+
+                        updateMember.Properties["firstName"].Value = model.RegisterBuyer.FirstName;
+
+                        updateMember.Properties["lastName"].Value = model.RegisterBuyer.LastName;
+
+                        updateMember.Properties["cellNumber"].Value = model.RegisterBuyer.CellNumber;
+
+                        //Save changes
+                        membershipService.Save(updateMember);
+                    }
+                    
 
                     int emailNodeToSend = 1521; //umbraco Email node ID.
+                    String BuyerName = model.RegisterBuyer.FirstName + " " + model.RegisterBuyer.LastName;
+                    //Verify link
+                    string baseURL = System.Web.HttpContext.Current.Request.Url.AbsoluteUri.Replace(System.Web.HttpContext.Current.Request.Url.AbsolutePath, string.Empty);
+                    var verifyURL = baseURL + "/verify-email?verifyGUID=" + tempGUID.ToString();
 
                     List<PerplexMail.EmailTag> listOfTags = new List<PerplexMail.EmailTag>();
                     listOfTags.Add(new PerplexMail.EmailTag("[#email#]", model.RegisterBuyer.EmailAddress));
-                    listOfTags.Add(new PerplexMail.EmailTag("[#firstName#]", model.RegisterBuyer.FirstName));
-                    listOfTags.Add(new PerplexMail.EmailTag("[#lastName#]", model.RegisterBuyer.LastName));
+                    listOfTags.Add(new PerplexMail.EmailTag("[#name#]", BuyerName));
+                    listOfTags.Add(new PerplexMail.EmailTag("[#GUID#]", verifyURL));
+
+                    PerplexMail.Email.SendUmbracoEmail(emailNodeToSend, listOfTags);
+
 
 
                     //var emailTags = new List<PerplexMail.EmailTag>()
@@ -435,9 +468,6 @@ namespace InShow.Controllers
                     //    new PerplexMail.EmailTag("[#firstName#]", model.RegisterBuyer.FirstName),
                     //    new PerplexMail.EmailTag("[#lastName#]", model.RegisterBuyer.LastName),
                     //    };
-
-
-                    PerplexMail.Email.SendUmbracoEmail(emailNodeToSend, listOfTags);
                     
                 }
                 catch (Exception ex)
@@ -448,34 +478,9 @@ namespace InShow.Controllers
                     return CurrentUmbracoPage();
                 }
 
-                //Create temporary GUID
-                var tempGUID = Guid.NewGuid();
-
-                //Fetch our new member we created by their email
-                var updateMember = membershipService.GetByEmail(model.RegisterBuyer.EmailAddress);
-
-                //Just to be sure...
-                if (updateMember != null)
-                {
-                    //Set the verification email GUID value on the member
-                    updateMember.Properties["emailVerifyGUID"].Value = tempGUID.ToString();
-
-                    //Set the Joined Date label on the member
-                    updateMember.Properties["joinedDate"].Value = DateTime.Now.ToString("dd/MM/yyyy @ HH:mm:ss");
-
-                    updateMember.Properties["firstName"].Value = model.RegisterBuyer.FirstName;
-
-                    updateMember.Properties["lastName"].Value = model.RegisterBuyer.LastName;
-
-                    updateMember.Properties["cellNumber"].Value = model.RegisterBuyer.CellNumber;
-
-                    //Save changes
-                    membershipService.Save(updateMember);
-                }
-
                 //Send out verification email, with GUID in it
-                EmailHelper email = new EmailHelper();
-                email.SendVerifyEmail(model.RegisterBuyer.EmailAddress, tempGUID.ToString());
+                //EmailHelper email = new EmailHelper();
+                //email.SendVerifyEmail(model.RegisterBuyer.EmailAddress, tempGUID.ToString());
 
                 //Update success flag (in a TempData key)
                 TempData["IsSuccessful"] = true;
@@ -517,6 +522,18 @@ namespace InShow.Controllers
 
                     //Set password on the newly created member
                     membershipService.SavePassword(createMember, model.RegisterPrivateSeller.Password);
+
+                    //Send verification Email
+
+                    int emailNodeToSend = 1521; //umbraco Email node ID.
+                    String PrivateSellerName = model.RegisterPrivateSeller.FirstName + " " + model.RegisterPrivateSeller.LastName;
+
+                    List<PerplexMail.EmailTag> listOfTags = new List<PerplexMail.EmailTag>();
+                    listOfTags.Add(new PerplexMail.EmailTag("[#email#]", model.RegisterPrivateSeller.EmailAddress));
+                    listOfTags.Add(new PerplexMail.EmailTag("[#name#]", PrivateSellerName));
+
+                    PerplexMail.Email.SendUmbracoEmail(emailNodeToSend, listOfTags);
+
                 }
                 catch (Exception ex)
                 {
@@ -595,6 +612,18 @@ namespace InShow.Controllers
 
                     //Set password on the newly created member
                     membershipService.SavePassword(createMember, model.RegisterAgent.Password);
+
+                    //Send verification Email
+
+                    int emailNodeToSend = 1521; //umbraco Email node ID.
+                    String RegisterAgentName = model.RegisterAgent.FirstName + " " + model.RegisterAgent.FirstName;
+
+                    List<PerplexMail.EmailTag> listOfTags = new List<PerplexMail.EmailTag>();
+                    listOfTags.Add(new PerplexMail.EmailTag("[#email#]", model.RegisterAgent.EmailAddress));
+                    listOfTags.Add(new PerplexMail.EmailTag("[#name#]", RegisterAgentName));
+
+                    PerplexMail.Email.SendUmbracoEmail(emailNodeToSend, listOfTags);
+
                 }
                 catch (Exception ex)
                 {
@@ -647,7 +676,7 @@ namespace InShow.Controllers
 
             }
 
-            Boolean agencyCheck = false;
+            //Boolean agencyCheck = false;
 
             //Its the final step, do some saving
             if (model.StepIndex == 4)
@@ -678,7 +707,18 @@ namespace InShow.Controllers
                     membershipService.Save(createMember);
 
                     //Set password on the newly created member
-                    membershipService.SavePassword(createMember, model.RegisterAgent.Password);
+                    membershipService.SavePassword(createMember, model.RegisterAgency.Password);
+
+                    //Send verification Email
+
+                    int emailNodeToSend = 1521; //umbraco Email node ID.
+
+                    List<PerplexMail.EmailTag> listOfTags = new List<PerplexMail.EmailTag>();
+                    listOfTags.Add(new PerplexMail.EmailTag("[#email#]", model.RegisterAgency.EmailAddress));
+                    listOfTags.Add(new PerplexMail.EmailTag("[#name#]", model.RegisterAgency.Name));
+
+                    PerplexMail.Email.SendUmbracoEmail(emailNodeToSend, listOfTags);
+
                 }
                 catch (Exception ex)
                 {
@@ -727,108 +767,104 @@ namespace InShow.Controllers
                 //Update success flag (in a TempData key)
                 TempData["IsSuccessful"] = true;
 
-                //TempData.Add("CustomMessage", "Your form was successfully submitted at " + DateTime.Now);
+                TempData.Add("CustomMessage", "Your form was successfully submitted at " + DateTime.Now);
 
 
-                agencyCheck = true;
+                //agencyCheck = true;
             }
 
-            if (agencyCheck)
-            {
-                var membershipService = ApplicationContext.Current.Services.MemberService;
+            //if (agencyCheck)
+            //{
+            //    var membershipService = ApplicationContext.Current.Services.MemberService;
 
-                if (!ModelState.IsValid)
-                {
+            //    if (!ModelState.IsValid)
+            //    {
                     //return PartialView("Register", model);
-                    return CurrentUmbracoPage();
-                }
+            //        return CurrentUmbracoPage();
+            //    }
 
 
                 //Then Create an Admin Agent...---------------------------------------------------------
 
                 //Model valid let's create the member
-                try
-                {
+           //     try
+           //     {
                     //Member createMember = Member.MakeNew(model.Name, model.EmailAddress, model.EmailAddress, umbJobMemberType, umbUser);
                     // WARNING: update to your desired MembertypeAlias...
                     //var createMember = membershipService.CreateMember(model.RegisterAgent.EmailAddress, model.RegisterAgent.EmailAddress, model.RegisterAgent.Agency, "agent");
-                    var createMember = membershipService.CreateMember(model.RegisterAgent.EmailAddress, model.RegisterAgent.EmailAddress, model.RegisterAgent.FirstName + " " + model.RegisterAgent.LastName, "agent");
+           //         var createMember = membershipService.CreateMember(model.RegisterAgent.EmailAddress, model.RegisterAgent.EmailAddress, model.RegisterAgent.FirstName + " " + model.RegisterAgent.LastName, "agent");
 
 
 
                     //Set the verified email to false
-                    createMember.Properties["hasVerifiedEmail"].Value = false;
+           //         createMember.Properties["hasVerifiedEmail"].Value = false;
 
                     //Save the changes, if we do not do so, we cannot save the password.
-                    membershipService.Save(createMember);
+           //         membershipService.Save(createMember);
 
                     //Set password on the newly created member
-                    membershipService.SavePassword(createMember, model.RegisterAgent.Password);
-                }
-                catch (Exception ex)
-                {
+           //         membershipService.SavePassword(createMember, model.RegisterAgent.Password);
+           //     }
+           //     catch (Exception ex)
+           //     {
 
-                    Console.WriteLine(ex.ToString());
+           //         Console.WriteLine(ex.ToString());
 
                     //EG: Duplicate email address - already exists
-                    ModelState.AddModelError("memberCreation", ex.Message);
+           //         ModelState.AddModelError("memberCreation", ex.Message);
 
-                    return CurrentUmbracoPage();
-                }
+           //         return CurrentUmbracoPage();
+           //     }
 
                 //Create temporary GUID
-                var tempGUID = Guid.NewGuid();
+           //     var tempGUID = Guid.NewGuid();
 
                 //Fetch our new member we created by their email
-                var updateMember = membershipService.GetByEmail(model.RegisterAgent.EmailAddress);
+           //     var updateMember = membershipService.GetByEmail(model.RegisterAgent.EmailAddress);
 
                 //Just to be sure...
-                if (updateMember != null)
-                {
+           //     if (updateMember != null)
+           //     {
                     //Set the verification email GUID value on the member
-                    updateMember.Properties["emailVerifyGUID"].Value = tempGUID.ToString();
+           //          updateMember.Properties["emailVerifyGUID"].Value = tempGUID.ToString();
 
                     //Set the Joined Date label on the member
-                    updateMember.Properties["joinedDate"].Value = DateTime.Now.ToString("dd/MM/yyyy @ HH:mm:ss");
+           //         updateMember.Properties["joinedDate"].Value = DateTime.Now.ToString("dd/MM/yyyy @ HH:mm:ss");
 
-                    updateMember.Properties["firstName"].Value = model.RegisterAgent.FirstName;
+           //         updateMember.Properties["firstName"].Value = model.RegisterAgent.FirstName;
 
-                    updateMember.Properties["lastName"].Value = model.RegisterAgent.LastName;
+           //         updateMember.Properties["lastName"].Value = model.RegisterAgent.LastName;
 
-                    updateMember.Properties["cellNumber"].Value = model.RegisterAgent.CellNumber;
+          //          updateMember.Properties["cellNumber"].Value = model.RegisterAgent.CellNumber;
 
-                    updateMember.Properties["agencyPin"].Value = model.RegisterAgency.AgencyPin;
+          //          updateMember.Properties["agencyPin"].Value = model.RegisterAgency.AgencyPin;
 
-                    updateMember.Properties["agencyName"].Value = model.RegisterAgency.Name;
+          //          updateMember.Properties["agencyName"].Value = model.RegisterAgency.Name;
 
-                    updateMember.Properties["isAdmin"].Value = true;
+          //          updateMember.Properties["isAdmin"].Value = true;
 
                     //Save changes
-                    membershipService.Save(updateMember);
-                }
+          //          membershipService.Save(updateMember);
+          //      }
 
                 //And cleanup for both agency and agent...------------------------------------------------
 
                 //Send out verification email, with GUID in it
-                EmailHelper email = new EmailHelper();
-                email.SendVerifyEmail(model.RegisterAgent.EmailAddress, tempGUID.ToString());
+         //      EmailHelper email = new EmailHelper();
+         //       email.SendVerifyEmail(model.RegisterAgent.EmailAddress, tempGUID.ToString());
 
                 //Update success flag (in a TempData key)
-                TempData["IsSuccessful"] = true;
+         //       TempData["IsSuccessful"] = true;
 
-                TempData.Add("CustomMessage", "Your form was successfully submitted at " + DateTime.Now);
+         //       TempData.Add("CustomMessage", "Your form was successfully submitted at " + DateTime.Now);
 
-            }
+         //   }
 
 
 
             //All done - redirect back to page
             return CurrentUmbracoPage();
         }
-
-
-
-
 
 
         /// <summary>
@@ -898,12 +934,6 @@ namespace InShow.Controllers
         }
 
 
-
-
-
-
-
-
         public JsonResult IsUID_Available(string Username)
         {
 
@@ -911,16 +941,6 @@ namespace InShow.Controllers
             
             return Json(true, JsonRequestBehavior.AllowGet);
         }
-
-
-
-
-
-
-
-
-
-
 
     }
 }
