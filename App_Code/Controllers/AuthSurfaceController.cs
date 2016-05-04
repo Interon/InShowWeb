@@ -9,6 +9,7 @@ using InShow.Models;
 using Umbraco.Core;
 using Umbraco.Core.Persistence.Querying;
 using Umbraco.Web.Mvc;
+using System.Collections.Generic;
 
 namespace InShow.Controllers
 {
@@ -347,7 +348,7 @@ namespace InShow.Controllers
 
             //ignore validation or saving data when going backwards
             if (model.Previous)
-                return CurrentUmbracoPage();
+                return RedirectToCurrentUmbracoPage();
 
             var validationStep = string.Empty;
 
@@ -379,7 +380,7 @@ namespace InShow.Controllers
             if (!ModelState.IsValid)
             {
                 //return PartialView("Register", model);
-                return CurrentUmbracoPage();
+                return null;
             }
 
             //Its the final step, do some saving
@@ -401,12 +402,6 @@ namespace InShow.Controllers
 
                 var membershipService = ApplicationContext.Current.Services.MemberService;
 
-                if (!ModelState.IsValid)
-                {
-                    //return PartialView("Register", model);
-                    return CurrentUmbracoPage();
-                }
-
                 //Model valid let's create the member
                 try
                 {
@@ -422,6 +417,28 @@ namespace InShow.Controllers
 
                     //Set password on the newly created member
                     membershipService.SavePassword(createMember, model.RegisterBuyer.Password);
+
+                    //Send verification Email
+
+
+                    int emailNodeToSend = 1521; //umbraco Email node ID.
+
+                    List<PerplexMail.EmailTag> listOfTags = new List<PerplexMail.EmailTag>();
+                    listOfTags.Add(new PerplexMail.EmailTag("[#email#]", model.RegisterBuyer.EmailAddress));
+                    listOfTags.Add(new PerplexMail.EmailTag("[#firstName#]", model.RegisterBuyer.FirstName));
+                    listOfTags.Add(new PerplexMail.EmailTag("[#lastName#]", model.RegisterBuyer.LastName));
+
+
+                    //var emailTags = new List<PerplexMail.EmailTag>()
+                    //    {
+                    //    new PerplexMail.EmailTag("[#email#]", model.RegisterBuyer.EmailAddress),
+                    //    new PerplexMail.EmailTag("[#firstName#]", model.RegisterBuyer.FirstName),
+                    //    new PerplexMail.EmailTag("[#lastName#]", model.RegisterBuyer.LastName),
+                    //    };
+
+
+                    PerplexMail.Email.SendUmbracoEmail(emailNodeToSend, listOfTags);
+                    
                 }
                 catch (Exception ex)
                 {
