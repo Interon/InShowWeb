@@ -90,6 +90,12 @@
                                 <div class="col-sm-6">
 
                                     <div class="form-group">
+                                        @Html.LabelFor(model => model.RegisterBuyer.UserName, "User Name", new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.RegisterBuyer.UserName, new { @class = "form-control", placeholder = "Your first name" })
+                                        @Html.ValidationMessageFor(model => model.RegisterBuyer.UserName, string.Empty, new { @class = "help-block" })
+                                    </div>
+
+                                    <div class="form-group">
                                         @Html.LabelFor(model => model.RegisterBuyer.FirstName, "First Name", new { @class = "control-label" })
                                         @Html.TextBoxFor(model => model.RegisterBuyer.FirstName, new { @class = "form-control", placeholder = "Your first name" })
                                         @Html.ValidationMessageFor(model => model.RegisterBuyer.FirstName, string.Empty, new { @class = "help-block" })

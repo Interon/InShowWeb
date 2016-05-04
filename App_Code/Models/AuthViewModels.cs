@@ -53,6 +53,7 @@ namespace InShow.Models
     /// </summary>
     public class RegisterViewModel
     {
+        
         public RegisterViewModel()
         {
             StepIndex = 0;
@@ -80,6 +81,9 @@ namespace InShow.Models
 
     public class RegisterBuyer
     {
+
+        [Required(ErrorMessage = "Please enter your user name")]
+        public string UserName { get; set; }
 
         [Required(ErrorMessage = "Please enter your first name")]
         public string FirstName { get; set; }
@@ -113,6 +117,9 @@ namespace InShow.Models
     public class RegisterPrivateSeller
     {
 
+        [Required(ErrorMessage = "Please enter your user name")]
+        public string UserName { get; set; }
+
         [Required(ErrorMessage = "Please enter your first name")]
         public string FirstName { get; set; }
 
@@ -142,6 +149,9 @@ namespace InShow.Models
 
     public class RegisterAgent
     {
+
+        [Required(ErrorMessage = "Please enter your user name")]
+        public string UserName { get; set; }
 
         [Required(ErrorMessage = "Please enter your first name")]
         public string FirstName { get; set; }
@@ -178,7 +188,8 @@ namespace InShow.Models
 
     public class RegisterAgency
     {
-        [Required(ErrorMessage = "Please enter your realestate agency")]
+
+        [Required(ErrorMessage = "Please enter your user name")]
         public string Name { get; set; }
        
         [Required(ErrorMessage = "Please enter your realestate agency pin number")]

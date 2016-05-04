@@ -902,7 +902,7 @@ namespace InShow.Controllers
             TempData["IsSuccessful"] = true;
 
             //All sorted let's redirect to root/homepage
-            return PartialView("VerifyEmail");
+            return PartialView("VerifyEmailPartial");
         }
 
 
