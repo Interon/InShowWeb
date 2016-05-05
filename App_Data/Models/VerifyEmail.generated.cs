@@ -18,9 +18,9 @@ using Umbraco.Web;
 using Umbraco.ModelsBuilder;
 using Umbraco.ModelsBuilder.Umbraco;
 
-namespace InShow
+namespace InShow.GenereatedModels
 {
-	/// <summary>__VerifyEmail</summary>
+	/// <summary>Verify Email</summary>
 	[PublishedContentModel("verifyEmail")]
 	public partial class VerifyEmail : Master
 	{

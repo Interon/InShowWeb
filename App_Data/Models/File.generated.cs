@@ -18,7 +18,7 @@ using Umbraco.Web;
 using Umbraco.ModelsBuilder;
 using Umbraco.ModelsBuilder.Umbraco;
 
-namespace InShow
+namespace InShow.GenereatedModels
 {
 	/// <summary>File</summary>
 	[PublishedContentModel("File")]

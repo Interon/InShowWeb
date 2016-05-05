@@ -177,10 +177,11 @@ var membershipService = ApplicationContext.Current.Services.MemberService;
 
                                     @foreach (var nodeid in Model.RegisterAgency.Agents.Split(','))
                                     {
-                                        InShow.ModelWrapper mw = new InShow.ModelWrapper();
+                                        InShow.GenereatedModels.ModelWrapper mw = new InShow.GenereatedModels.ModelWrapper();
                                         var _member = membershipService.GetById(int.Parse(nodeid));
                                         var member = Members.GetById(int.Parse(nodeid));
-                                        mw.agent = new InShow.Agent(member);
+                                        mw.agent = new InShow.GenereatedModels.Agent(member);
+                                        
 
                                          <tr>
                                              <td>
@@ -197,7 +198,7 @@ var membershipService = ApplicationContext.Current.Services.MemberService;
                                              <td>
                                              
                                              </td>
-                                             <td><a data-guid="@_member.Key" uib-tooltip="Impersonate" href="#"><i class="fa fa-user" aria-hidden="true"></i></a></td>
+                                             <td><a data-guid="@_member.Key" uib-tooltip="Edit" href="#"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
                                              <td><a uib-tooltip="Delete" href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                                          </tr>
                                     }

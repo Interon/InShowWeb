@@ -6,10 +6,12 @@ using System.Web;
 /// <summary>
 /// Summary description for ModelWrapper
 /// </summary>
-namespace InShow{
+namespace InShow.GenereatedModels
+{
 
     public class ModelWrapper
     {
+      
        public Agency  agency { get; set; }
        public Agent   agent { get; set; }
 
