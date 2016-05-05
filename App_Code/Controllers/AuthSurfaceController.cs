@@ -58,12 +58,12 @@ namespace InShow.Controllers
             try
             {
                 //Try and login the user...
-                if (Membership.ValidateUser(model.EmailAddress, model.Password))
+                if (Membership.ValidateUser(model.UserName, model.Password))
                 {
                     //Valid credentials
 
                     //Get the member from their email address
-                    var checkMember = membershipService.GetByEmail(model.EmailAddress);
+                    var checkMember = membershipService.GetByUsername(model.UserName);
 
                     //Check the member exists
                     if (checkMember != null)
@@ -97,7 +97,7 @@ namespace InShow.Controllers
 
                             //If they have verified then lets log them in
                             //Set Auth cookie
-                            FormsAuthentication.SetAuthCookie(model.EmailAddress, true);
+                            FormsAuthentication.SetAuthCookie(model.UserName, true);
 
                             //Once logged in - redirect them back to the return URL
                             return new RedirectResult(model.ReturnUrl);

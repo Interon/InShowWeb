@@ -125,13 +125,13 @@ namespace InShow.Controllers
                 {
                     profile.Name = findMember.Name;
 
-                    profile.RegisterAgent.EmailAddress = findMember.Email;
+                    profile.RegisterAgency.EmailAddress = findMember.Email;
                     profile.MemberType = findMember.ContentTypeAlias; //Groups.Values.Cast<MemberGroup>().First().Text;
-                    profile.RegisterAgency.Name = findMember.Properties["agencyName"].Value.ToString();
-                    profile.RegisterAgency.CellNumber = findMember.Properties["cellNumber"].Value.ToString();
-                    //     profile.RegisterAgent.Agency = findMember.Properties["agency"].Value ?? "";
-                    profile.RegisterAgency.AgencyPin = findMember.Properties["agencyPin"].Value.ToString();
-                    profile.RegisterAgency.Logo = findMember.Properties["logo"].Value.ToString();
+                 //   profile.RegisterAgency.Name = findMember.Properties["agencyName"].Value.ToString();
+                    profile.RegisterAgency.CellNumber = findMember.Properties["cellNumber"].Value.StringToNullSafe();
+                    profile.RegisterAgency.Agents = findMember.Properties["agents"].Value.StringToNullSafe();
+                    profile.RegisterAgency.AgencyPin = findMember.Properties["agencyPin"].Value.StringToNullSafe();
+                    profile.RegisterAgency.Logo = findMember.Properties["logo"].Value.StringToNullSafe();
                 }
                 //  profile.Description = findMember.Properties["description"].Value.ToString();
 

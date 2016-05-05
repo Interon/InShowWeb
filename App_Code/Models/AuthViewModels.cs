@@ -7,6 +7,9 @@ using System.Globalization;
 using Umbraco.Web.Models;
 using Umbraco.Web.PublishedContentModels;
 using AutoMapper.Internal;
+using Umbraco.Core.Services;
+using Umbraco.Core;
+
 
 namespace InShow.Models
 {
@@ -32,11 +35,9 @@ namespace InShow.Models
     /// </summary>
     public class LoginViewModel
     {
-        [DisplayName("Email address")]
-        [DataType(DataType.EmailAddress)]
-        [Required(ErrorMessage = "Please enter your email address")]
-        [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        public string EmailAddress { get; set; }
+        [DisplayName("Username")]
+        [Required(ErrorMessage = "Please enter your email Username")]
+        public string UserName { get; set; }
 
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Please enter your password")]
@@ -58,6 +59,37 @@ namespace InShow.Models
             StepIndex = 0;
             RegisterBuyer = new RegisterBuyer();
             RegisterAgent = new RegisterAgent();
+            RegisterAgency = new RegisterAgency();
+        }
+        public RegisterViewModel(int memberId)
+        {
+
+            IMemberService service = ApplicationContext.Current.Services.MemberService;
+            var member = service.GetById(memberId);
+            if (member.ContentTypeAlias == "agent")
+            {
+                RegisterAgent = new RegisterAgent();
+                RegisterAgent.Agency = member.GetValue("agency").ToNullSafeString();
+                RegisterAgent.AgencyPin = member.GetValue("agencyPin").ToNullSafeString();
+                RegisterAgent.CellNumber = member.GetValue("cellNumber").ToNullSafeString();
+                RegisterAgent.EmailAddress = member.Email;
+                RegisterAgent.FirstName = member.GetValue("firstName").ToNullSafeString();
+                RegisterAgent.LastName = member.GetValue("lastName").ToNullSafeString();
+                RegisterAgent.Picture = member.GetValue("picture").ToNullSafeString();
+               
+
+
+
+
+            }
+            if (member.ContentTypeAlias == "buyer")
+            {
+                RegisterBuyer = new RegisterBuyer();
+            }
+            if (member.ContentTypeAlias == "agency")
+            {
+                RegisterAgency = new RegisterAgency();
+            }
         }
         public int Id { get; set; }
         public string Name { get; set; }
@@ -190,7 +222,7 @@ namespace InShow.Models
         public string Logo { get; set; }
         public string AdminAgents { get; set; }
         public int  Credits { get; set; }
-        public int Agents { get; set; }
+        public string Agents { get; set; }
 
         [Required(ErrorMessage = "Please enter your cell number")]
         public string CellNumber { get; set; }

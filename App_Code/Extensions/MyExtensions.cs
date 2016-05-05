@@ -6,9 +6,12 @@ using System.Web;
 /// <summary>
 /// Summary description for _Extensions
 /// </summary>
-namespace ExtensionMethods
-{
-    public static class MyExtensions
+
+    public static class ObjectExtensions
     {
-    }
+        public static string StringToNullSafe(this object obj)
+        {
+            return obj != null ? obj.ToString() : String.Empty;
+        }
+   
 }
