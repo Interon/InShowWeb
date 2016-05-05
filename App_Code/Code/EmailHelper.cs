@@ -89,7 +89,7 @@ namespace InShow.Helpers
 
             // Send the email.
             // below line is uncommented for testing purposes
-            //transportSMTP.Send(myMessage);
+            transportSMTP.Send(myMessage);
         }
     }
 }

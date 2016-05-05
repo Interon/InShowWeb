@@ -54,6 +54,7 @@ namespace InShow.Models
     /// </summary>
     public class RegisterViewModel
     {
+        
         public RegisterViewModel()
         {
             StepIndex = 0;
@@ -113,6 +114,9 @@ namespace InShow.Models
     public class RegisterBuyer
     {
 
+        [Required(ErrorMessage = "Please enter your user name")]
+        public string UserName { get; set; }
+
         [Required(ErrorMessage = "Please enter your first name")]
         public string FirstName { get; set; }
 
@@ -138,12 +142,15 @@ namespace InShow.Models
         [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Your passwords do not match")]
         public string ConfirmPassword { get; set; }
 
-
+   
 
     }
 
     public class RegisterPrivateSeller
     {
+
+        [Required(ErrorMessage = "Please enter your user name")]
+        public string UserName { get; set; }
 
         [Required(ErrorMessage = "Please enter your first name")]
         public string FirstName { get; set; }
@@ -174,6 +181,9 @@ namespace InShow.Models
 
     public class RegisterAgent
     {
+
+        [Required(ErrorMessage = "Please enter your user name")]
+        public string UserName { get; set; }
 
         [Required(ErrorMessage = "Please enter your first name")]
         public string FirstName { get; set; }
@@ -210,15 +220,13 @@ namespace InShow.Models
 
     public class RegisterAgency
     {
-        [Required(ErrorMessage = "Please enter your realestate agency")]
+
+        [Required(ErrorMessage = "Please enter your user name")]
         public string Name { get; set; }
        
-
-
-
-
         [Required(ErrorMessage = "Please enter your realestate agency pin number")]
         public string AgencyPin { get; set; }
+
         public string Logo { get; set; }
         public string AdminAgents { get; set; }
         public int  Credits { get; set; }
@@ -232,6 +240,16 @@ namespace InShow.Models
         [EmailAddress(ErrorMessage = "Please enter a valid email address")]
         [Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
         public string EmailAddress { get; set; }
+
+        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "Please enter your password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [DisplayName("Confirm Password")]
+        [Required(ErrorMessage = "Please enter your password")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Your passwords do not match")]
+        public string ConfirmPassword { get; set; }
 
     }
 
