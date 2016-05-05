@@ -36,11 +36,11 @@ namespace InShow.Models
     public class LoginViewModel
     {
         [DisplayName("Username")]
-        [Required(ErrorMessage = "Please enter your email Username")]
+        [Required(ErrorMessage = "Please enter your Username")]
         public string UserName { get; set; }
 
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Please enter your password")]
+        [Required(ErrorMessage = "Please enter your Password")]
         public string Password { get; set; }
 
         [HiddenInput(DisplayValue = false)]
@@ -114,7 +114,10 @@ namespace InShow.Models
     public class RegisterBuyer
     {
 
+        [DisplayName("User Name")]
         [Required(ErrorMessage = "Please enter your user name")]
+        //Regex for validation
+        [Remote("CheckUserNameIsUsed", "AuthSurface", HttpMethod = "POST", ErrorMessage = "This username has already been registered")]
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Please enter your first name")]
@@ -124,12 +127,13 @@ namespace InShow.Models
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Please enter your cell number")]
+        [RegularExpression("(\\(0\\d\\d\\)\\s\\d{3}[\\s-]+\\d{4})|(0\\d\\d[\\s-]+\\d{3}[\\s-]+\\d{4})|(0\\d{9})|(\\+\\d\\d\\s?[\\(\\s]\\d\\d[\\)\\s]\\s?\\d{3}[\\s-]?\\d{4})", ErrorMessage = "Please enter a valid South African phone number")]
         public string CellNumber { get; set; }
 
         [DisplayName("Email address")]
         [Required(ErrorMessage = "Please enter your email address")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        [Remote("CheckEmailIsUsed", "AuthSurface", HttpMethod = "POST", ErrorMessage = "The email address has already been registered")]
+        //[Remote("CheckEmailIsUsed", "AuthSurface", HttpMethod = "POST", ErrorMessage = "The email address has already been registered")]
         public string EmailAddress { get; set; }
 
         [DataType(DataType.Password)]
@@ -149,7 +153,10 @@ namespace InShow.Models
     public class RegisterPrivateSeller
     {
 
+        [DisplayName("User Name")]
         [Required(ErrorMessage = "Please enter your user name")]
+        //Regex for validation
+        [Remote("CheckUserNameIsUsed", "AuthSurface", HttpMethod = "POST", ErrorMessage = "This username has already been registered")]
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Please enter your first name")]
@@ -159,12 +166,13 @@ namespace InShow.Models
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Please enter your cell number")]
+        [RegularExpression("(\\(0\\d\\d\\)\\s\\d{3}[\\s-]+\\d{4})|(0\\d\\d[\\s-]+\\d{3}[\\s-]+\\d{4})|(0\\d{9})|(\\+\\d\\d\\s?[\\(\\s]\\d\\d[\\)\\s]\\s?\\d{3}[\\s-]?\\d{4})", ErrorMessage = "Please enter a valid South African phone number")]
         public string CellNumber { get; set; }
 
         [DisplayName("Email address")]
         [Required(ErrorMessage = "Please enter your email address")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        [Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
+        //[Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
         public string EmailAddress { get; set; }
 
         [DataType(DataType.Password)]
@@ -182,7 +190,10 @@ namespace InShow.Models
     public class RegisterAgent
     {
 
+        [DisplayName("User Name")]
         [Required(ErrorMessage = "Please enter your user name")]
+        //Regex for validation
+        [Remote("CheckUserNameIsUsed", "AuthSurface", HttpMethod = "POST", ErrorMessage = "This username has already been registered")]
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Please enter your first name")]
@@ -192,6 +203,7 @@ namespace InShow.Models
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Please enter your cell number")]
+        [RegularExpression("(\\(0\\d\\d\\)\\s\\d{3}[\\s-]+\\d{4})|(0\\d\\d[\\s-]+\\d{3}[\\s-]+\\d{4})|(0\\d{9})|(\\+\\d\\d\\s?[\\(\\s]\\d\\d[\\)\\s]\\s?\\d{3}[\\s-]?\\d{4})", ErrorMessage = "Please enter a valid South African phone number")]
         public string CellNumber { get; set; }
 
         [Required(ErrorMessage = "Please enter your realestate agency")]
@@ -203,7 +215,7 @@ namespace InShow.Models
         [DisplayName("Email address")]
         [Required(ErrorMessage = "Please enter your email address")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        [Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
+        //[Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
         public string EmailAddress { get; set; }
 
         [DataType(DataType.Password)]
@@ -221,9 +233,12 @@ namespace InShow.Models
     public class RegisterAgency
     {
 
+        [DisplayName("Agency Name")]
         [Required(ErrorMessage = "Please enter your user name")]
+        //Regex for validation
+        [Remote("CheckUserNameIsUsed", "AuthSurface", HttpMethod = "POST", ErrorMessage = "This username has already been registered")]
         public string Name { get; set; }
-       
+
         [Required(ErrorMessage = "Please enter your realestate agency pin number")]
         public string AgencyPin { get; set; }
 
@@ -233,12 +248,13 @@ namespace InShow.Models
         public string Agents { get; set; }
 
         [Required(ErrorMessage = "Please enter your cell number")]
+        [RegularExpression("(\\(0\\d\\d\\)\\s\\d{3}[\\s-]+\\d{4})|(0\\d\\d[\\s-]+\\d{3}[\\s-]+\\d{4})|(0\\d{9})|(\\+\\d\\d\\s?[\\(\\s]\\d\\d[\\)\\s]\\s?\\d{3}[\\s-]?\\d{4})", ErrorMessage = "Please enter a valid South African phone number")]
         public string CellNumber { get; set; }
 
         [DisplayName("Email address")]
         [Required(ErrorMessage = "Please enter your email address")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        [Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
+        //[Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
         public string EmailAddress { get; set; }
 
         [DataType(DataType.Password)]
