@@ -1,4 +1,4 @@
 ﻿
 
-registerMember ver. 0.20
-username validation, un-hardcode email id;)
+registerMember ver. 0.21
+login fixes
