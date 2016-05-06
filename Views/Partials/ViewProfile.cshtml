@@ -4,6 +4,13 @@
 @{
     @*Layout = "~/views/catsense2014.cshtml";*@
 var membershipService = ApplicationContext.Current.Services.MemberService;
+var contentService = ApplicationContext.Current.Services.ContentService;
+var rootnodes = contentService.GetByLevel(1);
+var Emails = contentService.GetRootContent().Where(x=>x.Name.ToString() == "PerplexMail").First().Descendants().Where(x => x.Name == "Thank you, Perplex!").First();
+
+ //var email = contentService(PerplexMail.id)
+
+
 }
 
 <style type="text/css">

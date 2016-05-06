@@ -3,14 +3,14 @@
 @{ 
 
     var mem = Members.GetCurrentMember();
-    InShow.ModelWrapper mw = new InShow.ModelWrapper();
+    InShow.GenereatedModels.ModelWrapper mw = new InShow.GenereatedModels.ModelWrapper();
     if (mem.DocumentTypeAlias=="agency")
     {
-        mw.agency = new InShow.Agency(mem);
+        mw.agency = new InShow.GenereatedModels.Agency(mem);
     }
     if (mem.DocumentTypeAlias == "agent")
     {
-        mw.agent = new InShow.Agent(mem);
+        mw.agent = new InShow.GenereatedModels.Agent(mem);
     }
 
 
