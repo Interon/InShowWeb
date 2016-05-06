@@ -1,4 +1,4 @@
 ﻿
 
-registerMember ver. 0.19
-GUID verification, register agency mvc to exclude agent registartion, mvc username as unique identifier
+registerMember ver. 0.21
+login fixes

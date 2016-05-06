@@ -10,6 +10,7 @@ using Umbraco.Core;
 using Umbraco.Core.Persistence.Querying;
 using Umbraco.Web.Mvc;
 using System.Collections.Generic;
+using Umbraco.Core.Models;
 
 
 namespace InShow.Controllers
@@ -311,7 +312,6 @@ namespace InShow.Controllers
         public ActionResult RenderRegister(RegisterViewModel model)
         {
 
-
             return PartialView("Register", model);
         }
 
@@ -319,6 +319,17 @@ namespace InShow.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult HandleRegister(RegisterViewModel model)
         {
+
+
+            //create email id
+
+
+            var contentService = ApplicationContext.Current.Services.ContentService;
+
+            var Emails = contentService.GetRootContent().Where(x => x.Name.ToString() == "PerplexMail").First().Descendants().Where(x => x.Name == "Register Member Email").First();
+
+            int emailNodeToSend = Emails.Id; //umbraco Email node ID.
+
 
             ViewBag.AgencyDropList = new SelectList(new[] { "myVal1", "myVal2", "myVal3" });
 
@@ -408,7 +419,7 @@ namespace InShow.Controllers
                 {
                     //Member createMember = Member.MakeNew(model.Name, model.EmailAddress, model.EmailAddress, umbJobMemberType, umbUser);
                     // WARNING: update to your desired MembertypeAlias...
-                    var createMember = membershipService.CreateMember(model.RegisterBuyer.EmailAddress, model.RegisterBuyer.EmailAddress, model.RegisterBuyer.FirstName + " " + model.RegisterBuyer.LastName, "buyer");
+                    var createMember = membershipService.CreateMember(model.RegisterBuyer.UserName, model.RegisterBuyer.EmailAddress, model.RegisterBuyer.FirstName + " " + model.RegisterBuyer.LastName, "buyer");
 
                     //Set the verified email to false
                     createMember.Properties["hasVerifiedEmail"].Value = false;
@@ -447,7 +458,6 @@ namespace InShow.Controllers
                     }
                     
 
-                    int emailNodeToSend = 1521; //umbraco Email node ID.
                     String BuyerName = model.RegisterBuyer.FirstName + " " + model.RegisterBuyer.LastName;
                     //Verify link
                     string baseURL = System.Web.HttpContext.Current.Request.Url.AbsoluteUri.Replace(System.Web.HttpContext.Current.Request.Url.AbsolutePath, string.Empty);
@@ -512,7 +522,7 @@ namespace InShow.Controllers
                 {
                     //Member createMember = Member.MakeNew(model.Name, model.EmailAddress, model.EmailAddress, umbJobMemberType, umbUser);
                     // WARNING: update to your desired MembertypeAlias...
-                    var createMember = membershipService.CreateMember(model.RegisterPrivateSeller.EmailAddress, model.RegisterPrivateSeller.EmailAddress, model.RegisterPrivateSeller.FirstName + " " + model.RegisterPrivateSeller.LastName, "private");
+                    var createMember = membershipService.CreateMember(model.RegisterPrivateSeller.UserName, model.RegisterPrivateSeller.EmailAddress, model.RegisterPrivateSeller.FirstName + " " + model.RegisterPrivateSeller.LastName, "private");
 
                     //Set the verified email to false
                     createMember.Properties["hasVerifiedEmail"].Value = false;
@@ -525,7 +535,7 @@ namespace InShow.Controllers
 
                     //Send verification Email
 
-                    int emailNodeToSend = 1521; //umbraco Email node ID.
+                    
                     String PrivateSellerName = model.RegisterPrivateSeller.FirstName + " " + model.RegisterPrivateSeller.LastName;
 
                     List<PerplexMail.EmailTag> listOfTags = new List<PerplexMail.EmailTag>();
@@ -602,7 +612,7 @@ namespace InShow.Controllers
                 {
                     //Member createMember = Member.MakeNew(model.Name, model.EmailAddress, model.EmailAddress, umbJobMemberType, umbUser);
                     // WARNING: update to your desired MembertypeAlias...
-                    var createMember = membershipService.CreateMember(model.RegisterAgent.EmailAddress, model.RegisterAgent.EmailAddress, model.RegisterAgent.FirstName + " " + model.RegisterAgent.LastName, "agent");
+                    var createMember = membershipService.CreateMember(model.RegisterAgent.UserName, model.RegisterAgent.EmailAddress, model.RegisterAgent.FirstName + " " + model.RegisterAgent.LastName, "agent");
 
                     //Set the verified email to false
                     createMember.Properties["hasVerifiedEmail"].Value = false;
@@ -615,7 +625,6 @@ namespace InShow.Controllers
 
                     //Send verification Email
 
-                    int emailNodeToSend = 1521; //umbraco Email node ID.
                     String RegisterAgentName = model.RegisterAgent.FirstName + " " + model.RegisterAgent.FirstName;
 
                     List<PerplexMail.EmailTag> listOfTags = new List<PerplexMail.EmailTag>();
@@ -697,7 +706,7 @@ namespace InShow.Controllers
                 {
                     //Member createMember = Member.MakeNew(model.Name, model.EmailAddress, model.EmailAddress, umbJobMemberType, umbUser);
                     // WARNING: update to your desired MembertypeAlias...
-                    var createMember = membershipService.CreateMember(model.RegisterAgency.EmailAddress, model.RegisterAgency.EmailAddress, model.RegisterAgency.Name , "agency");
+                    var createMember = membershipService.CreateMember(model.RegisterAgency.Name, model.RegisterAgency.EmailAddress, model.RegisterAgency.Name , "agency");
 
 
                     //Set the verified email to false
@@ -711,7 +720,6 @@ namespace InShow.Controllers
 
                     //Send verification Email
 
-                    int emailNodeToSend = 1521; //umbraco Email node ID.
 
                     List<PerplexMail.EmailTag> listOfTags = new List<PerplexMail.EmailTag>();
                     listOfTags.Add(new PerplexMail.EmailTag("[#email#]", model.RegisterAgency.EmailAddress));
@@ -926,18 +934,45 @@ namespace InShow.Controllers
                 }
             }
             //Try and get member by email typed in
-           
+          
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
 
-            
+
+
+
+        //check if user name has already been used
+        public JsonResult CheckUserNameIsUsed()
+        {
+
+            var membershipService = ApplicationContext.Current.Services.MemberService;
+
+            //membershipService.FindByUsername
+
+
+            foreach (String key in Request.Params.AllKeys)
+            {
+                if (key.Contains("UserName"))
+                {
+                    var checkEmail = Members.GetByUsername(Request.Params[key]);
+                    if (checkEmail != null)
+                    {
+                        return Json(String.Format("The username '{0}' is already in use.", Request.Params[key].ToString()), JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            //Try and get member by email typed in
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
 
+
+
+
+
         public JsonResult IsUID_Available(string Username)
         {
-
-            System.Diagnostics.Debug.WriteLine("yadayadayada " + Username);
             
             return Json(true, JsonRequestBehavior.AllowGet);
         }
