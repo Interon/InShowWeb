@@ -1,0 +1,19 @@
+﻿
+<div ng-controller="ModalViewCtrl">
+    <script type="text/ng-template" id="ModalView.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Agent Details</h3>
+        </div>
+        <div class="modal-body">
+           <modalview url="/umbraco/controllers/profilesurface/RenderMemberProfile"></modalview>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+   
+     <i  ng-click="open('lg')" class="fa fa-pencil" aria-hidden="true"></i>
+   
+</div>

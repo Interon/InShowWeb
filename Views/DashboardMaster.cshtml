@@ -12,7 +12,7 @@
     {
         mw.agent = new InShow.GenereatedModels.Agent(mem);
     }
-
+    var imageurl = mw.agency?.Logo ?? mw.agent?.Picture ?? "/assets/img/avatar.jpg";
 
 }
 <!doctype html>
@@ -56,9 +56,9 @@
         <li class="sidebar-list">
           <a href="#/profile">Profile <span class="menu-icon fa fa-table"></span></a>
         </li>
-          <li class="sidebar-list">
+          @*<li class="sidebar-list">
               <a href="#/Listings">Listings <span class="menu-icon fa fa-table"></span></a>
-          </li>
+          </li>*@
           <li class="sidebar-list">
               <a href="#/InShow">InShow <span class="menu-icon fa fa-table"></span></a>
           </li>
@@ -93,7 +93,7 @@
             <div class="user pull-right">
               <div class="item dropdown" uib-dropdown>
                 <a href="#" class="dropdown-toggle" uib-dropdown-toggle>
-                  <img class="img-thumbnail" src="@( mw.agency.Logo ?? mw.agent.Picture ?? "/assets/img/avatar.jpg" )">
+                  <img class="img-thumbnail" src="@imageurl">
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
                   <li class="dropdown-header">

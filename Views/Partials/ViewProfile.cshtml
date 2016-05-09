@@ -205,7 +205,9 @@ var Emails = contentService.GetRootContent().Where(x=>x.Name.ToString() == "Perp
                                              <td>
                                              
                                              </td>
-                                             <td><a data-guid="@_member.Key" uib-tooltip="Edit" href="#"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                                          
+                                             
+                                             <td><modalviewButton memberkey="@_member.Key"></modalviewButton></td>
                                              <td><a uib-tooltip="Delete" href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                                          </tr>
                                     }
