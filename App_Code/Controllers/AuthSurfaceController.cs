@@ -442,7 +442,7 @@ namespace InShow.Controllers
                     var tempGUID = Guid.NewGuid();
 
                     //Fetch our new member we created by their email
-                    var updateMember = membershipService.GetByEmail(model.RegisterBuyer.EmailAddress);
+                    var updateMember = membershipService.GetByUsername(model.RegisterBuyer.UserName);
 
                     //Just to be sure...
                     if (updateMember != null)
@@ -459,6 +459,12 @@ namespace InShow.Controllers
 
                         updateMember.Properties["cellNumber"].Value = model.RegisterBuyer.CellNumber;
 
+                        updateMember.Properties["email"].Value = model.RegisterBuyer.EmailAddress;
+
+                        updateMember.Properties["numberOfLogins"].Value = 0;
+
+
+
                         //Save changes
                         membershipService.Save(updateMember);
                     }
@@ -473,6 +479,7 @@ namespace InShow.Controllers
                     listOfTags.Add(new PerplexMail.EmailTag("[#email#]", model.RegisterBuyer.EmailAddress));
                     listOfTags.Add(new PerplexMail.EmailTag("[#name#]", BuyerName));
                     listOfTags.Add(new PerplexMail.EmailTag("[#GUID#]", verifyURL));
+                    listOfTags.Add(new PerplexMail.EmailTag("[#buysell#]", "buying"));
 
                     PerplexMail.Email.SendUmbracoEmail(emailNodeToSend, listOfTags);
                     
@@ -536,8 +543,8 @@ namespace InShow.Controllers
                     var tempGUID = Guid.NewGuid();
 
                     //Fetch our new member we created by their email
-                    var updateMember = membershipService.GetByEmail(model.RegisterPrivateSeller.EmailAddress);
-
+                    var updateMember = membershipService.GetByUsername(model.RegisterPrivateSeller.UserName);
+                    
                     //Just to be sure...
                     if (updateMember != null)
                     {
@@ -553,6 +560,11 @@ namespace InShow.Controllers
 
                         updateMember.Properties["cellNumber"].Value = model.RegisterPrivateSeller.CellNumber;
 
+                        updateMember.Properties["email"].Value = model.RegisterPrivateSeller.EmailAddress;
+
+                        updateMember.Properties["numberOfLogins"].Value = 0;
+
+
                         //Save changes
                         membershipService.Save(updateMember);
                     }
@@ -566,6 +578,7 @@ namespace InShow.Controllers
                     listOfTags.Add(new PerplexMail.EmailTag("[#email#]", model.RegisterPrivateSeller.EmailAddress));
                     listOfTags.Add(new PerplexMail.EmailTag("[#name#]", PrivateSellerName));
                     listOfTags.Add(new PerplexMail.EmailTag("[#GUID#]", verifyURL));
+                    listOfTags.Add(new PerplexMail.EmailTag("[#buysell#]", "selling"));
 
                     PerplexMail.Email.SendUmbracoEmail(emailNodeToSend, listOfTags);
 
@@ -629,7 +642,7 @@ namespace InShow.Controllers
                     var tempGUID = Guid.NewGuid();
 
                     //Fetch our new member we created by their email
-                    var updateMember = membershipService.GetByEmail(model.RegisterAgent.EmailAddress);
+                    var updateMember = membershipService.GetByUsername(model.RegisterAgent.UserName);
 
                     //Just to be sure...
                     if (updateMember != null)
@@ -650,6 +663,11 @@ namespace InShow.Controllers
 
                         updateMember.Properties["agency"].Value = model.RegisterAgent.Agency;
 
+                        updateMember.Properties["email"].Value = model.RegisterAgent.EmailAddress;
+
+                        updateMember.Properties["numberOfLogins"].Value = 0;
+
+
                         //Save changes
                         membershipService.Save(updateMember);
                     }
@@ -664,6 +682,7 @@ namespace InShow.Controllers
                     listOfTags.Add(new PerplexMail.EmailTag("[#email#]", model.RegisterAgent.EmailAddress));
                     listOfTags.Add(new PerplexMail.EmailTag("[#name#]", AgentName));
                     listOfTags.Add(new PerplexMail.EmailTag("[#GUID#]", verifyURL));
+                    listOfTags.Add(new PerplexMail.EmailTag("[#buysell#]", "selling"));
 
                     PerplexMail.Email.SendUmbracoEmail(emailNodeToSend, listOfTags);
 
@@ -729,7 +748,7 @@ namespace InShow.Controllers
                     var tempGUID = Guid.NewGuid();
 
                     //Fetch our new member we created by their email
-                    var updateMember = membershipService.GetByEmail(model.RegisterAgency.EmailAddress);
+                    var updateMember = membershipService.GetByUsername(model.RegisterAgency.Name);
 
                     //Just to be sure...
                     if (updateMember != null)
@@ -749,6 +768,9 @@ namespace InShow.Controllers
                         //Put the registration of the agent admin after agent member has been created. Here temporarilly for testing.
                         updateMember.Properties["agencyAdminEmail"].Value = model.RegisterAgent.EmailAddress;
 
+                        updateMember.Properties["numberOfLogins"].Value = 0;
+
+
                         //Save changes
                         membershipService.Save(updateMember);
                     }
@@ -763,6 +785,7 @@ namespace InShow.Controllers
                     listOfTags.Add(new PerplexMail.EmailTag("[#email#]", model.RegisterAgency.EmailAddress));
                     listOfTags.Add(new PerplexMail.EmailTag("[#name#]", AgencyName));
                     listOfTags.Add(new PerplexMail.EmailTag("[#GUID#]", verifyURL));
+                    listOfTags.Add(new PerplexMail.EmailTag("[#buysell#]", "selling"));
 
                     PerplexMail.Email.SendUmbracoEmail(emailNodeToSend, listOfTags);
 
@@ -875,8 +898,8 @@ namespace InShow.Controllers
             {
                 if (key.Contains("UserName"))
                 {
-                    var checkEmail = Members.GetByUsername(Request.Params[key]);
-                    if (checkEmail != null)
+                    var checkUser = Members.GetByUsername(Request.Params[key]);
+                    if (checkUser != null)
                     {
                         return Json(String.Format("The username '{0}' is already in use.", Request.Params[key].ToString()), JsonRequestBehavior.AllowGet);
                     }

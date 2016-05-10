@@ -82,6 +82,15 @@ namespace InShow.GenereatedModels
 		}
 
 		///<summary>
+		/// Email
+		///</summary>
+		[ImplementPropertyType("email")]
+		public string Email
+		{
+			get { return this.GetPropertyValue<string>("email"); }
+		}
+
+		///<summary>
 		/// EmailVerifyGUID
 		///</summary>
 		[ImplementPropertyType("emailVerifyGUID")]

@@ -1,4 +1,4 @@
 ﻿
 
-registerMember ver. 0.22
-registration and login
+registerMember ver. 0.23
+more registration and validation bug fixes

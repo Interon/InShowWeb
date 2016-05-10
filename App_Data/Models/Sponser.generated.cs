@@ -76,9 +76,9 @@ namespace InShow.GenereatedModels
 		/// numberOfLogins
 		///</summary>
 		[ImplementPropertyType("numberOfLogins")]
-		public string NumberOfLogins
+		public int NumberOfLogins
 		{
-			get { return this.GetPropertyValue<string>("numberOfLogins"); }
+			get { return this.GetPropertyValue<int>("numberOfLogins"); }
 		}
 
 		///<summary>
