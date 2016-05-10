@@ -55,6 +55,15 @@ namespace InShow.GenereatedModels
 		}
 
 		///<summary>
+		/// Email
+		///</summary>
+		[ImplementPropertyType("email")]
+		public string Email
+		{
+			get { return this.GetPropertyValue<string>("email"); }
+		}
+
+		///<summary>
 		/// EmailVerifyGUID
 		///</summary>
 		[ImplementPropertyType("emailVerifyGUID")]
@@ -130,9 +139,9 @@ namespace InShow.GenereatedModels
 		/// numberOfLogins
 		///</summary>
 		[ImplementPropertyType("numberOfLogins")]
-		public string NumberOfLogins
+		public int NumberOfLogins
 		{
-			get { return this.GetPropertyValue<string>("numberOfLogins"); }
+			get { return this.GetPropertyValue<int>("numberOfLogins"); }
 		}
 
 		///<summary>

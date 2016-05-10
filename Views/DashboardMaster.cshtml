@@ -1,16 +1,24 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 
 @{ 
-
-    var mem = Members.GetCurrentMember();
     InShow.GenereatedModels.ModelWrapper mw = new InShow.GenereatedModels.ModelWrapper();
-    if (mem.DocumentTypeAlias=="agency")
+    try
     {
-        mw.agency = new InShow.GenereatedModels.Agency(mem);
+
+        var mem = Members.GetCurrentMember();
+
+        if (mem.DocumentTypeAlias == "agency")
+        {
+            mw.agency = new InShow.GenereatedModels.Agency(mem);
+        }
+        if (mem.DocumentTypeAlias == "agent")
+        {
+            mw.agent = new InShow.GenereatedModels.Agent(mem);
+        }
     }
-    if (mem.DocumentTypeAlias == "agent")
+    catch
     {
-        mw.agent = new InShow.GenereatedModels.Agent(mem);
+
     }
     var imageurl = mw.agency?.Logo ?? mw.agent?.Picture ?? "/assets/img/avatar.jpg";
 

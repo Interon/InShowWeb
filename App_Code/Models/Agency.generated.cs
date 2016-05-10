@@ -20,16 +20,16 @@ using Umbraco.ModelsBuilder.Umbraco;
 
 namespace InShow.GenereatedModels
 {
-	/// <summary>Sponser</summary>
-	[PublishedContentModel("sponser")]
-	public partial class Sponser : PublishedContentModel
+	/// <summary>Agency</summary>
+	[PublishedContentModel("agency")]
+	public partial class Agency : PublishedContentModel
 	{
 #pragma warning disable 0109 // new is redundant
-		public new const string ModelTypeAlias = "sponser";
+		public new const string ModelTypeAlias = "agency";
 		public new const PublishedItemType ModelItemType = PublishedItemType.Member;
 #pragma warning restore 0109
 
-		public Sponser(IPublishedContent content)
+		public Agency(IPublishedContent content)
 			: base(content)
 		{ }
 
@@ -40,9 +40,90 @@ namespace InShow.GenereatedModels
 		}
 #pragma warning restore 0109
 
-		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<Sponser, TValue>> selector)
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<Agency, TValue>> selector)
 		{
 			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// Address
+		///</summary>
+		[ImplementPropertyType("address")]
+		public string Address
+		{
+			get { return this.GetPropertyValue<string>("address"); }
+		}
+
+		///<summary>
+		/// Agency Admin
+		///</summary>
+		[ImplementPropertyType("agencyAdmin")]
+		public object AgencyAdmin
+		{
+			get { return this.GetPropertyValue("agencyAdmin"); }
+		}
+
+		///<summary>
+		/// Agency Admin Email
+		///</summary>
+		[ImplementPropertyType("agencyAdminEmail")]
+		public string AgencyAdminEmail
+		{
+			get { return this.GetPropertyValue<string>("agencyAdminEmail"); }
+		}
+
+		///<summary>
+		/// Agency Credits
+		///</summary>
+		[ImplementPropertyType("agencyCredits")]
+		public int AgencyCredits
+		{
+			get { return this.GetPropertyValue<int>("agencyCredits"); }
+		}
+
+		///<summary>
+		/// Name
+		///</summary>
+		[ImplementPropertyType("agencyName")]
+		public string AgencyName
+		{
+			get { return this.GetPropertyValue<string>("agencyName"); }
+		}
+
+		///<summary>
+		/// Agency Pin
+		///</summary>
+		[ImplementPropertyType("agencyPin")]
+		public string AgencyPin
+		{
+			get { return this.GetPropertyValue<string>("agencyPin"); }
+		}
+
+		///<summary>
+		/// Agents
+		///</summary>
+		[ImplementPropertyType("agents")]
+		public string Agents
+		{
+			get { return this.GetPropertyValue<string>("agents"); }
+		}
+
+		///<summary>
+		/// Cell Number
+		///</summary>
+		[ImplementPropertyType("cellNumber")]
+		public string CellNumber
+		{
+			get { return this.GetPropertyValue<string>("cellNumber"); }
+		}
+
+		///<summary>
+		/// EmailVerifyGUID
+		///</summary>
+		[ImplementPropertyType("emailVerifyGUID")]
+		public string EmailVerifyGuid
+		{
+			get { return this.GetPropertyValue<string>("emailVerifyGUID"); }
 		}
 
 		///<summary>
@@ -70,6 +151,24 @@ namespace InShow.GenereatedModels
 		public string IPofLastLogin
 		{
 			get { return this.GetPropertyValue<string>("iPofLastLogin"); }
+		}
+
+		///<summary>
+		/// JoinedDate
+		///</summary>
+		[ImplementPropertyType("joinedDate")]
+		public string JoinedDate
+		{
+			get { return this.GetPropertyValue<string>("joinedDate"); }
+		}
+
+		///<summary>
+		/// Logo
+		///</summary>
+		[ImplementPropertyType("logo")]
+		public object Logo
+		{
+			get { return this.GetPropertyValue("logo"); }
 		}
 
 		///<summary>
