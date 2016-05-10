@@ -219,7 +219,7 @@ namespace InShow.Controllers
         /// <returns></returns>
         public ActionResult RenderResetPassword()
         {
-            return PartialView("ResetPassword", new ResetPasswordViewModel());
+            return PartialView("ResetPasswordPartial", new ResetPasswordViewModel());
         }
 
         [HttpPost]
