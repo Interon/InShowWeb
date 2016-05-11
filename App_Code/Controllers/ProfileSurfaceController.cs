@@ -5,11 +5,32 @@ using InShow.Models;
 using umbraco.cms.businesslogic.member;
 using Umbraco.Core.Persistence.Querying;
 using Umbraco.Web.Mvc;
+using System.Collections.Generic;
+using System.Web;
+using System.IO;
 
 namespace InShow.Controllers
 {
     public class ProfileSurfaceController : SurfaceController
     {
+
+
+
+
+
+
+        [HttpPost]
+        public ActionResult Multiple(IEnumerable<HttpPostedFileBase> files)
+        {
+            foreach (var file in files)
+            {
+                if (file != null && file.ContentLength > 0)
+                {
+                    file.SaveAs(Path.Combine(Server.MapPath("/uploads"), Guid.NewGuid() + Path.GetExtension(file.FileName)));
+                }
+            }
+            return View();
+        }
         /// <summary>
         /// Renders the Login view
         /// </summary>
