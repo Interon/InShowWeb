@@ -133,7 +133,7 @@ namespace InShow.Models
         [DisplayName("Email address")]
         [Required(ErrorMessage = "Please enter your email address")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        //[Remote("CheckEmailIsUsed", "AuthSurface", HttpMethod = "POST", ErrorMessage = "The email address has already been registered")]
+        [Remote("CheckEmailIsUsedBuyer", "AuthSurface", HttpMethod = "POST", ErrorMessage = "The email address has already been registered under a member who is a buyer")]
         public string EmailAddress { get; set; }
 
         [DataType(DataType.Password)]
@@ -172,7 +172,7 @@ namespace InShow.Models
         [DisplayName("Email address")]
         [Required(ErrorMessage = "Please enter your email address")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        //[Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
+        [Remote("CheckEmailIsUsedSeller", "AuthSurface", ErrorMessage = "The email address has already been registered under a member who is a seller")]
         public string EmailAddress { get; set; }
 
         [DataType(DataType.Password)]
@@ -212,10 +212,11 @@ namespace InShow.Models
         [Required(ErrorMessage = "Please enter your realestate agency pin number")]
         public string AgencyPin { get; set; }
         public string Picture { get; set; }
+
         [DisplayName("Email address")]
         [Required(ErrorMessage = "Please enter your email address")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        //[Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
+        [Remote("CheckEmailIsUsedAgent", "AuthSurface", ErrorMessage = "The email address has already been registered under a member who is an agent")]
         public string EmailAddress { get; set; }
 
         [DataType(DataType.Password)]
@@ -254,7 +255,7 @@ namespace InShow.Models
         [DisplayName("Email address")]
         [Required(ErrorMessage = "Please enter your email address")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        //[Remote("CheckEmailIsUsed", "AuthSurface", ErrorMessage = "The email address has already been registered")]
+        [Remote("CheckEmailIsUsedAgency", "AuthSurface", ErrorMessage = "The email address has already been registered under a realestate agency")]
         public string EmailAddress { get; set; }
 
         [DataType(DataType.Password)]
@@ -273,10 +274,10 @@ namespace InShow.Models
     //Forgotten Password View Model
     public class ForgottenPasswordViewModel
     {
-        [DisplayName("Email address")]
-        [Required(ErrorMessage = "Please enter your email address")]
-        [EmailAddress(ErrorMessage = "Please enter a valid email address")]
-        public string EmailAddress { get; set; }
+        [DisplayName("Username")]
+        [Required(ErrorMessage = "Please enter your username")]
+        public string Username { get; set; }
+
     }
 
 
@@ -297,5 +298,15 @@ namespace InShow.Models
         [Required(ErrorMessage = "Please enter your password")]
         [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Your passwords do not match")]
         public string ConfirmPassword { get; set; }
+    }
+
+    //Reset Password View Model
+    public class ResendUsernameViewModel
+    {
+        [DisplayName("Email address")]
+        [Required(ErrorMessage = "Please enter your email address")]
+        [EmailAddress(ErrorMessage = "Please enter a valid email address")]
+        public string EmailAddress { get; set; }
+
     }
 }

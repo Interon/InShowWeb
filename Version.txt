@@ -1,4 +1,4 @@
 ﻿
 
-registerMember ver. 0.23
-more registration and validation bug fixes
+registerMember ver. 0.24
+email validation and forgotten username and password

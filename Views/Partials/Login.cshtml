@@ -15,7 +15,9 @@
     <div class="alert alert-danger">
         <h4>Forgotten your password?</h4>
         <p>
-            @Html.Raw("Don't worry we all forget our passwords from time to time <a href='/forgotten-password' class='alert-link'>may need a reminder</a>.")
+            @Html.Raw("Don't worry we all forget our passwords from time to time. You can <a href='/forgotten-password' class='alert-link'>click here if you forgot your password</a>, or else if you forgot your username you can <a href='/resend-username' class='alert-link'>click here if you need a reminder</a>").
+
+
         </p>
 
         @foreach (ModelState modelState in ViewData.ModelState.Values)
