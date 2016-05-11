@@ -143,7 +143,7 @@ namespace InShow.Controllers
 
         //Used with an ActionLink
         //@Html.ActionLink("Logout", "Logout", "AuthSurface")
-       
+
         public ActionResult Logout()
         {
             //Member already logged in, lets log them out and redirect them home
@@ -169,7 +169,7 @@ namespace InShow.Controllers
         /// <returns></returns>
         public ActionResult RenderForgottenPassword()
         {
-            return PartialView("ForgottenPassword", new ForgottenPasswordViewModel());
+            return PartialView("ForgottenPasswordPartial", new ForgottenPasswordViewModel());
         }
 
         [HttpPost]
@@ -184,7 +184,7 @@ namespace InShow.Controllers
             }
 
             //Find the member with the email address
-            var findMember = membershipService.GetByEmail(model.EmailAddress);
+            var findMember = membershipService.GetByUsername(model.Username);
 
             if (findMember != null)
             {
@@ -196,12 +196,45 @@ namespace InShow.Controllers
                 //Lets update resetGUID property
                 findMember.Properties["resetGUID"].Value = expiryTime.ToString("ddMMyyyyHHmmssFFFF");
 
-                //Save the member with the up[dated property value
+                //Save the member with the updated property value
                 membershipService.Save(findMember);
 
+
+                //Send Reset Password Email
+
+                //Create temporary GUID
+                var resetGUID = expiryTime.ToString("ddMMyyyyHHmmssFFFF");
+
+                //Fetch our new member we created by their email
+                var updateMember = membershipService.GetByUsername(model.Username);
+
+                String MemberName = model.Username;
+
+                //Verify link
+                string baseURL = System.Web.HttpContext.Current.Request.Url.AbsoluteUri.Replace(System.Web.HttpContext.Current.Request.Url.AbsolutePath, string.Empty);
+                var resetURL = baseURL + "/reset-password?resetGUID=" + resetGUID.ToString() + "&user=" + MemberName.ToString();
+
+                List<PerplexMail.EmailTag> listOfTags = new List<PerplexMail.EmailTag>();
+                listOfTags.Add(new PerplexMail.EmailTag("[#email#]", findMember.Email));
+                listOfTags.Add(new PerplexMail.EmailTag("[#name#]", MemberName));
+                listOfTags.Add(new PerplexMail.EmailTag("[#GUID#]", resetURL));
+
+
+                var contentService = ApplicationContext.Current.Services.ContentService;
+
+                var Emails = contentService.GetRootContent().Where(x => x.Name.ToString() == "PerplexMail").First().Descendants().Where(x => x.Name == "Reset Password Email").First();
+
+                int emailNodeToSend = Emails.Id; //umbraco Email node ID.
+
+                PerplexMail.Email.SendUmbracoEmail(emailNodeToSend, listOfTags);
+
+                //Update success flag (in a TempData key)
+                TempData["IsSuccessful"] = true;
+
                 //Send user an email to reset password with GUID in it
-                EmailHelper email = new EmailHelper();
-                email.SendResetPasswordEmail(findMember.Email, expiryTime.ToString("ddMMyyyyHHmmssFFFF"));
+                //EmailHelper email = new EmailHelper();
+                //email.SendResetPasswordEmail(findMember.Email, expiryTime.ToString("ddMMyyyyHHmmssFFFF"));
+
             }
             else
             {
@@ -219,7 +252,7 @@ namespace InShow.Controllers
         /// <returns></returns>
         public ActionResult RenderResetPassword()
         {
-            return PartialView("ResetPassword", new ResetPasswordViewModel());
+            return PartialView("ResetPasswordPartial", new ResetPasswordViewModel());
         }
 
         [HttpPost]
@@ -233,8 +266,10 @@ namespace InShow.Controllers
                 return CurrentUmbracoPage();
             }
 
+            var username = Request.QueryString["user"];
+
             //Get member from email
-            var resetMember = membershipService.GetByEmail(model.EmailAddress);
+            var resetMember = membershipService.GetByUsername(username);
 
             //Ensure we have that member
             if (resetMember != null)
@@ -273,7 +308,7 @@ namespace InShow.Controllers
                         else
                         {
                             //ERROR: Reset GUID has expired
-                            ModelState.AddModelError("ResetPasswordForm.", "Reset GUID has expired");
+                            ModelState.AddModelError("ResetPasswordForm.", "Your password reset has has expired, please try again");
                             return CurrentUmbracoPage();
                         }
                     }
@@ -299,15 +334,135 @@ namespace InShow.Controllers
 
 
         /// <summary>
+        /// Renders the Reset Password View
+        /// @Html.Action("RenderResendUsername","AuthSurface");
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult RenderResendUsername()
+        {
+            return PartialView("ResendUsernamePartial", new ResendUsernameViewModel());
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult HandleResendUsername(ResendUsernameViewModel model)
+        {
+
+            var membershipService = ApplicationContext.Current.Services.MemberService;
+
+            if (!ModelState.IsValid)
+            {
+                return CurrentUmbracoPage();
+            }
+
+            //Find the member with the email address
+            var findMember = membershipService.GetByEmail(model.EmailAddress);
+
+            if (findMember != null)
+            {
+                //We found the member with that email
+
+                String BuyerUsername = "";
+                String SellerUsername = "";
+                String AgentUsername = "";
+                String AgencyUsername = "";
+
+
+                //member loop
+                var members = membershipService.GetAllMembers();
+
+                foreach (Member m in members)
+                {
+
+                    if (m.Email == model.EmailAddress)
+                    {
+                        if (m.ContentTypeAlias == "buyer")
+                        {
+                            BuyerUsername = m.Username.ToString() + "</br></br>";
+                        }
+                        if (m.ContentTypeAlias == "private")
+                        {
+                            SellerUsername = m.Username.ToString() + "</br></br>";
+                        }
+                        if (m.ContentTypeAlias == "agent")
+                        {
+                            AgentUsername = m.Username.ToString() + "</br></br>";
+                        }
+                        if (m.ContentTypeAlias == "agency")
+                        {
+                            AgencyUsername = m.Username.ToString() + "</br></br>";
+                        }
+                    }
+
+                }
+
+                String BufferTextBuyer = "";
+                String BufferTextSeller = "";
+                String BufferTextAgent = "";
+                String BufferTextAgency = "";
+
+                if (BuyerUsername != "")
+                {
+                    BufferTextBuyer = "Your Buyer Username is: </br>";
+                }
+                if (SellerUsername != "")
+                {
+                    BufferTextSeller = "Your Private Seller Username is: </br>";
+                }
+                if (AgentUsername != "")
+                {
+                    BufferTextAgent = "Your Agent Username is: </br>";
+                }
+                if (AgencyUsername != "")
+                {
+                    BufferTextAgency = "Your Agency Username is: </br>";
+                }
+
+                var username = findMember.Username.ToString();
+
+                List<PerplexMail.EmailTag> listOfTags = new List<PerplexMail.EmailTag>();
+                listOfTags.Add(new PerplexMail.EmailTag("[#email#]", findMember.Email));
+
+                listOfTags.Add(new PerplexMail.EmailTag("[#bufferTextBuyer#]", BufferTextBuyer));
+                listOfTags.Add(new PerplexMail.EmailTag("[#bufferTextSeller#]", BufferTextSeller));
+                listOfTags.Add(new PerplexMail.EmailTag("[#bufferTextAgent#]", BufferTextAgent));
+                listOfTags.Add(new PerplexMail.EmailTag("[#bufferTextAgency#]", BufferTextAgency));
+
+                listOfTags.Add(new PerplexMail.EmailTag("[#buyername#]", BuyerUsername));
+                listOfTags.Add(new PerplexMail.EmailTag("[#sellername#]", SellerUsername));
+                listOfTags.Add(new PerplexMail.EmailTag("[#agentname#]", AgentUsername));
+                listOfTags.Add(new PerplexMail.EmailTag("[#agencyname#]", AgencyUsername));
+
+
+                var contentService = ApplicationContext.Current.Services.ContentService;
+
+                var Emails = contentService.GetRootContent().Where(x => x.Name.ToString() == "PerplexMail").First().Descendants().Where(x => x.Name == "Resend Username Email").First();
+
+                int emailNodeToSend = Emails.Id; //umbraco Email node ID.
+
+                PerplexMail.Email.SendUmbracoEmail(emailNodeToSend, listOfTags);
+
+                //Update success flag (in a TempData key)
+                TempData["IsSuccessful"] = true;
+
+            }
+            else
+            {
+                ModelState.AddModelError("ForgottenPasswordForm.", "No member found");
+                return CurrentUmbracoPage();
+            }
+
+            return RedirectToCurrentUmbracoPage();
+
+
+        }
+
+        /// <summary>
         /// Renders the Register View
         /// @Html.Action("RenderRegister","AuthSurface");
         /// </summary>
         /// <returns></returns>
-
-
-
-
-
         [ChildActionOnly]
         public ActionResult RenderRegister(RegisterViewModel model)
         {
@@ -468,7 +623,7 @@ namespace InShow.Controllers
                         //Save changes
                         membershipService.Save(updateMember);
                     }
-                    
+
 
                     String BuyerName = model.RegisterBuyer.FirstName + " " + model.RegisterBuyer.LastName;
                     //Verify link
@@ -482,7 +637,7 @@ namespace InShow.Controllers
                     listOfTags.Add(new PerplexMail.EmailTag("[#buysell#]", "buying"));
 
                     PerplexMail.Email.SendUmbracoEmail(emailNodeToSend, listOfTags);
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -544,7 +699,7 @@ namespace InShow.Controllers
 
                     //Fetch our new member we created by their email
                     var updateMember = membershipService.GetByUsername(model.RegisterPrivateSeller.UserName);
-                    
+
                     //Just to be sure...
                     if (updateMember != null)
                     {
@@ -730,7 +885,7 @@ namespace InShow.Controllers
                 {
                     //Member createMember = Member.MakeNew(model.Name, model.EmailAddress, model.EmailAddress, umbJobMemberType, umbUser);
                     // WARNING: update to your desired MembertypeAlias...
-                    var createMember = membershipService.CreateMember(model.RegisterAgency.Name, model.RegisterAgency.EmailAddress, model.RegisterAgency.Name , "agency");
+                    var createMember = membershipService.CreateMember(model.RegisterAgency.Name, model.RegisterAgency.EmailAddress, model.RegisterAgency.Name, "agency");
 
 
                     //Set the verified email to false
@@ -864,23 +1019,152 @@ namespace InShow.Controllers
         /// </summary>
         /// <param name="emailAddress"></param>
         /// <returns></returns>
-        public JsonResult CheckEmailIsUsed()
+        public JsonResult CheckEmailIsUsedBuyer()
         {
             foreach (String key in Request.Params.AllKeys)
             {
-                if(key.Contains("EmailAddress"))
+                if (key.Contains("EmailAddress"))
+                {
+                    var checkEmail = Members.GetByEmail(Request.Params[key]);
+
+                    if (checkEmail != null) { }
+
+                    var membershipService = ApplicationContext.Current.Services.MemberService;
+                    var members = membershipService.GetAllMembers();
+
+                    foreach (var m in members)
                     {
-                    var checkEmail = Members.GetByEmail (Request.Params[key]);
-                    if (checkEmail != null)
-                    {
-                        return Json(String.Format("The email address '{0}' is already in use.", Request.Params[key].ToString()), JsonRequestBehavior.AllowGet);
+                        if (m.ContentTypeAlias == "buyer")
+                        {
+                            return Json(String.Format("The email address '{0}' has already been registered under a member who is a buyer.", Request.Params[key].ToString()), JsonRequestBehavior.AllowGet);
+
+                        }
+
                     }
+
                 }
+
             }
             //Try and get member by email typed in
-          
+
             return Json(true, JsonRequestBehavior.AllowGet);
         }
+
+        //REMOTE Validation
+        /// <summary>
+        /// Used with jQuery Validate to check when user registers that email address not already used
+        /// </summary>
+        /// <param name="emailAddress"></param>
+        /// <returns></returns>
+        public JsonResult CheckEmailIsUsedSeller()
+        {
+            foreach (String key in Request.Params.AllKeys)
+            {
+                if (key.Contains("EmailAddress"))
+                {
+                    var checkEmail = Members.GetByEmail(Request.Params[key]);
+
+                    if (checkEmail != null) { }
+
+                    var membershipService = ApplicationContext.Current.Services.MemberService;
+                    var members = membershipService.GetAllMembers();
+
+                    foreach (var m in members)
+                    {
+                        if (m.ContentTypeAlias == "private")
+                        {
+                            return Json(String.Format("The email address '{0}' has already been registered under a member who is a seller.", Request.Params[key].ToString()), JsonRequestBehavior.AllowGet);
+
+                        }
+
+                    }
+
+                }
+
+            }
+            //Try and get member by email typed in
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        //REMOTE Validation
+        /// <summary>
+        /// Used with jQuery Validate to check when user registers that email address not already used
+        /// </summary>
+        /// <param name="emailAddress"></param>
+        /// <returns></returns>
+        public JsonResult CheckEmailIsUsedAgent()
+        {
+            foreach (String key in Request.Params.AllKeys)
+            {
+                if (key.Contains("EmailAddress"))
+                {
+                    var checkEmail = Members.GetByEmail(Request.Params[key]);
+
+                    if (checkEmail != null) { }
+
+                    var membershipService = ApplicationContext.Current.Services.MemberService;
+                    var members = membershipService.GetAllMembers();
+
+                    foreach (var m in members)
+                    {
+                        if (m.ContentTypeAlias == "agent")
+                        {
+                            return Json(String.Format("The email address '{0}' has already been registered under a member who is an agent.", Request.Params[key].ToString()), JsonRequestBehavior.AllowGet);
+
+                        }
+
+                    }
+
+                }
+
+            }
+            //Try and get member by email typed in
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        //REMOTE Validation
+        /// <summary>
+        /// Used with jQuery Validate to check when user registers that email address not already used
+        /// </summary>
+        /// <param name="emailAddress"></param>
+        /// <returns></returns>
+        public JsonResult CheckEmailIsUsedAgency()
+        {
+            foreach (String key in Request.Params.AllKeys)
+            {
+                if (key.Contains("EmailAddress"))
+                {
+                    var checkEmail = Members.GetByEmail(Request.Params[key]);
+
+                    if (checkEmail != null) { }
+
+                    var membershipService = ApplicationContext.Current.Services.MemberService;
+                    var members = membershipService.GetAllMembers();
+
+                    foreach (var m in members)
+                    {
+                        if (m.ContentTypeAlias == "agency")
+                        {
+                            return Json(String.Format("The email address '{0}' has already been registered under an agency.", Request.Params[key].ToString()), JsonRequestBehavior.AllowGet);
+
+                        }
+
+                    }
+
+                }
+
+            }
+            //Try and get member by email typed in
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+
 
 
 
@@ -911,13 +1195,9 @@ namespace InShow.Controllers
         }
 
 
-
-
-
-
         public JsonResult IsUID_Available(string Username)
         {
-            
+
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
