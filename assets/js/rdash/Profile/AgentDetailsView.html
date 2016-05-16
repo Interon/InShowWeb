@@ -118,9 +118,9 @@
                         <rd-widget-body>
                             <ul class="list-group">
                                 <li class="list-group-item"> Agency Name :  {{member.agencyName}} </li>
-                                <li class="list-group-item"> Agency Pin:  {{member.agencyPin}}</li>
-                                <li class="list-group-item"> Cell Number: {{member.cellNumber}}</li>
-                                <li class="list-group-item"> Address: {{member.cellNumber}}</li>
+                                <li class="list-group-item"> Agency Pin:  <a href="#" editable-text="member.agencyPin">{{ member.agencyPin || "empty" }}</a></li>
+                                <li class="list-group-item"> Cell Number:<a href="#"  editable-text="member.cellNumber">{{ member.cellNumber || "empty" }}</a> </li>
+                                <li class="list-group-item"> Address: <a href="#" editable-text="member.address">{{ member.address || "empty" }}</a></li>
 
 
 
@@ -139,7 +139,7 @@
                             <a href="#">Edit</a>
                         </rd-widget-header>
                         <rd-widget-body>
-                            <img ng-source="member.logo" class="img-thumbnail" />
+                            <img src="{{member.logo}}" class="img-thumbnail" />
                         </rd-widget-body>
                     </rd-widget>
 

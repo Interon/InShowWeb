@@ -4,7 +4,6 @@ angular.module('RDash').controller('MasterCtrl', ['$scope', '$cookieStore', '$ro
 
    
     $scope.member = fMember;
-    debugger;
     /**
      * Sidebar Toggle & Cookie Control
      */
