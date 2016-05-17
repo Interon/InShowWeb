@@ -1,6 +1,10 @@
-﻿angular.module('RDash').controller('agentdetailscontroller', ['$scope', 'fMember', 'appService', 'fMembership', function ($scope, fMember, appService, fMembership) {
+﻿angular.module('RDash').controller('agentdetailscontroller', ['$scope', 'fMember', 'appService', 'fMembership','ngDialog', function ($scope, fMember, appService, fMembership,ngDialog) {
 
-  
+    $scope.ChangePassword = function () {
+       
+             ngDialog.open({ template: '/assets/js/rdash/Shared/Membership/PasswordChange.view.html', className: 'ngdialog-theme-plain' });
+        
+    }
         $scope.member = fMember;
         //$scope.updateUser = function (data) {
         //    debugger;

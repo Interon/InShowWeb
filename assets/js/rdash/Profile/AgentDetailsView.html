@@ -1,5 +1,5 @@
 ﻿<div ng-controller="agentdetailscontroller">
-    <h1 ng-show="member.Type=='agent'" style="color:#FF7C00">Agent Details - {{UserId}}</h1>
+    <h1 ng-show="member.Type=='agent'" style="color:#FF7C00">Agent Details </h1>
     <rd-widget ng-show="member.Type=='agent'">
         <rd-widget-body>
             <div class="row">
@@ -8,10 +8,10 @@
                     <rd-widget>
                         <rd-widget-header icon="fa-pen" title="Agent Login Details">
 
-                            <a href="#">Reset Password</a>
+                            <a  ng-click="ChangePassword()">Reset Password</a>
                         </rd-widget-header>
                         <rd-widget-body>
-                            Login:  @Model.Name;
+                            Login:  {{member.Name}}
                         </rd-widget-body>
                     </rd-widget>
                     <br />
@@ -21,7 +21,7 @@
 
                         </rd-widget-header>
                         <rd-widget-body>
-                            Credits:  3
+                            Credits:  {{member.credits}}
 
                             <button class="btn btn-primary">Buy Credits</button>
                             <button class="btn btn-primary">Enter Voucher number</button>
@@ -71,7 +71,7 @@
   
 
 
-    <h1 ng-show="member.Type=='agency'" style="color:#FF7C00">Agency Details - {{UserId}}</h1>
+    <h1 ng-show="member.Type=='agency'" style="color:#FF7C00">Agency Details </h1>
     <rd-widget ng-show="member.Type=='agency'">
         <rd-widget-body>
             <div class="row">
@@ -80,7 +80,7 @@
                     <rd-widget>
                         <rd-widget-header icon="fa-pen" title="Agency Login Details">
 
-                            <a href="#">Reset Password</a>
+                            <a ng-click="ChangePassword()">Reset Password</a>
                         </rd-widget-header>
                         <rd-widget-body>
                             <ul class="list-group">

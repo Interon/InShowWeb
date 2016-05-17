@@ -2,14 +2,26 @@
 //Rdash
 
 
-angular.module('RDash', ['ui.bootstrap', 'ui.router', 'ngCookies', 'angularFileUpload', 'ngResource', 'ngRoute', 'angular-loading-bar', 'ngAnimate', 'xeditable']);
+angular.module('RDash', ['ui.bootstrap', 'ui.router', 'ngCookies', 'angularFileUpload',
+                         'ngResource', 'ngRoute', 'angular-loading-bar', 'ngAnimate', 'xeditable',
+                         'ngFileUpload', 'ngImgCrop', 'toaster', 'formly', 'formlyBootstrap', 'ngDialog']);
 
 /**
  * Route configuration for the RDash module.
  */
-angular.module('RDash').config(['$stateProvider', '$urlRouterProvider','cfpLoadingBarProvider',
-    function ($stateProvider, $urlRouterProvider) {
-
+angular.module('RDash').config(['$stateProvider', '$urlRouterProvider',  'ngDialogProvider','cfpLoadingBarProvider',
+    function ($stateProvider, $urlRouterProvider, ngDialogProvider) {
+        ngDialogProvider.setDefaults({
+            className: 'ngdialog-theme-default',
+            plain: false,
+            showClose: true,
+            closeByDocument: true,
+            closeByEscape: true,
+            appendTo: false,
+            preCloseCallback: function () {
+                console.log('default pre-close callback');
+            }
+        });
         // For unmatched routes
         $urlRouterProvider.otherwise('/');
 

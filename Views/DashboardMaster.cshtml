@@ -34,6 +34,11 @@
     <link rel="stylesheet" href="/assets/lib/css/main.min.css"/>
     <link href="/scripts/angular-loading-bar/build/loading-bar.css" rel="stylesheet" />
     <link href="~/scripts/angular-xeditable/dist/css/xeditable.css" rel="stylesheet" />
+    <link href="~/scripts/ngImgCrop/ng-img-crop.css" rel="stylesheet" />
+    <link href="~/scripts/toaster/toaster.css" rel="stylesheet" />
+    <link href="~/scripts/ng-dialog/css/ngDialog.css" rel="stylesheet" />
+    <link href="~/scripts/ng-dialog/css/ngDialog-theme-default.css" rel="stylesheet" />
+    <link href="~/scripts/ng-dialog/css/ngDialog-theme-plain.css" rel="stylesheet" />
     <!-- SCRIPTS -->
   <!-- Custom Scripts -->
     <script src="/scripts/jquery/dist/jquery.js"></script>
@@ -49,13 +54,22 @@
     <script src="/assets/js/angular-file-upload.js"></script>
     <script src="~/scripts/angular-loading-bar/build/loading-bar.min.js"></script>
     <script src="~/scripts/angular-xeditable/dist/js/xeditable.js"></script>
+    <script src="~/scripts/ng-file-upload/dist/ng-file-upload-all.js"></script>
+    <script src="~/scripts/toaster/toaster.js"></script>
+    <script src="~/scripts/ngImgCrop/ng-img-crop.js"></script>
+    <script src="~/scripts/api-check/dist/api-check.js"></script>
+    <script src="~/scripts/angular-formly/dist/formly.js"></script>
+    <script src="~/scripts/ng-dialog/js/ngDialog.js"></script>
+    <script src="~/node_modules/angular-formly-templates-bootstrap/dist/angular-formly-templates-bootstrap.min.js"></script>
+
 
     <script type="text/javascript" src="/assets/js/rdash/rdash.min.js"></script>
- 
+
+  
 
 </head>
 <body ng-controller="MasterCtrl">
-
+    <toaster-container></toaster-container>
    
   <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
     

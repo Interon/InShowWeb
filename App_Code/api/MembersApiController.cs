@@ -1,11 +1,19 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using Umbraco.Core.Models;
 using Umbraco.Web.WebApi;
 
+
 namespace InshowControllers
 {
+
+    public class passwordmodel
+    {
+        public string password;
+    }
+
     public class MembersController : UmbracoApiController
     {
         [HttpGet]
@@ -41,6 +49,25 @@ namespace InshowControllers
                 return false;
             }
            
+        }
+        [HttpPost]
+        public bool ChangePassword(string id, object o)
+        {
+
+            var json = JsonConvert.DeserializeObject<passwordmodel>(o.ToString());
+            try
+            {
+                var memberService = ApplicationContext.Services.MemberService;
+                var mymember = memberService.GetById(int.Parse(id));
+
+                memberService.SavePassword(mymember, json.password );
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
         }
 
     }

@@ -1,5 +1,5 @@
 ﻿
-angular.module('RDash').factory("fMembership", function ($resource, $http, $q) {
+angular.module('RDash').factory("fMembership", function ($resource, $http, $q,toaster) {
     return {
         CurrentMemberAsync: $resource('/umbraco/api/members/GetCurrentMember', {}, {
             query: { method: 'GET', params: {}, isArray: false }
@@ -10,6 +10,7 @@ angular.module('RDash').factory("fMembership", function ($resource, $http, $q) {
            .success(function (data) {
 
                defer.resolve(data);
+
            });
 
             return defer.promise;
@@ -17,16 +18,40 @@ angular.module('RDash').factory("fMembership", function ($resource, $http, $q) {
         UpdateMember: function (id,parameters) {
             $http.post('/umbraco/api/members/UpdateMember/'+ id, parameters).
         success(function (data, status, headers, config) {
-         // this callback will be called asynchronously
-         // when the response is available
-         console.log(data);
+          
+           
+                toaster.pop('success', "", "Save Successfull");
+           
      }).
        error(function (data, status, headers, config) {
-           // called asynchronously if an error occurs
-           // or server returns response with an error status.
+           toaster.pop('error', "", "Error Update Member");
        });
         },
+        ChangePassword: function (id, parameters) {
+          
+            $http.post('/umbraco/api/members/ChangePassword/' + id, parameters).
+        success(function (data, status, headers, config) {
 
+
+            toaster.pop('success', "", "Save Successfull");
+
+        }).
+       error(function (data, status, headers, config) {
+           toaster.pop('error', "", "Error Update Member ->" + status);
+       });
+        },
+        UpdateMemberPassword: function (id, parameters) {
+            $http.post('/umbraco/api/members/UpdateMemberPassword/' + id, parameters).
+        success(function (data, status, headers, config) {
+
+
+            toaster.pop('success', "", "Save Successfull");
+
+        }).
+       error(function (data, status, headers, config) {
+           toaster.pop('error', "", "Error Update Member");
+       });
+        },
 
         countries: $resource('../data/countries.json', {}, {
             query: { method: 'GET', params: {}, isArray: false }
