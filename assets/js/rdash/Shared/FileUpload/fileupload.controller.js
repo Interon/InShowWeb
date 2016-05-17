@@ -7,9 +7,9 @@
     //NodeId NodeId of member or content
     //PropertyAlias = ""
     //DataType = array or string or url
-
+    $scope.multifile = $scope.$parent.multifile;
    
-    $scope.fileUploadObj = { Type: "member", NodeId: $scope.UserId, PropertyAlias: "logo", DataType: "string" };
+    $scope.fileUploadObj = { Type: "member", NodeId: fMember.Id, PropertyAlias: "logo", DataType: "string" };
     var uploader = $scope.uploader = new FileUploader({
         url: '/Umbraco/Api/FileApi/Upload',
         formData: [$scope.fileUploadObj]

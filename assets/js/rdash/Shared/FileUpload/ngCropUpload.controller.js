@@ -1,7 +1,7 @@
 ﻿angular.module('RDash').controller('ngCropUpload', ['$scope', 'Upload', '$timeout', function ($scope, Upload, $timeout) {
     $scope.upload = function (dataUrl, name) {
         Upload.upload({
-            url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+            url: '/umbraco/api/FileApi/Upload',
             data: {
                 file: Upload.dataUrltoBlob(dataUrl, name)
             },

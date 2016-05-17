@@ -1,10 +1,23 @@
 ﻿angular.module('RDash').controller('agentdetailscontroller', ['$scope', 'fMember', 'appService', 'fMembership','ngDialog', function ($scope, fMember, appService, fMembership,ngDialog) {
 
+
+    $scope.multifile = true;
     $scope.ChangePassword = function () {
        
              ngDialog.open({ template: '/assets/js/rdash/Shared/Membership/PasswordChange.view.html', className: 'ngdialog-theme-plain' });
         
     }
+    $scope.ImageUploadClick = function () {
+       
+        ngDialog.open({
+            template: '/assets/js/rdash/Shared/FileUpload/fileUpload.view.html',
+            className: 'ngdialog-theme-plain',
+            scope: $scope,
+            
+        });
+        
+    }
+
         $scope.member = fMember;
         //$scope.updateUser = function (data) {
         //    debugger;

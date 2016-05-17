@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using Umbraco.Core.Models;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.WebApi;
 
@@ -51,11 +52,20 @@ namespace Inshow.Controllers
                 // Remove this line as well as GetFormData method if you're not
                 // sending any form data with your upload request
                 var fileUploadObj = GetFormData<UploadDataModel>(result);
+            
+               
 
-                // Through the request response you can return an object to the Angular controller
-                // You will be able to access this in the .success callback through its data attribute
-                // If you want to send something to the .error callback, use the HttpStatusCode.BadRequest instead
-                var returnData = "ReturnTest";
+            
+               
+
+            
+
+           
+
+          
+
+
+            var returnData = "ReturnTest";
                 return this.Request.CreateResponse(HttpStatusCode.OK, new { returnData });
             }
 

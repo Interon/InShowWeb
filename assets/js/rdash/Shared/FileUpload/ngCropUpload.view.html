@@ -3,7 +3,7 @@
     background: #E4E4E4;
     overflow: hidden;
     width:200px;
-    height:350px;
+    height:200px;
 }
 form .progress {
     line-height: 15px;
@@ -22,8 +22,8 @@ form .progress {
 
 
 <form name="myForm">
-    <div>Crop Image and Upload</div>
-    <button ngf-select ng-model="picFile" accept="image/*">
+    <h1>Crop Image and Upload</h1>
+    <button class="btn btn-default " ngf-select ng-model="picFile" accept="image/*">
         Select Picture
     </button>
     <div ngf-drop ng-model="picFile" ngf-pattern="image/*"
