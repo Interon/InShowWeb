@@ -1,27 +1,35 @@
-﻿angular.module('RDash').controller('PasswordChangeController', function (ngDialog,$scope,fMembership,fMember) {
-    
+﻿angular.module('RDash').controller('PasswordChangeController', ['ngDialog', '$scope', 'fMembership', 'fMember', function (ngDialog, $scope, fMembership, fMember) {
+
     $scope.member = {};
-    $scope.submit = function(member)
-    {
-       
-        fMembership.ChangePassword(fMember.Id,angular.toJson(member));
-       
-        }
+    $scope.submit = function (member) {
 
-$scope.memberfields = [
+        fMembership.ChangePassword(fMember.Id, angular.toJson(member));
 
-  {
-      key: 'password',
-      type: 'input',
-      templateOptions: {
-          type: 'password',
-          label: 'New Password',
-          placeholder: 'Password'
+    }
+
+    $scope.memberfields = [
+
+      {
+          key: 'password',
+          type: 'input',
+          templateOptions: {
+              type: 'password',
+              label: 'New Password',
+              placeholder: 'Password'
+          }
+      },
+
+      {
+          key: 'emailVerifyGUID',
+          type: 'input',
+          templateOptions: {
+              label: 'TEST',
+              placeholder: 'TEST'
+          }
       }
-  }
-  
-]
+
+    ]
 
 
 
-});
+}]);

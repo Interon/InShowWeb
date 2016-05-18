@@ -71,7 +71,7 @@
   
 
 
-    <h1 ng-show="member.Type=='agency'" style="color:#FF7C00">Agency Details </h1>
+    <h1 ng-show="member.Type=='agency'" style="color:#FF7C00">Agency Details</h1>
     <rd-widget ng-show="member.Type=='agency'">
         <rd-widget-body>
             <div class="row">
@@ -136,7 +136,10 @@
                 <div class="col-md-2 text-center">
                     <rd-widget>
                         <rd-widget-header icon="fa-pen" title="Logo">
+
+
                             <a ng-click="ImageUploadClick()">Upload</a>
+
                         </rd-widget-header>
                         <rd-widget-body>
                             <img src="{{member.logo}}" class="img-thumbnail" />
@@ -152,7 +155,14 @@
 
                     <rd-widget>
                         <rd-widget-header icon="fa-pen" title="Agent List">
-                            <a href="#">Add</a>
+
+
+
+                            <a ng-click="AddAgent()">Add Agent</a>
+
+
+
+
                         </rd-widget-header>
                         <rd-widget-body>
                             <table class="table table-responsive table-striped table-hover">
@@ -167,8 +177,6 @@
 
                                     </tr>
                                 </thead>
-
-
 
 
                                 <tr>
