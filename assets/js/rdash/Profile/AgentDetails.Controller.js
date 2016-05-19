@@ -4,9 +4,23 @@
     $scope.multifile = true;
     $scope.ChangePassword = function () {
        
-             ngDialog.open({ template: '/assets/js/rdash/Shared/Membership/PasswordChange.view.html', className: 'ngdialog-theme-plain' });
+        ngDialog.open({
+            template: '/assets/js/rdash/Shared/Membership/PasswordChange.view.html',
+            className: 'ngdialog-theme-plain'
+        });
         
     }
+
+    $scope.AddAgent = function () {
+
+        ngDialog.open({
+            template: '/assets/js/rdash/Shared/Membership/addAgent.view.html',
+            className: 'ngdialog-theme-plain',
+        });
+
+    }
+
+
     $scope.ImageUploadClick = function () {
        
         ngDialog.open({
@@ -36,8 +50,6 @@
                             }
                         }
                         
-                       
-                       
                     }
                 ,true);
       

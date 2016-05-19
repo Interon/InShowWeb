@@ -1,4 +1,4 @@
 ﻿
 
-registerMember ver. 0.24
-email validation and forgotten username and password
+registerMember ver. 0.26
+email add agent popup complete bug fixes on linq TODO: form validation

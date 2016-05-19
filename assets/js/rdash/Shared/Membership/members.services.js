@@ -1,5 +1,5 @@
 ﻿
-angular.module('RDash').factory("fMembership", function ($resource, $http, $q,toaster) {
+angular.module('RDash').factory("fMembership", function ($resource, $http, $q, toaster) {
     return {
         CurrentMemberAsync: $resource('/umbraco/api/members/GetCurrentMember', {}, {
             query: { method: 'GET', params: {}, isArray: false }
@@ -15,20 +15,21 @@ angular.module('RDash').factory("fMembership", function ($resource, $http, $q,to
 
             return defer.promise;
         },
-        UpdateMember: function (id,parameters) {
-            $http.post('/umbraco/api/members/UpdateMember/'+ id, parameters).
+        UpdateMember: function (id, parameters) {
+            $http.post('/umbraco/api/members/UpdateMember/' + id, parameters).
         success(function (data, status, headers, config) {
-          
-           
-                toaster.pop('success', "", "Save Successfull");
-           
-     }).
+
+
+            toaster.pop('success', "", "Save Successfull");
+
+        }).
        error(function (data, status, headers, config) {
            toaster.pop('error', "", "Error Update Member");
        });
         },
+
         ChangePassword: function (id, parameters) {
-          
+
             $http.post('/umbraco/api/members/ChangePassword/' + id, parameters).
         success(function (data, status, headers, config) {
 
@@ -40,6 +41,21 @@ angular.module('RDash').factory("fMembership", function ($resource, $http, $q,to
            toaster.pop('error', "", "Error Update Member ->" + status);
        });
         },
+
+        AddAgent: function (id, parameters) {
+
+            $http.post('/umbraco/api/members/AddAgent/' + id, parameters).
+        success(function (data, status, headers, config) {
+
+
+            toaster.pop('success', "", "Save Successfull");
+
+        }).
+       error(function (data, status, headers, config) {
+           toaster.pop('error', "", "Error Update Member ->" + status);
+       });
+        },
+
         UpdateMemberPassword: function (id, parameters) {
             $http.post('/umbraco/api/members/UpdateMemberPassword/' + id, parameters).
         success(function (data, status, headers, config) {
@@ -58,7 +74,10 @@ angular.module('RDash').factory("fMembership", function ($resource, $http, $q,to
         })
     };
 });
+
 angular.module('RDash').factory('fMember', ['fMembership', function (fMembership, $scope) {
+
+    //debugger;
 
     var member = { Id: 0, Type: "" };
     fMembership.CurrentMember().then(function (data) {
@@ -72,6 +91,8 @@ angular.module('RDash').factory('fMember', ['fMembership', function (fMembership
         var myarray = [];
         myarray = _member.Properties.$values;
 
+
+
         for (var i = 0; i < myarray.length; i++) {
             console.log(myarray[i].Alias + '->' + myarray[i].Value);
             var myObj = new Object;
@@ -79,6 +100,7 @@ angular.module('RDash').factory('fMember', ['fMembership', function (fMembership
             angular.extend(member, myObj)
         };
 
+        debugger;
 
 
         return member;
