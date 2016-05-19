@@ -1,4 +1,4 @@
 ﻿
 
-registerMember ver. 0.25
-email add agent popup complete TODO: form validation
+registerMember ver. 0.26
+email add agent popup complete bug fixes on linq TODO: form validation

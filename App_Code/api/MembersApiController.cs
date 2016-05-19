@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using Umbraco.Core.Models;
 using Umbraco.Web.WebApi;
@@ -17,7 +18,6 @@ namespace InshowControllers
     {
         
         public string password;
-        public string EmailVerifyGUID;
     }
 
     public class addAgentModel
@@ -86,20 +86,6 @@ namespace InshowControllers
                 var mymember = memberService.GetById(int.Parse(id));
 
                 memberService.SavePassword(mymember, json.password );
-
-
-                //testcode
-
-                mymember.Properties["emailVerifyGUID"].Value = "hello";
-                mymember.Properties["agencyCredits"].Value = "hi";
-
-
-
-
-
-
-
-
 
                 return true;
             }
@@ -196,14 +182,12 @@ namespace InshowControllers
                     listOfTags.Add(new PerplexMail.EmailTag("[#GUID#]", verifyURL));
                     listOfTags.Add(new PerplexMail.EmailTag("[#buysell#]", "selling"));
 
-                    //TODO- FIX emilNodeToSend--------------------------------------------------------------------------------------------------------------------------------------------------------------
                     //                    //create email id ???
-                    //                    var contentService = ApplicationContext.Current.Services.ContentService;
-                    //                    var Emails = contentService.GetRootContent().Where(x => x.Name.ToString() == "PerplexMail").First().Descendants().Where(x => x.Name == "Register Member Email").First();
-                    //                    int emailNodeToSend = Emails.Id; //umbraco Email node ID.
-                    //TODO- FIX emilNodeToSend--------------------------------------------------------------------------------------------------------------------------------------------------------------
+                    var contentService = ApplicationContext.Services.ContentService;
+                    var Emails = contentService.GetRootContent().Where(x => x.Name.ToString() == "PerplexMail").First().Descendants().Where(x => x.Name == "Register Member Email").First();
+                    int emailNodeToSend = Emails.Id; //umbraco Email node ID.
 
-                    int emailNodeToSend = 1903;
+                    //int emailNodeToSend = 1903;
 
                     PerplexMail.Email.SendUmbracoEmail(emailNodeToSend, listOfTags);
 

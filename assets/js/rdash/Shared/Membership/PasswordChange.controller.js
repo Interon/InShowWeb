@@ -19,15 +19,6 @@
           }
       },
 
-      {
-          key: 'emailVerifyGUID',
-          type: 'input',
-          templateOptions: {
-              label: 'TEST',
-              placeholder: 'TEST'
-          }
-      }
-
     ]
 
 
