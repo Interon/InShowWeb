@@ -1,6 +1,6 @@
 ﻿angular.module('RDash').controller('AddAgentController', ['ngDialog', '$scope', 'fMembership', 'fMember', function (ngDialog, $scope, fMembership, fMember) {
-    //TODO close modal after save 
-    //Check email API 
+    //TODO AJ close modal after save 
+    //TODO AJ Check if agent exist via Restfull call to API
     $scope.member = {};
     $scope.submit = function (member) {
 

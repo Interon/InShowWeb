@@ -56,7 +56,7 @@ namespace InshowControllers
         [HttpPost]
         public bool UpdateMember (string id,dynamic o)
         {
-            //TODO - Find a better way to handle o
+            //TODO AO Find a better way to handle o
             try
             {
                 var memberService = ApplicationContext.Services.MemberService;
@@ -124,7 +124,7 @@ namespace InshowControllers
                     //Member createMember = Member.MakeNew(model.Name, model.EmailAddress, model.EmailAddress, umbJobMemberType, umbUser);
                     // WARNING: update to your desired MembertypeAlias...
 
-                    //TODO Check if agent exists by  email. 
+                    //TODO AJ Check if agent exists by  email Only one membership type by email ie Email can exists for agent,agency,buyer or seller only 
                     var createMember = memberService.CreateMember(json.UserName, json.EmailAddress, json.FirstName + " " + json.LastName, "agent");
 
                     //Set the verified email to false
@@ -142,7 +142,7 @@ namespace InshowControllers
                     var tempGUID = Guid.NewGuid();
 
                     //Fetch our new member we created by their email
-                    //TODO Get member by ID
+                    //TODO AJ Get member by ID
                     var updateMember = memberService.GetByUsername(json.UserName);
 
                     //Just to be sure...
@@ -161,7 +161,7 @@ namespace InshowControllers
                         updateMember.Properties["cellNumber"].Value = json.CellNumber;
 
                         updateMember.Properties["agencyPin"].Value = json.AgencyPin;
-                        //TODO This is wrong should save ID as  array
+                        //TODO AJ This is wrong should save ID 
                         updateMember.Properties["agency"].Value = json.Agency;
 
                         updateMember.Properties["email"].Value = json.EmailAddress;

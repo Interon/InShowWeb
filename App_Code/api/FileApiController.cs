@@ -62,7 +62,7 @@ namespace Inshow.Controllers
                 var parent = ms.GetById(1781);
                 var media = ms.CreateMedia(originalFileName, parent, "Image");
                 media.SetValue("umbracoFile",originalFileName, fs);
-                //TODO Save method hangs
+                //TODO AO Save method hangs
                 ms.Save(media,0,true);
                 var memberservice = Services.MemberService;
 
