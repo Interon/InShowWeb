@@ -51,18 +51,45 @@ namespace Inshow.Controllers
 
                 // Remove this line as well as GetFormData method if you're not
                 // sending any form data with your upload request
-                var fileUploadObj = GetFormData<UploadDataModel>(result);
+                dynamic fileUploadObj = GetFormData<UploadDataModel>(result);
+
+            var ms = Services.MediaService;
+            MemoryStream uploadFile = new MemoryStream();
             
-               
+            using (FileStream fs = uploadedFileInfo.OpenRead())
+            {
+              fs.CopyTo(uploadFile);
+                var parent = ms.GetById(1781);
+                var media = ms.CreateMedia(originalFileName, parent, "Image");
+                media.SetValue("umbracoFile",originalFileName, fs);
 
-            
-               
+                ms.Save(media,0,true);
+                var memberservice = Services.MemberService;
 
-            
+                IMember member = memberservice.GetById(fileUploadObj.NodeId);
 
-           
+                member.SetValue(fileUploadObj.PropertyAlias, media.Path);
+                memberservice.Save(member);
 
-          
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             var returnData = "ReturnTest";
