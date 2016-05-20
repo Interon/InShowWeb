@@ -113,7 +113,6 @@ namespace InShow.Controllers
                             //Get the verify guid on the member (so we can resend out verification email)
                             var verifyGUID = checkMember.Properties["emailVerifyGUID"].Value.ToString();
 
-                            // TODO: Implement the Email helper/send the Email :)
                             //Get Email Settings from Login Node (current node)
                             //var emailFrom = CurrentPage.GetPropertyValue("emailFrom", "robot@your-site.co.uk").ToString();
                             //var emailSubject = CurrentPage.GetPropertyValue("emailSubject", "CWS - Verify Email").ToString();
@@ -553,8 +552,6 @@ namespace InShow.Controllers
             //Its the final step, do some saving
             if (model.StepIndex == 0)
             {
-
-                //TODO: Do something with the form data
 
                 return RedirectToCurrentUmbracoPage();
             }

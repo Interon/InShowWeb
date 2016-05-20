@@ -1,4 +1,5 @@
 ﻿angular.module('RDash').controller('PasswordChangeController', ['ngDialog', '$scope', 'fMembership', 'fMember', function (ngDialog, $scope, fMembership, fMember) {
+    //TODO Add Confirm Password block and 
 
     $scope.member = {};
     $scope.submit = function (member) {

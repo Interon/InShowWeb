@@ -11,14 +11,16 @@
         
     }
 
+
     $scope.AddAgent = function () {
+        //$rootScope.theme = 'ngdialog-theme-plain custom-width';
 
         ngDialog.open({
             template: '/assets/js/rdash/Shared/Membership/addAgent.view.html',
-            className: 'ngdialog-theme-plain',
+            className: 'ngdialog-theme-plain custom-width',
+            closeByDocument: false
         });
-
-    }
+    };
 
 
     $scope.ImageUploadClick = function () {
@@ -31,6 +33,9 @@
         });
         
     }
+
+
+
 
         $scope.member = fMember;
         //$scope.updateUser = function (data) {

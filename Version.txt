@@ -1,4 +1,10 @@
 ﻿
 
-registerMember ver. 0.26
-email add agent popup complete bug fixes on linq TODO: form validation
+registerMember ver. 0.27
+Completed TODOs:
+//TODO AJ Get member by ID
+//TODO AJ Check if agent exists by  email Only one membership type by email ie Email can exists for agent,agency,buyer or seller only 
+//TODO AJ This is wrong should save ID
+//TODO AJ close modal after save 
+Installed ngMessages
+Still TODO Validation using api

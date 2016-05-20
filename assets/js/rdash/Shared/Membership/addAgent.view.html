@@ -2,8 +2,10 @@
     
     <h1>Add realestate-agent</h1>
     <br/>
-    <formly-form model="member" fields="memberfields">
-        <button class="btn btn-primary" type="submit" ng-click="submit(member)">Add Agent</button>
-    </formly-form>
-
+    <form ng-submit="vm.onSubmit()" name="vm.form" novalidate>
+        <formly-form model="member" fields="memberfields" options="vm.options" form="vm.form">
+            <button class="btn btn-primary submit-button close-this-dialog" type="submit" ng-click="submit(member)">Add Agent</button>
+            <button type="button" class="btn btn-default close-this-dialog" ng-click="closeThisDialog('Cancel')">Cancel</button>
+        </formly-form>
+    </form>
 </div>

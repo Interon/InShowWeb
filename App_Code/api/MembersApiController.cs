@@ -10,18 +10,19 @@ using Umbraco.Web.WebApi;
 namespace InshowControllers
 {
 
-    
+
 
     //MVC Models
 
     public class passwordModel
     {
-        
+
         public string password;
     }
 
     public class addAgentModel
     {
+        public int Id;
         public string UserName;
         public string FirstName;
         public string LastName;
@@ -54,7 +55,7 @@ namespace InshowControllers
         }
 
         [HttpPost]
-        public bool UpdateMember (string id,dynamic o)
+        public bool UpdateMember(string id, dynamic o)
         {
             //TODO AO Find a better way to handle o
             try
@@ -72,7 +73,7 @@ namespace InshowControllers
             {
                 return false;
             }
-           
+
         }
 
         [HttpPost]
@@ -85,7 +86,7 @@ namespace InshowControllers
                 var memberService = ApplicationContext.Services.MemberService;
                 var mymember = memberService.GetById(int.Parse(id));
 
-                memberService.SavePassword(mymember, json.password );
+                memberService.SavePassword(mymember, json.password);
 
                 return true;
             }
@@ -106,7 +107,7 @@ namespace InshowControllers
             {
                 var memberService = ApplicationContext.Services.MemberService;
                 var mymember = memberService.GetById(int.Parse(id));
-
+                int AgencyId = mymember.Id;
                 //memberService.SavePassword(mymember, json.Password);
                 //return true;
 
@@ -121,10 +122,30 @@ namespace InshowControllers
                 //Model valid let's create the member
                 try
                 {
-                    //Member createMember = Member.MakeNew(model.Name, model.EmailAddress, model.EmailAddress, umbJobMemberType, umbUser);
-                    // WARNING: update to your desired MembertypeAlias...
 
-                    //TODO AJ Check if agent exists by  email Only one membership type by email ie Email can exists for agent,agency,buyer or seller only 
+
+
+                        //We found the member with that email
+
+                        //member loop
+                        var members = memberService.GetAllMembers();
+
+                        foreach (Member m in members)
+                        {
+
+                            if (m.Email == json.EmailAddress)
+                            {
+
+                                if (m.ContentTypeAlias == "agent")
+                                {
+                                    return false;
+                                }
+
+                            }
+
+                        }
+
+                   
                     var createMember = memberService.CreateMember(json.UserName, json.EmailAddress, json.FirstName + " " + json.LastName, "agent");
 
                     //Set the verified email to false
@@ -142,8 +163,7 @@ namespace InshowControllers
                     var tempGUID = Guid.NewGuid();
 
                     //Fetch our new member we created by their email
-                    //TODO AJ Get member by ID
-                    var updateMember = memberService.GetByUsername(json.UserName);
+                    var updateMember = memberService.GetById(createMember.Id);
 
                     //Just to be sure...
                     if (updateMember != null)
@@ -161,8 +181,8 @@ namespace InshowControllers
                         updateMember.Properties["cellNumber"].Value = json.CellNumber;
 
                         updateMember.Properties["agencyPin"].Value = json.AgencyPin;
-                        //TODO AJ This is wrong should save ID 
-                        updateMember.Properties["agency"].Value = json.Agency;
+
+                        updateMember.Properties["agency"].Value = AgencyId;
 
                         updateMember.Properties["email"].Value = json.EmailAddress;
 
@@ -187,12 +207,14 @@ namespace InshowControllers
 
                     //                    //create email id ???
                     var contentService = ApplicationContext.Services.ContentService;
-                    var Emails = contentService.GetRootContent().Where(x => x.Name.ToString() == "PerplexMail").First().Descendants().Where(x => x.Name == "Register Member Email").First();
+                    var Emails = contentService.GetRootContent().Where(x => x.Name.ToString() == "PerplexMail (1)").First().Descendants().Where(x => x.Name == "Register Member Email (2)").First();
                     int emailNodeToSend = Emails.Id; //umbraco Email node ID.
 
                     //int emailNodeToSend = 1903;
 
                     PerplexMail.Email.SendUmbracoEmail(emailNodeToSend, listOfTags);
+
+
 
                 }
                 catch (Exception ex)
