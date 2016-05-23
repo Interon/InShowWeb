@@ -3,7 +3,7 @@ angular.module('RDash').factory("fMembership", function ($resource, $http, $q, t
     return {
         CurrentMemberAsync: $resource('/umbraco/api/members/GetCurrentMember', {}, {
             query: { method: 'GET', params: {}, isArray: false }
-        }),
+        }), 
         CurrentMember: function () {
             var defer = $q.defer();
             $http.get('/umbraco/api/members/GetCurrentMember', { cache: 'true' })
@@ -17,26 +17,21 @@ angular.module('RDash').factory("fMembership", function ($resource, $http, $q, t
         },
         
 
-        AllMembersAsync: $resource('/umbraco/api/members/GetAllMembers', {}, {
-            query: { method: 'GET', params: {}, isArray: false }
-        }),
-        CurrentMember: function () {
-            var defer = $q.defer();
-            $http.get('/umbraco/api/members/GetAllMembers', { cache: 'true' })
-           .success(function (data) {
-
-               defer.resolve(data);
-
-           });
-
-            return defer.promise;
-        },
-
-
-
 
         UpdateMember: function (id, parameters) {
             $http.post('/umbraco/api/members/UpdateMember/' + id, parameters).
+        success(function (data, status, headers, config) {
+
+            toaster.pop('success', "", "Save Successfull");
+
+        }).
+       error(function (data, status, headers, config) {
+           toaster.pop('error', "", "Error Update Member");
+       });
+        },
+
+        GetMemberByEmail: function (email, parameters) {
+            $http.post('/umbraco/api/members/GetMemberByEmail/' + email, parameters).
         success(function (data, status, headers, config) {
 
             toaster.pop('success', "", "Save Successfull");
@@ -134,40 +129,5 @@ angular.module('RDash').factory('fMember', ['fMembership', function (fMembership
 
 
 
-angular.module('RDash').factory('CheckMember', ['fMembership', function (fMembership, $scope) {
 
-    debugger;
-
-    var checkMember = { Id: 0, Type: "" };
-    fMembership.CurrentMember().then(function (data) {
-
-        var _member = data;
-        member.Id = _member.Id;
-        member.Type = _member.ContentTypeAlias;
-        member.Name = _member.Name;
-        member.Username = _member.Username;
-        // member.Properties = _member.Properties;
-        var myarray = [];
-        myarray = _member.Properties.$values;
-
-
-
-        for (var i = 0; i < myarray.length; i++) {
-            console.log(myarray[i].Alias + '->' + myarray[i].Value);
-            var myObj = new Object;
-            myObj[myarray[i].Alias] = myarray[i].Value;
-            angular.extend(member, myObj)
-        };
-
-        debugger;
-
-
-        return member;
-
-    });
-
-    return member;
-
-
-}]);
 

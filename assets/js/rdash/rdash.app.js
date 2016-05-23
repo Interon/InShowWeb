@@ -74,22 +74,32 @@ angular.module('RDash').run(function ($rootScope, $state, editableOptions) {
 
 //Formly Configuration for Validation
 
-angular.module('RDash').run(function (formlyConfig, formlyValidationMessages) {
-
-    formlyConfig.extras.errorExistsAndShouldBeVisibleExpression = 'fc.$touched || form.$submitted';
-    formlyValidationMessages.addStringMessage('required', 'This field is required');
-
-});
 
 angular.module('RDash').config(function (formlyConfigProvider) {
 
-    /*
     formlyConfigProvider.setWrapper({
-        name: 'validation',
-        types: ['input'],
-        templateUrl: 'error-messages.html'
+        name: 'loader',
+        template: [
+          '<formly-transclude></formly-transclude>',
+          '<span class="glyphicon glyphicon-refresh loader" ng-show="to.loading"></span>'
+        ].join(' ')
     });
-    */
 
-});
+    formlyConfigProvider.setType({
+        name: 'input-loader',
+        extends: 'input',
+        wrapper: ['loader']
+    });
+
+    formlyConfigProvider.setWrapper({
+        template: '<formly-transclude></formly-transclude><div my-messages="options"></div>',
+        types: ['input', 'checkbox', 'select', 'textarea', 'radio', 'input-loader']
+    });
+})
+  .directive('myMessages', function () {
+      return {
+          templateUrl: 'custom-messages.html',
+          scope: { options: '=myMessages' }
+      };
+  });
 

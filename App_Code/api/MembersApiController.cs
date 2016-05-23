@@ -34,16 +34,21 @@ namespace InshowControllers
 
     }
 
-
     //MVC Controllers
 
     public class MembersController : UmbracoApiController
     {
-        [HttpGet]
-        public IEnumerable<IMember> GetAllmembers()
+        [HttpPost]
+        public IMember GetMemberByEmail(string email, object o)
         {
+
+            var json = JsonConvert.DeserializeObject<passwordModel>(o.ToString());
+
             var memberService = ApplicationContext.Services.MemberService;
-            return memberService.GetAllMembers();
+            var mymember = memberService.GetByEmail(email);
+
+            return mymember;
+
         }
 
         [HttpGet]
@@ -125,27 +130,27 @@ namespace InshowControllers
 
 
 
-                        //We found the member with that email
+                    //We found the member with that email
 
-                        //member loop
-                        var members = memberService.GetAllMembers();
+                    //member loop
+                    var members = memberService.GetAllMembers();
 
-                        foreach (Member m in members)
+                    foreach (Member m in members)
+                    {
+
+                        if (m.Email == json.EmailAddress)
                         {
 
-                            if (m.Email == json.EmailAddress)
+                            if (m.ContentTypeAlias == "agent")
                             {
-
-                                if (m.ContentTypeAlias == "agent")
-                                {
-                                    return false;
-                                }
-
+                                return false;
                             }
 
                         }
 
-                   
+                    }
+
+
                     var createMember = memberService.CreateMember(json.UserName, json.EmailAddress, json.FirstName + " " + json.LastName, "agent");
 
                     //Set the verified email to false
