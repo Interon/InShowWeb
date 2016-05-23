@@ -15,8 +15,6 @@ angular.module('RDash').factory("fMembership", function ($resource, $http, $q, t
             
             return defer.promise;
         },
-        
-
 
         UpdateMember: function (id, parameters) {
             $http.post('/umbraco/api/members/UpdateMember/' + id, parameters).
@@ -33,7 +31,7 @@ angular.module('RDash').factory("fMembership", function ($resource, $http, $q, t
         GetMemberByEmail: function (email, parameters) {
             $http.post('/umbraco/api/members/GetMemberByEmail/' + email, parameters).
         success(function (data, status, headers, config) {
-
+            
             toaster.pop('success', "", "Save Successfull");
 
         }).
@@ -92,7 +90,6 @@ angular.module('RDash').factory("fMembership", function ($resource, $http, $q, t
 
 angular.module('RDash').factory('fMember', ['fMembership', function (fMembership, $scope) {
 
-    debugger;
 
     var member = { Id: 0, Type: "" };
     fMembership.CurrentMember().then(function (data) {
@@ -115,7 +112,6 @@ angular.module('RDash').factory('fMember', ['fMembership', function (fMembership
             angular.extend(member, myObj)
         };
 
-        debugger;
 
 
         return member;

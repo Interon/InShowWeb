@@ -1,13 +1,13 @@
 ﻿<div ng-controller="AddAgentController">
 
-    <h1>Add realestate-agent</h1>
-    <br />
-    <form ng-submit="onSubmit()" name="form" novalidate>
-        <formly-form model="member" fields="memberfields" options="options" form="vm.form">
-            <button class="btn btn-primary submit-button close-this-dialog" type="submit" ng-click="submit(member)">Add Agent</button>
+    <h1>Add Agent</h1>
+    <form ng-submit="onSubmit(member)" novalidate>
+        <formly-form model="model" fields="fields" form="form">
+            <button class="btn btn-primary" type="submit">Change Password</button>
             <button type="button" class="btn btn-default close-this-dialog" ng-click="closeThisDialog('Cancel')">Cancel</button>
         </formly-form>
     </form>
+
 </div>
 
 <script type="text/ng-template" id="custom-messages.html">

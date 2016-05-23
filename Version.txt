@@ -1,10 +1,4 @@
 ﻿
 
-registerMember ver. 0.27
-Completed TODOs:
-//TODO AJ Get member by ID
-//TODO AJ Check if agent exists by  email Only one membership type by email ie Email can exists for agent,agency,buyer or seller only 
-//TODO AJ This is wrong should save ID
-//TODO AJ close modal after save 
-Installed ngMessages
-Still TODO Validation using api
+registerMember ver. 0.28
+Validation using api in progress

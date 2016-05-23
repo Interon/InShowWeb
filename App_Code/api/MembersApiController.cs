@@ -34,6 +34,13 @@ namespace InshowControllers
 
     }
 
+    public class addAgentByEmailModel
+    {
+        public string EmailAddress;
+    }
+
+
+
     //MVC Controllers
 
     public class MembersController : UmbracoApiController
@@ -41,9 +48,7 @@ namespace InshowControllers
         [HttpPost]
         public IMember GetMemberByEmail(string email, object o)
         {
-
-            var json = JsonConvert.DeserializeObject<passwordModel>(o.ToString());
-
+            var json = JsonConvert.DeserializeObject<addAgentByEmailModel>(o.ToString());
             var memberService = ApplicationContext.Services.MemberService;
             var mymember = memberService.GetByEmail(email);
 
@@ -128,8 +133,6 @@ namespace InshowControllers
                 try
                 {
 
-
-
                     //We found the member with that email
 
                     //member loop
@@ -149,7 +152,6 @@ namespace InshowControllers
                         }
 
                     }
-
 
                     var createMember = memberService.CreateMember(json.UserName, json.EmailAddress, json.FirstName + " " + json.LastName, "agent");
 
