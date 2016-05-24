@@ -1,4 +1,5 @@
 ﻿
 
-registerMember ver. 0.28
-Validation using api in progress
+registerMember ver. 0.29
+Member Call using email.
+Bug where if the email string contains a '.', it doesn't verify. ie. verifies aj@interon BUT NOT aj@interon.co.za

@@ -3,7 +3,7 @@ angular.module('RDash').factory("fMembership", function ($resource, $http, $q, t
     return {
         CurrentMemberAsync: $resource('/umbraco/api/members/GetCurrentMember', {}, {
             query: { method: 'GET', params: {}, isArray: false }
-        }), 
+        }),
         CurrentMember: function () {
             var defer = $q.defer();
             $http.get('/umbraco/api/members/GetCurrentMember', { cache: 'true' })
@@ -12,25 +12,15 @@ angular.module('RDash').factory("fMembership", function ($resource, $http, $q, t
                defer.resolve(data);
 
            });
-            
+
             return defer.promise;
         },
+
+
 
         UpdateMember: function (id, parameters) {
             $http.post('/umbraco/api/members/UpdateMember/' + id, parameters).
         success(function (data, status, headers, config) {
-
-            toaster.pop('success', "", "Save Successfull");
-
-        }).
-       error(function (data, status, headers, config) {
-           toaster.pop('error', "", "Error Update Member");
-       });
-        },
-
-        GetMemberByEmail: function (email, parameters) {
-            $http.post('/umbraco/api/members/GetMemberByEmail/' + email, parameters).
-        success(function (data, status, headers, config) {
             
             toaster.pop('success', "", "Save Successfull");
 
@@ -40,8 +30,31 @@ angular.module('RDash').factory("fMembership", function ($resource, $http, $q, t
        });
         },
 
-        ChangePassword: function (id, parameters) {
 
+
+        GetMemberByEmailAsync: $resource('/umbraco/api/members/GetMemberByEmail', {}, {
+            query: { method: 'GET', params: {}, isArray: false }
+        }),
+
+        GetMemberByEmail: function (email) {
+            debugger
+            var defer = $q.defer();
+            $http.get('/umbraco/api/members/GetMemberByEmail/' + email, { cache: 'true' })
+           .success(function (data) {
+
+               defer.resolve(data);
+               toaster.pop('success', "", "Save Successfull");
+
+           });
+
+            return defer.promise;
+        },
+
+
+
+
+        ChangePassword: function (id, parameters) {
+            
             $http.post('/umbraco/api/members/ChangePassword/' + id, parameters).
         success(function (data, status, headers, config) {
 
@@ -55,8 +68,11 @@ angular.module('RDash').factory("fMembership", function ($resource, $http, $q, t
        });
         },
 
-        AddAgent: function (id, parameters) {
 
+
+
+        AddAgent: function (id, parameters) {
+            debugger;
             $http.post('/umbraco/api/members/AddAgent/' + id, parameters).
         success(function (data, status, headers, config) {
 
@@ -68,6 +84,8 @@ angular.module('RDash').factory("fMembership", function ($resource, $http, $q, t
            toaster.pop('error', "", "Error Update Member ->" + status);
        });
         },
+
+
 
         UpdateMemberPassword: function (id, parameters) {
             $http.post('/umbraco/api/members/UpdateMemberPassword/' + id, parameters).
@@ -81,6 +99,9 @@ angular.module('RDash').factory("fMembership", function ($resource, $http, $q, t
            toaster.pop('error', "", "Error Update Member");
        });
         },
+
+
+
 
         countries: $resource('../data/countries.json', {}, {
             query: { method: 'GET', params: {}, isArray: false }

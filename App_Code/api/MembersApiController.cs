@@ -45,13 +45,12 @@ namespace InshowControllers
 
     public class MembersController : UmbracoApiController
     {
-        [HttpPost]
-        public IMember GetMemberByEmail(string email, object o)
+        [HttpGet]
+        public IMember GetMemberByEmail(string id, object o)
         {
-            var json = JsonConvert.DeserializeObject<addAgentByEmailModel>(o.ToString());
+            
             var memberService = ApplicationContext.Services.MemberService;
-            var mymember = memberService.GetByEmail(email);
-
+            var mymember = memberService.GetByEmail(id);
             return mymember;
 
         }

@@ -23,13 +23,10 @@
         'arya'
     ];
 
-    $scope.getAgentMemberByEmail = function (email) {
-
-        var agentMember = fMembership.GetMemberByEmail(email, angular.toJson(member))
-        return agentMember;
+    $scope.getAgentMemberByEmail = function (email, memberType) {
+        fMembership.GetMemberByEmail(email, memberType);
+      
     }
-
-
 
 
     $scope.fields = [
@@ -53,11 +50,11 @@
                           scope.options.templateOptions.loading = true;
                           return $timeout(function () {
                               scope.options.templateOptions.loading = false;
-                              //-----------Unpredictable Custom Code -------------------------------------------------------
-                              if ($scope.getAgentMemberByEmail($viewValue) !== -1) {
-                                throw new Error('taken')
+                              //-----------Custom Code -------------------------------------------------------
+                              if ($scope.getAgentMemberByEmail($viewValue, 'agent') !== -1) {
+                                  throw new Error('taken');
                               }
-                              //-----------Unpredictable Code -------------------------------------------------------
+                              //------------------------------------------------------------------
                               if ($scope.existingUsers.indexOf($viewValue) !== -1) {
                                   throw new Error('taken');
                               }
@@ -69,7 +66,9 @@
               modelOptions: {
                   updateOn: 'blur'
               }
-          }
+          },
+
+
     ];
 
     $scope.originalFields = angular.copy($scope.fields);
