@@ -16,6 +16,9 @@
 
     }
 
+    
+
+
 
     $scope.existingUsers = [
         'john',
@@ -24,8 +27,9 @@
     ];
 
     $scope.getAgentMemberByEmail = function (email, memberType) {
-        fMembership.GetMemberByEmail(email, memberType);
-      
+        agentMember = fMembership.GetMemberByEmail(email, memberType);
+        debugger;
+        return agentMember;
     }
 
 
@@ -45,16 +49,20 @@
                   }
               },
               asyncValidators: {
-                  uniqueUsername: {
+                  uniqueEmail: {
                       expression: function ($viewValue, $modelValue, scope) {
                           scope.options.templateOptions.loading = true;
                           return $timeout(function () {
                               scope.options.templateOptions.loading = false;
                               //-----------Custom Code -------------------------------------------------------
-                              if ($scope.getAgentMemberByEmail($viewValue, 'agent') !== -1) {
+                              var memberByEmail = $scope.getAgentMemberByEmail($viewValue, 'agent')
+                              debugger;
+                              if (memberByEmail !== -1) {
+
+
                                   throw new Error('taken');
                               }
-                              //------------------------------------------------------------------
+                              //------------------------------------------------------------------------------
                               if ($scope.existingUsers.indexOf($viewValue) !== -1) {
                                   throw new Error('taken');
                               }
@@ -67,6 +75,62 @@
                   updateOn: 'blur'
               }
           },
+
+            {
+                key: 'userName',
+                type: 'input',
+                templateOptions: {
+                    label: 'User Name',
+                    placeholder: 'User Name'
+                }
+            },
+
+            {
+                key: 'firstName',
+                type: 'input',
+                templateOptions: {
+                    label: 'First Name',
+                    placeholder: 'First Name'
+                }
+            },
+
+            {
+                key: 'lastName',
+                type: 'input',
+                templateOptions: {
+                    label: 'Last Name',
+                    placeholder: 'Last Name'
+                }
+            },
+
+            {
+                key: 'emailAddress',
+                type: 'input',
+                templateOptions: {
+                    label: 'Email Address',
+                    placeholder: 'Email Address'
+                }
+            },
+
+            {
+                key: 'cellNumber',
+                type: 'input',
+                templateOptions: {
+                    label: 'Cell Number',
+                    placeholder: 'Cell Number'
+                }
+            },
+
+            {
+                key: 'password',
+                type: 'input',
+                templateOptions: {
+                    type: 'password',
+                    label: 'Password',
+                    placeholder: 'Password'
+                }
+            },
+
 
 
     ];

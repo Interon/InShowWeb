@@ -1,5 +1,5 @@
 ﻿
 
-registerMember ver. 0.29
-Member Call using email.
-Bug where if the email string contains a '.', it doesn't verify. ie. verifies aj@interon BUT NOT aj@interon.co.za
+registerMember ver. 0.30
+agent add bug fixes
+Implementation of edit agency and add admin 

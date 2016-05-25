@@ -38,16 +38,35 @@ angular.module('RDash').factory("fMembership", function ($resource, $http, $q, t
 
         GetMemberByEmail: function (email) {
             debugger
-            var defer = $q.defer();
+            var member = { Id: 0, Type: "" };
+            //var defer = $q.defer();
             $http.get('/umbraco/api/members/GetMemberByEmail/' + email, { cache: 'true' })
            .success(function (data) {
 
-               defer.resolve(data);
-               toaster.pop('success', "", "Save Successfull");
+               //defer.resolve(data);
+               //toaster.pop('success', "", "Save Successfull");
+               var memberData = data;
+               debugger;
 
+               member.Id = memberData.Id;
+               member.Type = memberData.ContentTypeAlias;
+               member.Name = memberData.Name;
+               member.Username = memberData.Username;
+               // member.Properties = _member.Properties;
+               var myarray = [];
+               myarray = memberData.Properties.$values;
+
+               for (var i = 0; i < myarray.length; i++) {
+                   console.log(myarray[i].Alias + '->' + myarray[i].Value);
+                   var myObj = new Object;
+                   myObj[myarray[i].Alias] = myarray[i].Value;
+                   angular.extend(member, myObj)
+               };
+
+               return member;
            });
 
-            return defer.promise;
+            return member;
         },
 
 
@@ -74,6 +93,21 @@ angular.module('RDash').factory("fMembership", function ($resource, $http, $q, t
         AddAgent: function (id, parameters) {
             debugger;
             $http.post('/umbraco/api/members/AddAgent/' + id, parameters).
+        success(function (data, status, headers, config) {
+
+            toaster.pop('success', "", "Save Successfull");
+            ngDialog.close();
+
+        }).
+       error(function (data, status, headers, config) {
+           toaster.pop('error', "", "Error Update Member ->" + status);
+       });
+        },
+
+
+        EditAgent: function (id, parameters) {
+            debugger;
+            $http.post('/umbraco/api/members/EditAgent/' + id, parameters).
         success(function (data, status, headers, config) {
 
             toaster.pop('success', "", "Save Successfull");

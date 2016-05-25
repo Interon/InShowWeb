@@ -113,8 +113,10 @@
                 <div class="col-md-5">
 
                     <rd-widget>
-                        <rd-widget-header icon="fa-pen" title="Agent  Details">
-                            <a href="#">Edit</a>
+                        <rd-widget-header icon="fa-pen" title="Agent Details">
+
+                            <button class="btn btn-primary" ng-click="EditAgent()">Edit</button>
+
                         </rd-widget-header>
                         <rd-widget-body>
                             <ul class="list-group">
@@ -197,7 +199,9 @@
 
                     <rd-widget>
                         <rd-widget-header icon="fa-pen" title="Admin Users">
-                            <a href="#">Add</a>
+
+                            <button class="btn btn-primary" ng-click="AddAdmin()">Add</button>
+
                         </rd-widget-header>
                         <rd-widget-body>
                             <table class="table table-responsive table-striped table-hover">

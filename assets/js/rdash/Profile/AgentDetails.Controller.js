@@ -22,6 +22,26 @@
         });
     };
 
+    $scope.EditAgent = function () {
+        //$rootScope.theme = 'ngdialog-theme-plain custom-width';
+
+        ngDialog.open({
+            template: '/assets/js/rdash/Shared/Membership/editAgent.view.html',
+            className: 'ngdialog-theme-plain custom-width',
+            closeByDocument: false
+        });
+    };
+
+    $scope.AddAdmin = function () {
+        //$rootScope.theme = 'ngdialog-theme-plain custom-width';
+
+        ngDialog.open({
+            template: '/assets/js/rdash/Shared/Membership/addAdmin.view.html',
+            className: 'ngdialog-theme-plain custom-width',
+            closeByDocument: false
+        });
+    };
+
 
     $scope.ImageUploadClick = function () {
        
